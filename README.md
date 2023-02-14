@@ -1,6 +1,11 @@
 ## Information Sharing Blog project
 
-Team members: 3 peoples
+## Repo
+
+- FE: https://github.com/huongle158/sharingblog
+- BE: https://github.com/huongle158/blog-backend
+
+## Team members: 3 peoples
 
 - Le Thi Huong
 - Nguyen Thi Ngoc Lu
@@ -8,7 +13,8 @@ Team members: 3 peoples
 
 ---
 
-Technologies:
-++ FE: Nextjs, Tailwindcss, Redux ...
-++ BE: Nestjs, Typeorm...
-++ Database: PosgreSQL
+## Technologies:
+
+- FE: Nextjs, Tailwindcss, Redux ...
+- BE: Nestjs, Typeorm...
+- Database: PosgreSQL
