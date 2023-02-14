@@ -11,8 +11,6 @@
 - Nguyen Thi Ngoc Lu
 - Pham Duc Thinh
 
----
-
 ## Technologies:
 
 - FE: Nextjs, Tailwindcss, Redux ...
