@@ -12,27 +12,27 @@ export const Sidebar = ({children}: Props) => {
     <div className="flex">
         <div className="fixed w-30 h-screen p-4 border-r-[1px] flex flex-col justify-between bg-slate-100">
             <div className="flex flex-col items-center">
-                <Link href="/">
+                <Link href="/login">
                     <div className="bg-purple-800 text-white p-3 rounded-lg inline-block">
-                     Avata
+                        Avatar
                     </div>
                 </Link>
                 <span className="border-b-[1px] border-gray-200 w-full p-2"></span>
                 <Link href="/createBlog">
-                    <div className=" bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer mt-4 mb-5 p-3  inline-block">
-                    <AiOutlinePlus />
+                    <div className=" bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer 
+                            mt-4 mb-5 p-3 inline-block"
+                        >
+                        <AiOutlinePlus />
                     </div>
                 </Link>
                 <Link href="/">
                     <div className=" text-2xl hover:bg-slate-300 cursor-pointer my-3 p-3  inline-block">
-                    <AiOutlineHome />
-                    
+                        <AiOutlineHome />
                     </div>
                 </Link>
                 <Link href="/profile">
                     <div className=" text-2xl hover:bg-slate-300 cursor-pointer my-3 p-3  inline-block">
-                    <CgProfile />
-                    
+                        <CgProfile />
                     </div>
                 </Link>
                 
