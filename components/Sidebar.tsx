@@ -1,9 +1,13 @@
 import Link from "next/link"
-import React from "react"
+import React, { ReactNode } from "react"
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 
-export const Sidebar = ({children}) => {
+interface Props {
+    children: ReactNode
+}
+
+export const Sidebar = ({children}: Props) => {
   return (
     <div className="flex">
         <div className="fixed w-30 h-screen p-4 border-r-[1px] flex flex-col justify-between bg-slate-100">
