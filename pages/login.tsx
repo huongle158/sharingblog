@@ -1,69 +1,62 @@
-import React, { useState } from 'react'
-import { Sidebar } from '@/components/Sidebar'
-import { Form, Input, Button } from 'components/index'
 
-export default function login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import React from 'react'
+import { BoxShadow, Button } from 'components/index'
+import { Checkbox, Form, Input } from 'antd';
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(`Email: ${email}, Password: ${password}`);
-  };
+const onFinish = (values: any) => {
+  console.log('Success:', values);
+};
 
-  return (
-    <Sidebar>
-      <div className="login">
-        <Form label='Sign in to your account' handleSubmit={handleSubmit}>
-          <Input
-            input={{
-              label: "Email address",
-              id: 'email', 
-              name: 'email',
-              type: 'email', 
-              required: true, 
-              value: email,
-              onChange: (event) => {
-                setEmail(event.target.value)
-                }
-              }} 
-            />
-          <Input
-            input={{
-              label: "Password",
-              id: 'password', 
-              name: 'password',
-              type: 'password', 
-              required: true, 
-              value: password,
-              onChange: (event) => {
-                setPassword(event.target.value)
-                }
-              }} 
-            />
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo);
+};
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember_me"
-                name="remember_me"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900" >
-                Remember me
-              </label>
-            </div>
-            <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Forgot your password?
-              </a>
-            </div>
-          </div>
+const login: React.FC = () => (
+  <BoxShadow label='Sign in'>
+    <Form
+      name="basic"
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      style={{ maxWidth: 600 }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+      className='grid'
+    >
+      <Form.Item
+        label="Email address"
+        name="email"
+        rules={[{ required: true, message: 'Please input your email!' }]}
+      >
+        <Input type='email' />
+      </Form.Item>
 
-          <Button type='submit' label='Sign in' />
-        </Form>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: 'Please input your password!' }]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item name="remember" valuePropName="checked" className='grid justify-items-stretch'>
+        <Checkbox className='justify-self-start'>Remember me</Checkbox>
+      </Form.Item>
+
+      <Button type='submit' label='Sign in' />
+
+      <div className="flex flex-row text-sm mt-2">
+        <a href="/register" className="text-blue-600 hover:text-blue-500 basis-3/6">
+          Forgot password?
+        </a>
+        <a href="/register" className="text-blue-600 hover:text-blue-500 basis-3/6">
+          Already have an account?
+        </a>
       </div>
-    </Sidebar>
-  )
-}
+
+    </Form>
+  </BoxShadow>
+)
+
+export default login
