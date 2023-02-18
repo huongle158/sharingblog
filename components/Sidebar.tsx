@@ -20,8 +20,8 @@ export const Sidebar = ({ children }: Props) => {
                         Avatar
                     </div> */}
 						<Avatar
-							style={{ backgroundColor: "#87d068", fontSize: "40px" }}
-							size={60}
+							style={{ backgroundColor: "#87d068", fontSize: "30px" }}
+							size={50}
 							icon={<UserOutlined />}
 						/>
 					</Link>
@@ -37,7 +37,7 @@ export const Sidebar = ({ children }: Props) => {
 						</div>
 					</Link>
 					<Link href="/">
-						<div className=" text-3xl hover:bg-slate-400 cursor-pointer my-3 p-3  inline-block">
+						<div className=" text-3xl hover:bg-slate-300 cursor-pointer my-3 p-3  inline-block">
 							<Tooltip placement="right" title={"Home page"}>
 								<AiOutlineHome />
 							</Tooltip>
