@@ -4,63 +4,58 @@ import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { Button, Tooltip } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Space } from "antd";
+import { Badge, Avatar, Space } from "antd";
 import { useRouter } from "next/router";
 
 interface Props {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 export const Sidebar = ({ children }: Props) => {
-	const router = useRouter()
+  const router = useRouter();
 
-	return (
-		<div className="flex">
-			<div className="fixed w-[10%] h-screen p-3 border-r-[1px] flex flex-col justify-between bg-slate-100">
-				<div className="flex flex-col items-center">
-					<Link href="/login">
-						{/* <div className="bg-purple-800 text-white p-3 rounded-lg inline-block">
-                        Avatar
-                    </div> */}
-						<Avatar
-							style={{ backgroundColor: "#87d068", fontSize: "30px" }}
-							size={50}
-							icon={<UserOutlined />}
-						/>
-					</Link>
-					<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
-					<Link href="/createBlog">
-						<div
-							className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer 
-                            mt-4 mb-5 p-3 inline-block"
-						>
-							<Tooltip placement="right" title={"Create Blog"}>
-								<AiOutlinePlus />
-							</Tooltip>
-						</div>
-					</Link>
-					<Link href="/">
-						<div
-							className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3 
-								inline-block ${router.pathname === "/" ? "bg-blue-200" : ""}`}>
-							<Tooltip placement="right" title={"Home page"}>
-								<AiOutlineHome />
-							</Tooltip>
-						</div>
-					</Link>
-					<Link href="/profile">
-						<div className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3  
-							inline-block ${router.pathname === "/profile" ? "bg-blue-200" : ""}`}>
-							<Tooltip placement="right" title={"Profile page"}>
-								<CgProfile />
-							</Tooltip>
-						</div>
-					</Link>
-					
-				</div>
-			</div>
+  return (
+    <div className="flex">
+      <div className="flex-none lg:w-[10%] w-[14%] h-screen p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200">
+        <Link href="/login">
+          <Badge dot>
+            <Avatar shape="circle" icon={<UserOutlined />} size="large" />
+          </Badge>
+        </Link>
+        <span className="border-b-[1px] border-gray-400 w-full p-2"></span>
+        <Link href="/createBlog" className="">
+          <div
+            className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer 
+                        mt-5 mb-5 p-3 inline-block"
+          >
+            <Tooltip placement="right" title={"Create Blog"}>
+              <AiOutlinePlus />
+            </Tooltip>
+          </div>
+        </Link>
+        <Link href="/">
+          <div
+            className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3 
+								inline-block ${router.pathname === "/" ? "bg-blue-200" : ""}`}
+          >
+            <Tooltip placement="right" title={"Home page"}>
+              <AiOutlineHome />
+            </Tooltip>
+          </div>
+        </Link>
+        <Link href="/profile">
+          <div
+            className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3  
+							inline-block ${router.pathname === "/profile" ? "bg-blue-200" : ""}`}
+          >
+            <Tooltip placement="right" title={"Profile page"}>
+              <CgProfile />
+            </Tooltip>
+          </div>
+        </Link>
+      </div>
 
-			<main className="w-full ml-40">{children}</main>
-		</div>
-	);
+      <main className="grow">{children}</main>
+    </div>
+  );
 };
