@@ -120,6 +120,41 @@
   color: #0645AD;
   text-decoration: underline;
 }
+/* CSS cho các lựa chọn font và kích thước */
+.ql-font-serif {
+  font-family: serif;
+}
+.ql-font-sans-serif {
+  font-family: sans-serif;
+}
+.ql-size-small {
+  font-size: 0.75em;
+}
+.ql-size-large {
+  font-size: 1.25em;
+}
+.ql-size-huge {
+  font-size: 1.5em;
+}
+
+/* CSS cho các phần tử in đậm, in nghiêng, gạch chân, gạch đầu dòng */
+.ql-bold {
+  font-weight: bold;
+}
+.ql-italic {
+  font-style: italic;
+}
+.ql-underline {
+  text-decoration: underline;
+}
+.ql-strike {
+  text-decoration: line-through;
+}
+.ql-blockquote {
+  margin-left: 1em;
+  border-left: 3px solid #ccc;
+  padding-left: 0.5em;
+}
 
 .preview img {
   display: block;
