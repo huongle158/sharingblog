@@ -1,7 +1,8 @@
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
+import { MdOutlineCreate } from "react-icons/md";
 import { Button, Tooltip } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Space } from "antd";
@@ -12,7 +13,12 @@ interface Props {
 }
 
 export const Sidebar = ({ children }: Props) => {
-	const router = useRouter()
+	const router = useRouter();
+	const [isOpen, setIsOpen] = useState(false);
+
+	const toggleDropdown = () => {
+	  setIsOpen(!isOpen);
+	};
 
 	return (
 		<div className="flex">
@@ -29,7 +35,7 @@ export const Sidebar = ({ children }: Props) => {
 						/>
 					</Link>
 					<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
-					<Link href="/createBlog">
+					{/* <Link href="/createBlog">
 						<div
 							className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer 
                             mt-4 mb-5 p-3 inline-block"
@@ -38,7 +44,22 @@ export const Sidebar = ({ children }: Props) => {
 								<AiOutlinePlus />
 							</Tooltip>
 						</div>
-					</Link>
+					</Link> */}
+					<div className="group inline-block">
+						<div className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer mt-4 mb-5 p-3 inline-block" onClick={toggleDropdown}>
+							<Tooltip placement="right" title={"Create Blog"}>
+							<AiOutlinePlus />
+							</Tooltip>
+						</div>
+						<ul className={`absolute bg-white py-2 rounded-md shadow-lg w-40 ${isOpen ? 'block' : 'hidden'}`}>
+							<li className="px-4 py-2 hover:bg-gray-100">
+								<Link href="/createBlog" legacyBehavior>
+									<a onClick={toggleDropdown} className="flex items-center"> 
+										<MdOutlineCreate className="mr-2 text-xl"/> Create Blog</a>
+								</Link>
+							</li>
+						</ul>
+					</div>
 					<Link href="/">
 						<div
 							className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3 
@@ -56,7 +77,7 @@ export const Sidebar = ({ children }: Props) => {
 							</Tooltip>
 						</div>
 					</Link>
-					
+
 				</div>
 			</div>
 
