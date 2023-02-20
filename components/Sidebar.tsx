@@ -56,6 +56,7 @@ export const Sidebar = ({ children }: Props) => {
 							</Tooltip>
 						</div>
 					</Link>
+					
 				</div>
 			</div>
 

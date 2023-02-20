@@ -1,7 +1,9 @@
-
+import Link from "next/link";
 import React from 'react'
 import { BoxShadow, Button } from 'components/index'
 import { Checkbox, Form, Input } from 'antd';
+import { useRouter } from 'next/router';
+
 
 const onFinish = (values: any) => {
   console.log('Success:', values);
@@ -11,7 +13,8 @@ const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
-const login: React.FC = () => (
+const login: React.FC = () => {
+  return (
   <BoxShadow label='Sign in'>
     <Form
       name="basic"
@@ -45,18 +48,22 @@ const login: React.FC = () => (
       </Form.Item>
 
       <Button type='submit' label='Sign in' />
-
       <div className="flex flex-row text-sm mt-2">
-        <a href="/register" className="text-blue-600 hover:text-blue-500 basis-3/6">
-          Forgot password?
-        </a>
-        <a href="/register" className="text-blue-600 hover:text-blue-500 basis-3/6">
-          Already have an account?
-        </a>
+        <Link href="/register" >
+          <div className="text-blue-600 hover:text-blue-500 basis-3/6 mr-5">
+            Forgot password?
+          </div>  
+        </Link>
+        <Link href="/register">
+          <div  className="text-blue-600 hover:text-blue-500 basis-3/6">
+            Already have an account?
+          </div>
+        </Link>
+        
       </div>
-
     </Form>
   </BoxShadow>
-)
+  )
+}
 
 export default login

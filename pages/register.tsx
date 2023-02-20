@@ -2,6 +2,7 @@
 import React from 'react'
 import { BoxShadow, Button } from 'components/index'
 import { Checkbox, Form, Input } from 'antd';
+import Link from "next/link";
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -11,7 +12,8 @@ const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
 };
 
-const register: React.FC = () => (
+const register: React.FC = () => {
+    return (
     <BoxShadow label='Sign up'>
         <Form
             name="basic"
@@ -58,16 +60,16 @@ const register: React.FC = () => (
             <Button type='submit' label='Sign up' />
 
             <div className="grid text-sm mt-3">
-                <a
-                    href="/login"
-                    className="justify-self-center text-blue-600 hover:text-blue-500"
-                >
-                    Already have an account sign?
-                </a>
+                <Link href="/login">
+                    <div className="justify-self-center text-blue-600 hover:text-blue-500">
+                        Already have an account sign?
+                    </div>
+                </Link>       
             </div>
 
         </Form>
     </BoxShadow>
-)
+    )
+}
 
 export default register
