@@ -7,6 +7,7 @@ import { Button, Tooltip } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Badge, Avatar, Space } from "antd";
 import { useRouter } from "next/router";
+import ModalDisplayCreateTitleBLog from "./Modal/ModalDisplayCreateTitleBLog";
 
 interface Props {
   children: ReactNode;
@@ -19,6 +20,12 @@ export const Sidebar = ({ children }: Props) => {
 	const toggleDropdown = () => {
 	  setIsOpen(!isOpen);
 	};
+	// modal hiển thị create Title BLog
+	const [showModal, setShowModal] = useState(false);
+	const openToModal = () => {
+		setIsOpen(!isOpen);
+		setShowModal(true)
+	}
 
 	return (
 		<div className="flex">
@@ -47,10 +54,8 @@ export const Sidebar = ({ children }: Props) => {
 					</div>
 					<ul className={`absolute bg-white py-2 rounded-md shadow-lg w-40 ${isOpen ? 'block' : 'hidden'}`}>
 						<li className="px-4 py-2 hover:bg-gray-100">
-							<Link href="/createBlog" legacyBehavior>
-								<a onClick={toggleDropdown} className="flex items-center"> 
-									<MdOutlineCreate className="mr-2 text-xl"/> Create Blog</a>
-							</Link>
+							<a onClick={openToModal} className="flex items-center cursor-pointer"> 
+								<MdOutlineCreate className="mr-2 text-xl"/> Create Blog</a>
 						</li>
 					</ul>
 				</div>
@@ -72,8 +77,8 @@ export const Sidebar = ({ children }: Props) => {
 					</div>
 				</Link>
 			</div>
-
 			<main className="grow">{children}</main>
+			<ModalDisplayCreateTitleBLog modal = {showModal} setShowModal = {() => setShowModal(!showModal)} />
 		</div>
 	);
 };

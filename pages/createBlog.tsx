@@ -20,9 +20,10 @@ const modules = {
     ["link", "image", "video"],
   ],
 };
+const formats = ["header", "font", "size", "bold", "italic", "underline", "strike", "blockquote", "list", "bullet", "indent", "link", "image", "video"];
 const CreateBlog = () => {
-  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -35,7 +36,7 @@ const CreateBlog = () => {
 
   return (
     <Sidebar>
-      <div className="lg:ml-7 container">
+      <div className=" container">
         <div className="row">
           <div className="editor">
             <ReactQuill

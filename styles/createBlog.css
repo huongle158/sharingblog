@@ -3,6 +3,9 @@
     height: 100vh;
     width: 100%;
 }
+.quill-input-container input {
+  height: 2rem;
+}
 .row{
     height: 100%;
     width: 100%;

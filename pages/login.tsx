@@ -4,15 +4,16 @@ import { BoxShadow, Button } from "components/index";
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/router";
 
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
-
 const login: React.FC = () => {
+  const router = useRouter()
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+    router.push("/")
+  };
+  
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
     <BoxShadow label="Sign in">
       <Form
