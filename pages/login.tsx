@@ -1,68 +1,73 @@
-import React, { useState } from 'react'
-import { Sidebar } from '@/components/Sidebar'
-import { Form, Input, Button } from 'components/index'
+import Link from "next/link";
+import React from "react";
+import { Guest, Button } from "@/components/index";
+import { Checkbox, Form, Input } from "antd";
+import { useRouter } from "next/router";
 
-export default function login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const login: React.FC = () => {
+	const router = useRouter();
+	const onFinish = (values: any) => {
+		console.log("Success:", values);
+		router.push("/");
+	};
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(`Email: ${email}, Password: ${password}`);
-  };
+	const onFinishFailed = (errorInfo: any) => {
+		console.log("Failed:", errorInfo);
+	};
+	return (
+		<Guest label="Sign in">
+			<Form
+				name="login"
+				labelCol={{ span: 8 }}
+				wrapperCol={{ span: 16 }}
+				style={{ maxWidth: 600 }}
+				initialValues={{ remember: true }}
+				onFinish={onFinish}
+				onFinishFailed={onFinishFailed}
+				autoComplete="off"
+				className="grid"
+			>
+				<Form.Item
+					label="Email address"
+					name="email"
+					rules={[{ required: true, message: "Please input your email!" }]}
+				>
+					<Input type="email" />
+				</Form.Item>
 
-  return (
-    <Sidebar>
-      <Form label='Sign in to your account' handleSubmit={handleSubmit}>
-        <Input
-          input={{
-            label: "Email address",
-            id: 'email', 
-            name: 'email',
-            type: 'email', 
-            required: true, 
-            value: email,
-            onChange: (event) => {
-              setEmail(event.target.value)
-              }
-            }} 
-          />
+				<Form.Item
+					label="Password"
+					name="password"
+					rules={[{ required: true, message: "Please input your password!" }]}
+				>
+					<Input.Password />
+				</Form.Item>
 
-        <Input
-          input={{
-            label: "Password",
-            id: 'password', 
-            name: 'password',
-            type: 'password', 
-            required: true, 
-            value: password,
-            onChange: (event) => {
-              setPassword(event.target.value)
-              }
-            }} 
-          />
+				<Form.Item
+					name="remember"
+					valuePropName="checked"
+					className="grid justify-items-stretch"
+				>
+					<Checkbox className="justify-self-start">Remember me</Checkbox>
+				</Form.Item>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              id="remember_me"
-              name="remember_me"
-              type="checkbox"
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            />
-            <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900" >
-              Remember me
-            </label>
-          </div>
-          <div className="text-sm">
-            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-              Forgot your password?
-            </a>
-          </div>
-        </div>
+				<Button type="submit" label="Sign in" />
 
-        <Button type='submit' label='Sign in' />
-      </Form>
-    </Sidebar>
-  )
-}
+				<div className="flex flex-row text-sm mt-5">
+					<Link legacyBehavior href="/register">
+						<a className="text-blue-600 hover:text-blue-500 basis-3/6 mr-5">
+							Forgot password?
+						</a>
+					</Link>
+					<Link legacyBehavior href="/register">
+						<a className="text-blue-600 hover:text-blue-500 basis-3/6">
+							Already have an account?
+						</a>
+					</Link>
+				</div>
+			</Form>
+		</Guest>
+	);
+};
+
+export default login;
