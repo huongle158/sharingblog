@@ -1,10 +1,9 @@
-import { Sidebar } from "@/components/Sidebar";
+import { Sidebar } from "@/components/layouts/Sidebar";
 
 export default function Home() {
-  return (
-    <Sidebar>
-        <button>Home</button>
-    </Sidebar>
-  )
+	return (
+		<Sidebar>
+			<button>Home</button>
+		</Sidebar>
+	);
 }
-

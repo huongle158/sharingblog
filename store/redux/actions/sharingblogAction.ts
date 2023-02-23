@@ -1,4 +1,4 @@
-import { CREATE_TITLE_BLOG } from './../../../types/actionConstan';
+import { CREATE_TITLE_BLOG } from '../../../types/actionConstant';
 
 export const getTitleNewBlog = (title: any) => {
     return {

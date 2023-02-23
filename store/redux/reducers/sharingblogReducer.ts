@@ -1,4 +1,4 @@
-import { CREATE_TITLE_BLOG } from './../../../types/actionConstan';
+import { CREATE_TITLE_BLOG } from '../../../types/actionConstant';
 
 const initialState: any = {
     newTitle : ""
@@ -12,5 +12,3 @@ const sharingblogReducers = (state = initialState, action: any) => {
     return {...state}
 }
 export default sharingblogReducers
-
-
