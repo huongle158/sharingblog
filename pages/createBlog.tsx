@@ -52,7 +52,7 @@ const CreateBlog = () => {
 
 	return (
 		<Sidebar>
-			<div className=" container">
+			<div className="container overflow-y-scroll h-screen">
 				<div className="row">
 					<div className="editor">
 						<ReactQuill
@@ -64,7 +64,7 @@ const CreateBlog = () => {
 						/>
 					</div>
 					<div
-						className="preview"
+						className="preview overflow-y-scroll h-screen"
 						dangerouslySetInnerHTML={{ __html: content }}
 					/>
 				</div>

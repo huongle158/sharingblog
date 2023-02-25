@@ -12,7 +12,7 @@ interface Blogs {
 export const BlogItem: React.FC<Blogs> = ({ title, content, image, tags, time }) => {
     return (
         <Card
-            className="mb-8"
+            className="mb-8 w-full"
             title={
                 <a href="#" className="flex justify-left items-left hover:text-black">
                     <div className="mr-4">
@@ -27,11 +27,11 @@ export const BlogItem: React.FC<Blogs> = ({ title, content, image, tags, time })
                     </div>
                 </a>
             }>
-            <h1 className="text-xl font-bold">{ title }</h1>
-            <a href="#" className="lg:flex h-fit hover:text-black mt-4">
+            <h1 className="text-xl font-bold mb-2">{ title }</h1>
+            <a href="#" className="lg:flex h-fit hover:text-black">
                 <p className="lg:flex-1 mb-4">{content}</p>
                 <div className="lg:flex-2">
-                    <img src={image} alt="Post" className="w-40 rounded-lg object-cover" />
+                    <img src={image} alt="Post" className="w-40 rounded-lg object-cover"/>
                 </div>
             </a>
             <div className="flex mt-4 mb-4">
