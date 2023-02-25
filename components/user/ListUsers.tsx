@@ -2,7 +2,8 @@ import { Avatar, Button, List, Typography } from "antd"
 import { FC } from "react"
 
 interface Props {
-    users: Users[]
+    users: Users[],
+    title?: string
 }
 
 interface Users {
@@ -11,11 +12,11 @@ interface Users {
     mutualFriends: number
 }
 
-export const ListUsers: FC<Props> = ({users}) => {
+export const ListUsers: FC<Props> = ({users, title}) => {
     return (
         <>
             <div className="flex justify-between items-center mb-4">
-                <Typography.Title level={5}>Friends (255)</Typography.Title>
+                <Typography.Title level={5}>{title}</Typography.Title>
                 <Button>View All</Button>
             </div>
             <List
