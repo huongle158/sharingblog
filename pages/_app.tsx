@@ -9,14 +9,17 @@ import thunk from 'redux-thunk';
 import roorReducers from '../store/redux/reducers/index';
 
 const store =createStore(roorReducers,applyMiddleware(thunk))
+const Wrapper = ({ children }: any) => {
+  return <Provider store={store}>{children}</Provider>;
+};
 
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <React.StrictMode>
-      <Provider store={store}>
+      <Wrapper>
         <Component {...pageProps} />
-      </Provider>
+      </Wrapper>
     </React.StrictMode>
   )
 }

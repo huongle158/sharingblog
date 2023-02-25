@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-
+import { useSelector } from "react-redux";
+import blogService from './../services/blogService';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 
 const modules = {
   toolbar: [
@@ -31,7 +33,6 @@ const CreateBlog = () => {
 
   const handleContentChange = (value: string) => {
     setContent(value);
-    console.log(value);
   };
 
   return (
@@ -57,3 +58,5 @@ const CreateBlog = () => {
   );
 };
 export default CreateBlog;
+
+
