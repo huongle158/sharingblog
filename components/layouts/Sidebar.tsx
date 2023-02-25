@@ -14,21 +14,21 @@ interface Props {
 
 export const Sidebar = ({ children }: Props) => {
 	const router = useRouter();
-	const [isOpen, setIsOpen] = useState(false);
+	// const [isOpen, setIsOpen] = useState(false);
 
-	const toggleDropdown = () => {
-		setIsOpen(!isOpen);
-	};
+	// const toggleDropdown = () => {
+	// 	setIsOpen(!isOpen);
+	// };
 	// modal show create Title BLog
 	const [showModal, setShowModal] = useState(false);
 	const openToModal = () => {
-		setIsOpen(!isOpen);
+		// setIsOpen(!isOpen);
 		setShowModal(true);
 	};
 
 	return (
 		<div className="flex">
-			<div className="flex-none lg:w-[10%] w-[14%] h-screen p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200">
+			<div className="lg:w-[10%] h-screen w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky">
 				<Link href="/login">
 					<Badge dot>
 						<Avatar shape="circle" icon={<UserOutlined />} size="large" />

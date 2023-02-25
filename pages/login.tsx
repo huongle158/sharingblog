@@ -4,7 +4,7 @@ import { Guest, Button } from "@/components/index";
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/router";
 
-const login: React.FC = () => {
+const Login: React.FC = () => {
 	const router = useRouter();
 	const onFinish = (values: any) => {
 		console.log("Success:", values);
@@ -70,4 +70,4 @@ const login: React.FC = () => {
 	);
 };
 
-export default login;
+export default Login;
