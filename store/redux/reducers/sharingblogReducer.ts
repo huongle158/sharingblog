@@ -1,7 +1,7 @@
 import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_REQUEST,
         GET_ALL_BLOG_SUCCESS,
-        GET_ALL_BLOG_FAILURE } from './../../../types/actionConstan';
+        GET_ALL_BLOG_FAILURE } from '../../../types/actionConstant';
 
 const initialState: any = {
     newTitle : "",
@@ -19,5 +19,3 @@ const sharingblogReducers = (state = initialState, action: any) => {
     return {...state}
 }
 export default sharingblogReducers
-
-

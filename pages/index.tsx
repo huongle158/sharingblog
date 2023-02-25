@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/Sidebar";
+import { Sidebar } from "@/components/layouts/Sidebar";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBlogs } from './../store/redux/actions/sharingblogAction';
 import blogService from './../services/blogService';
