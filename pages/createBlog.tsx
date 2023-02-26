@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-
+import { useSelector } from "react-redux";
+import blogService from './../services/blogService';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 
 const modules = {
 	toolbar: [
@@ -44,14 +46,13 @@ const CreateBlog = () => {
 		setTitle(event.target.value);
 	};
 
-	const handleContentChange = (value: string) => {
-		setContent(value);
-		console.log(value);
-	};
+  const handleContentChange = (value: string) => {
+    setContent(value);
+  };
 
 	return (
 		<Sidebar>
-			<div className=" container">
+			<div className="container overflow-y-scroll h-screen">
 				<div className="row">
 					<div className="editor">
 						<ReactQuill
@@ -63,7 +64,7 @@ const CreateBlog = () => {
 						/>
 					</div>
 					<div
-						className="preview"
+						className="preview overflow-y-scroll h-screen"
 						dangerouslySetInnerHTML={{ __html: content }}
 					/>
 				</div>
@@ -72,3 +73,5 @@ const CreateBlog = () => {
 	);
 };
 export default CreateBlog;
+
+
