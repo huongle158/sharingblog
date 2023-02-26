@@ -1,10 +1,6 @@
-import { Sidebar } from '@/components/Sidebar'
-import React from 'react'
+import { Sidebar } from "@/components/layouts/Sidebar";
+import React from "react";
 
 export default function blogDetail() {
-  return (
-    <Sidebar>
-        BlogDetail
-    </Sidebar>
-  )
+    return <Sidebar>BlogDetail</Sidebar>;
 }

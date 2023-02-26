@@ -2,14 +2,14 @@ import Link from "next/link";
 import React, { ReactNode, useState } from "react";
 import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import { MdOutlineCreate } from "react-icons/md";
-import { Button, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { Badge, Avatar, Space } from "antd";
+import { Badge, Avatar } from "antd";
 import { useRouter } from "next/router";
+import ModalDisplayCreateTitleBLog from "../modals/ModalDisplayCreateTitleBLog";
 
 interface Props {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export const Sidebar = ({ children }: Props) => {
@@ -17,7 +17,13 @@ export const Sidebar = ({ children }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const toggleDropdown = () => {
-	  setIsOpen(!isOpen);
+		setIsOpen(!isOpen);
+	};
+	// modal show create Title BLog
+	const [showModal, setShowModal] = useState(false);
+	const openToModal = () => {
+		setIsOpen(!isOpen);
+		setShowModal(true);
 	};
 
 	return (
@@ -29,7 +35,7 @@ export const Sidebar = ({ children }: Props) => {
 					</Badge>
 				</Link>
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
-				{/* <Link href="/createBlog">
+				<a onClick={openToModal}>
 					<div
 						className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer 
 						mt-4 mb-5 p-3 inline-block"
@@ -38,42 +44,33 @@ export const Sidebar = ({ children }: Props) => {
 							<AiOutlinePlus />
 						</Tooltip>
 					</div>
-				</Link> */}
-				<div className="group inline-block">
-					<div className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer mt-4 mb-5 p-3 inline-block" onClick={toggleDropdown}>
-						<Tooltip placement="right" title={"Create Blog"}>
-						<AiOutlinePlus />
-						</Tooltip>
-					</div>
-					<ul className={`absolute bg-white py-2 rounded-md shadow-lg w-40 ${isOpen ? 'block' : 'hidden'}`}>
-						<li className="px-4 py-2 hover:bg-gray-100">
-							<Link href="/createBlog" legacyBehavior>
-								<a onClick={toggleDropdown} className="flex items-center"> 
-									<MdOutlineCreate className="mr-2 text-xl"/> Create Blog</a>
-							</Link>
-						</li>
-					</ul>
-				</div>
+				</a>
 				<Link href="/">
 					<div
 						className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3 
-							inline-block ${router.pathname === "/" ? "bg-blue-200" : ""}`}>
+							inline-block ${router.pathname === "/" ? "bg-blue-200" : ""}`}
+					>
 						<Tooltip placement="right" title={"Home page"}>
 							<AiOutlineHome />
 						</Tooltip>
 					</div>
 				</Link>
 				<Link href="/profile">
-					<div className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3  
-						inline-block ${router.pathname === "/profile" ? "bg-blue-200" : ""}`}>
+					<div
+						className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3  
+						inline-block ${router.pathname === "/profile" ? "bg-blue-200" : ""}`}
+					>
 						<Tooltip placement="right" title={"Profile page"}>
 							<CgProfile />
 						</Tooltip>
 					</div>
 				</Link>
 			</div>
-
 			<main className="grow">{children}</main>
+			<ModalDisplayCreateTitleBLog
+				modal={showModal}
+				setShowModal={() => setShowModal(!showModal)}
+			/>
 		</div>
 	);
 };
