@@ -13,7 +13,7 @@ const onFinishFailed = (errorInfo: any) => {
 
 const register: React.FC = () => {
 	return (
-		<Guest label="Sign up">
+		<Guest label="Đăng ký">
 			<Form
 				name="register"
 				labelCol={{ span: 10 }}
@@ -25,45 +25,45 @@ const register: React.FC = () => {
 				autoComplete="off"
 			>
 				<Form.Item
-					label="Name"
+					label="Họ tên"
 					name="name"
-					rules={[{ required: true, message: "Please input your name!" }]}
+					rules={[{ required: true, message: "Vui lòng nhập tên của bạn!" }]}
 				>
 					<Input />
 				</Form.Item>
 
 				<Form.Item
-					label="Email"
+					label="Tên đăng nhập"
 					name="email"
-					rules={[{ required: true, message: "Please input your email!" }]}
+					rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập!" }]}
 				>
 					<Input type="email" />
 				</Form.Item>
 
 				<Form.Item
-					label="Password"
+					label="Mật khẩu"
 					name="password"
-					rules={[{ required: true, message: "Please input your password!" }]}
+					rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
 				>
 					<Input.Password />
 				</Form.Item>
 
 				<Form.Item
-					label="Password confirm"
+					label="Nhập lại mật khẩu"
 					name="password_confirm"
 					rules={[
-						{ required: true, message: "Please re-input your password!" },
+						{ required: true, message: "Vui lòng nhập lại mật khẩu!" },
 					]}
 				>
 					<Input.Password />
 				</Form.Item>
 
-				<Button type="submit" label="Sign up" />
+				<Button type="submit" label="Đăng ký" className="w-full"/>
 
 				<div className="grid text-sm mt-5">
 					<Link legacyBehavior href="/login">
 						<a className="justify-self-center text-blue-600 hover:text-blue-500">
-							Already have an account sign?
+							Bạn đã có tài khoản? Đăng nhập?
 						</a>
 					</Link>
 				</div>
