@@ -1,0 +1,1 @@
+export const tags = ["CSS", "HTML", "Coding", "Javascript", "Java", "Next.js", "Others"]

@@ -15,7 +15,7 @@ const Login: React.FC = () => {
 		console.log("Failed:", errorInfo);
 	};
 	return (
-		<Guest label="Sign in">
+		<Guest label="Đăng nhập">
 			<Form
 				name="login"
 				labelCol={{ span: 8 }}
@@ -28,17 +28,17 @@ const Login: React.FC = () => {
 				className="grid"
 			>
 				<Form.Item
-					label="Email address"
-					name="email"
-					rules={[{ required: true, message: "Please input your email!" }]}
+					label="Tên đăng nhập"
+					name="username"
+					rules={[{ required: true, message: "Vui lòng nhập tài khoản!" }]}
 				>
-					<Input type="email" />
+					<Input />
 				</Form.Item>
 
 				<Form.Item
-					label="Password"
+					label="Mật khẩu"
 					name="password"
-					rules={[{ required: true, message: "Please input your password!" }]}
+					rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
 				>
 					<Input.Password />
 				</Form.Item>
@@ -48,20 +48,20 @@ const Login: React.FC = () => {
 					valuePropName="checked"
 					className="grid justify-items-stretch"
 				>
-					<Checkbox className="justify-self-start">Remember me</Checkbox>
+					<Checkbox className="justify-self-start">Ghi nhớ mật khẩu</Checkbox>
 				</Form.Item>
 
-				<Button type="submit" label="Sign in" />
+				<Button type="submit" label="Đăng nhập" />
 
-				<div className="flex flex-row text-sm mt-5">
-					<Link legacyBehavior href="/register">
+				<div className="flex flex-row text-sm mt-5 justify-center">
+					{/* <Link legacyBehavior href="/register">
 						<a className="text-blue-600 hover:text-blue-500 basis-3/6 mr-5">
-							Forgot password?
+							Quên mật khẩu?
 						</a>
-					</Link>
+					</Link> */}
 					<Link legacyBehavior href="/register">
-						<a className="text-blue-600 hover:text-blue-500 basis-3/6">
-							Already have an account?
+						<a className="text-blue-600 hover:text-blue-500">
+							Bạn chưa có tài khoản? Đăng ký?
 						</a>
 					</Link>
 				</div>
