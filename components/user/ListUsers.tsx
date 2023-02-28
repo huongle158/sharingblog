@@ -1,5 +1,6 @@
 import { Avatar, Button, List, Typography } from "antd"
 import { FC } from "react"
+import { SingleLineList } from "../ui/SingleLineList"
 
 interface Props {
     users: Users[],
@@ -8,33 +9,22 @@ interface Props {
 
 interface Users {
     name: string,
-    avatar: string,
-    mutualFriends: number
+    avatar: string
 }
 
 export const ListUsers: FC<Props> = ({users, title}) => {
     return (
-        <>
+        <div>
             <div className="flex justify-between items-center mb-4">
                 <Typography.Title level={5}>{title}</Typography.Title>
-                <Button>View All</Button>
+                <Button>Xem tất cả</Button>
             </div>
             <List
                 dataSource={users}
                 renderItem={(item) => (
-                    <List.Item className="flex">
-                        <div className="justify-items-start">
-                            <Avatar size={48} src={item.avatar} />
-                            <Typography.Text className="ml-2" strong>{item.name}</Typography.Text>
-                        </div>
-                        <div className="justify-items-end">
-                            <Typography.Text type="secondary">
-                                {item.mutualFriends} mutual friends
-                            </Typography.Text>
-                        </div>
-                    </List.Item>
+                    <SingleLineList user={item} />
                 )}
             />
-        </>
+        </div>
     )
 }
