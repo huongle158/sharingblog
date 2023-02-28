@@ -3,12 +3,31 @@ import React from "react";
 import { Guest, Button } from "@/components/index";
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/router";
+import userService from './../services/userService';
+import Cookies from 'js-cookie'
+
 
 const Login: React.FC = () => {
 	const router = useRouter();
-	const onFinish = (values: any) => {
-		console.log("Success:", values);
-		router.push("/");
+	const onFinish = async  (values: any) => {
+		const { email, password } = values;
+		const  input = {
+			user : {
+				email: email,
+				password: password
+			}	
+		}
+		 const result  = await userService.login(input)
+		if (result) {
+			console.log("THANH CONG", result)
+			Cookies.set('token', result.user.token, { expires: 7 });
+			
+			router.push("/");
+		}
+		else {
+			console.log("Đăng nhập thất bại");
+		}
+		
 	};
 
 	const onFinishFailed = (errorInfo: any) => {
@@ -29,7 +48,7 @@ const Login: React.FC = () => {
 			>
 				<Form.Item
 					label="Tên đăng nhập"
-					name="username"
+					name="email"
 					rules={[{ required: true, message: "Vui lòng nhập tài khoản!" }]}
 				>
 					<Input />

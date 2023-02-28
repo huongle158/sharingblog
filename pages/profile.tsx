@@ -1,10 +1,28 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import { Sidebar, BlogItem, ListUsers} from "@/components/index"
 import { Avatar, Button, Card, Typography } from 'antd'
 import { blogs, tags, users } from "@/fake-data"
+import { GetStaticProps } from "next"
+import userService from './../services/userService';
+import Cookies from 'js-cookie'
+import { useDispatch, useSelector} from 'react-redux';
+import { getUserInfo } from './../store/redux/actions/userAction';
 
 export default function Profile() {
-    const author = [{ name: "Lu Nguyen", avatar: "https://img.freepik.com/free-vector/cute-chick-bite-knife-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4216.jpg?w=1380&t=st=1677256095~exp=1677256695~hmac=0149fa8211014395c1fac56ad159b39254a380729278eeb9e877fab0d12d6136" }]
+    //const author = [{ name: "Lu Nguyen", avatar: "https://img.freepik.com/free-vector/cute-chick-bite-knife-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4216.jpg?w=1380&t=st=1677256095~exp=1677256695~hmac=0149fa8211014395c1fac56ad159b39254a380729278eeb9e877fab0d12d6136" }]
+    const token = Cookies.get('token');
+    const dispath = useDispatch();
+    const { user } = useSelector((reduxData) => {
+        return reduxData.userReducer
+    })
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+          const userInfo = await userService.getInfo(token);
+          dispath(getUserInfo(userInfo.user));
+        };
+        fetchUserInfo();
+      }, [token]);
+    console.log(user)
     return (
         <Sidebar>
             <div className="overflow-y-scroll h-screen">

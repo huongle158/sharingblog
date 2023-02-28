@@ -2,7 +2,7 @@ import blogService from '@/services/blogService';
 import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_REQUEST,
         GET_ALL_BLOG_SUCCESS,
-        GET_ALL_BLOG_FAILURE } from '../../../types/actionConstant';
+        GET_ALL_BLOG_FAILURE } from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
 export const getAllBlogs = () => {
