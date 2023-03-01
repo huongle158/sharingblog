@@ -3,7 +3,7 @@ import React from "react";
 import { Guest, Button } from "@/components/index";
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/router";
-import userService from '../../services/userService';
+import userService from '../services/userService';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
