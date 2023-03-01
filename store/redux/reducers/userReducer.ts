@@ -5,7 +5,7 @@ const initialState: any = {
 
 const userReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case action.type : 
+        case GET_USER_INFO :
         state.user = action.payload
     }
     return {...state}

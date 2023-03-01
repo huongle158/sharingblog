@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/layouts/Sidebar";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
-import blogService from '../../services/blogService';
+import blogService from '../services/blogService';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 

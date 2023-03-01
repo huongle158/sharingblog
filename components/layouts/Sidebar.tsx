@@ -77,7 +77,7 @@ export const Sidebar = ({ children }: Props) => {
 					<AiOutlineHome />
 				</NavItem>
 				{/* Profile */}
-				<NavItem title="Trang cá nhân" route="/users">
+				<NavItem title="Trang cá nhân" route="/profile">
 					<CgProfile />
 				</NavItem>
 				{/* Logout */}

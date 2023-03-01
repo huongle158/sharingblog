@@ -3,11 +3,11 @@ import { Sidebar, BlogItem, ListUsers } from "@/components/index"
 import { Avatar, Button, Card, Input, Modal, Typography } from 'antd'
 import { blogs, tags, users } from "@/fake-data"
 import { GetStaticProps } from "next"
-import userService from '../../services/userService';
 import Cookies from 'js-cookie'
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserInfo } from '../../store/redux/actions/userAction';
 import { EditOutlined } from "@ant-design/icons"
+import { getUserInfo } from './../store/redux/actions/userAction';
+import userService from './../services/userService';
 
 export default function Profile() {
     const token = Cookies.get('token') || '';
@@ -20,7 +20,7 @@ export default function Profile() {
         fullname: '',
         bio: ''
     })
-    const [bio, setBio] = useState("")
+    const [bio, setBio] = useState(userData.bio)
     useEffect(() => {
         const fetchUserInfo = async () => {
             const userInfo = await userService.getInfo(token);
@@ -100,7 +100,7 @@ export default function Profile() {
                     </div>
                     {/* Modal edit bio */}
                     <Modal title="Chỉnh sửa tiểu sử" open={isBioModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <Input name="bio" onChange={(e) => setBio(e.target.value)} />
+                        <Input value={bio} name="bio" onChange={(e) => setBio(e.target.value)} />
                     </Modal>
                 </div>
             </div>
