@@ -3,13 +3,14 @@ import React from "react";
 import { Guest, Button } from "@/components/index";
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/router";
-import userService from './../services/userService';
-import Cookies from 'js-cookie'
+import userService from '../../services/userService';
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 
 const Login: React.FC = () => {
 	const router = useRouter();
-	const onFinish = async  (values: any) => {
+	const onFinish = async (values: any) => {
 		const { email, password } = values;
 		const  input = {
 			user : {
@@ -17,21 +18,23 @@ const Login: React.FC = () => {
 				password: password
 			}	
 		}
-		 const result  = await userService.login(input)
+		const result  = await userService.login(input)
 		if (result) {
-			console.log("THANH CONG", result)
 			Cookies.set('token', result.user.token, { expires: 7 });
-			
-			router.push("/");
+			router.push('/')
+			// router.push({
+			// 	pathname: '/',
+			// 	query: { showToast: true, message: 'Đăng nhập thành công!'},
+			// }, undefined, { shallow: true });
 		}
 		else {
-			console.log("Đăng nhập thất bại");
+			toast.error('Đăng nhập thất bại');
 		}
 		
 	};
 
 	const onFinishFailed = (errorInfo: any) => {
-		console.log("Failed:", errorInfo);
+		toast.error("Lỗi: " + { errorInfo })
 	};
 	return (
 		<Guest label="Đăng nhập">
@@ -47,7 +50,7 @@ const Login: React.FC = () => {
 				className="grid"
 			>
 				<Form.Item
-					label="Tên đăng nhập"
+					label="Email"
 					name="email"
 					rules={[{ required: true, message: "Vui lòng nhập tài khoản!" }]}
 				>

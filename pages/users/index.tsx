@@ -1,28 +1,60 @@
-import React, {useEffect, useState} from "react"
-import { Sidebar, BlogItem, ListUsers} from "@/components/index"
-import { Avatar, Button, Card, Typography } from 'antd'
+import React, { useEffect, useState } from "react"
+import { Sidebar, BlogItem, ListUsers } from "@/components/index"
+import { Avatar, Button, Card, Input, Modal, Typography } from 'antd'
 import { blogs, tags, users } from "@/fake-data"
 import { GetStaticProps } from "next"
-import userService from './../services/userService';
+import userService from '../../services/userService';
 import Cookies from 'js-cookie'
-import { useDispatch, useSelector} from 'react-redux';
-import { getUserInfo } from './../store/redux/actions/userAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfo } from '../../store/redux/actions/userAction';
+import { EditOutlined } from "@ant-design/icons"
 
 export default function Profile() {
-    //const author = [{ name: "Lu Nguyen", avatar: "https://img.freepik.com/free-vector/cute-chick-bite-knife-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4216.jpg?w=1380&t=st=1677256095~exp=1677256695~hmac=0149fa8211014395c1fac56ad159b39254a380729278eeb9e877fab0d12d6136" }]
-    const token = Cookies.get('token');
+    const token = Cookies.get('token') || '';
     const dispath = useDispatch();
-    const { user } = useSelector((reduxData) => {
+    const { user } = useSelector((reduxData: any) => {
         return reduxData.userReducer
     })
+    const [userData, setUserData] = useState({
+        avatar: '',
+        fullname: '',
+        bio: ''
+    })
+    const [bio, setBio] = useState("")
     useEffect(() => {
         const fetchUserInfo = async () => {
-          const userInfo = await userService.getInfo(token);
-          dispath(getUserInfo(userInfo.user));
+            const userInfo = await userService.getInfo(token);
+            if (userInfo.user) {
+                setUserData(userInfo.user)
+                dispath(getUserInfo(userInfo.user));
+            }
         };
         fetchUserInfo();
-      }, [token]);
-    console.log(user)
+    }, [token]
+    );
+    
+    const [isBioModalOpen, setIsBioModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsBioModalOpen(true);
+    };
+    
+    const handleOk = async () => {
+        const input = {
+            user: {
+                userfull: user.username,
+                email: user.email,
+                bio: user
+            }
+        }
+        await userService.updateInfo(token, input)
+        setIsBioModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsBioModalOpen(false);
+    };
+
     return (
         <Sidebar>
             <div className="overflow-y-scroll h-screen">
@@ -33,13 +65,13 @@ export default function Profile() {
                         <div className="mr-4">
                             <Avatar
                                 size={128}
-                                src="https://img.freepik.com/free-vector/cute-chick-bite-knife-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4216.jpg?w=1380&t=st=1677256095~exp=1677256695~hmac=0149fa8211014395c1fac56ad159b39254a380729278eeb9e877fab0d12d6136"
+                                src={userData?.avatar}
                                 alt="Avatar"
                             />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold mb-1 mt-1">Lu Nguyen</h1>
-                            <p className="mb-2">@girl_lanhlung</p>
+                            <h1 className="text-3xl font-bold mb-1 mt-1">{userData?.fullname}</h1>
+                            {/* <p className="mb-2">@{user.username}</p> */}
                             <Button type="primary" className="bg-blue-500 hover:bg-blue-400">Theo dõi</Button>
                             <Button hidden>Đang theo dõi</Button>
                         </div>
@@ -48,8 +80,9 @@ export default function Profile() {
                         <div className="lg:flex-[40%] lg:mr-10 h-auto my-8">
                             <Typography.Title level={5}>Giới thiệu</Typography.Title>
                             <Card className="lg:p-8 mt-6">
+                                <EditOutlined size={4} onClick={showModal} />
                                 <h2 className="text-center">
-                                    Xin chào! <br/>Chào mừng bạn đến với thế giới của tôi!
+                                    {userData.bio}
                                 </h2>
                             </Card>
                         </div>
@@ -61,10 +94,14 @@ export default function Profile() {
                         <h3 className="text-2xl font-bold">Bài viết</h3>
                         <div className="mt-10">
                             {blogs.map((item, index) => (
-                                <BlogItem key={index} blog={item}/>
+                                <BlogItem key={index} blog={item} />
                             ))}
                         </div>
                     </div>
+                    {/* Modal edit bio */}
+                    <Modal title="Chỉnh sửa tiểu sử" open={isBioModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                        <Input name="bio" onChange={(e) => setBio(e.target.value)} />
+                    </Modal>
                 </div>
             </div>
         </Sidebar>
