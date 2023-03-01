@@ -4,16 +4,16 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
 interface Props {
-    route: string,
+    route?: string,
     title: string,
     children: ReactNode,
-    className?: string
+    className?: string,
 }
 
-export const NavItem = ({route, title, children, className}: Props) => {
+export const NavItem = ({ route, title, children, className }: Props) => {
     const router = useRouter();
     return (
-        <Link href={route}>
+        <Link href={route || ""} legacyBehavior>
             <div
                 className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3 
 						inline-block ${className} ${router.pathname === route ? "bg-blue-300" : ""}`}

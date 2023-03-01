@@ -18,9 +18,12 @@ export default function Profile() {
     const [userData, setUserData] = useState({
         avatar: '',
         fullname: '',
+        email: '',
+        username: '',
         bio: ''
     })
-    const [bio, setBio] = useState(userData.bio)
+
+    const [bio, setBio] = useState("")
     useEffect(() => {
         const fetchUserInfo = async () => {
             const userInfo = await userService.getInfo(token);
@@ -30,8 +33,7 @@ export default function Profile() {
             }
         };
         fetchUserInfo();
-    }, [token]
-    );
+    }, [token]);
     
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
 
@@ -42,9 +44,9 @@ export default function Profile() {
     const handleOk = async () => {
         const input = {
             user: {
-                userfull: user.username,
-                email: user.email,
-                bio: user
+                ...userData,
+                fullname: userData.fullname,
+                bio: bio
             }
         }
         await userService.updateInfo(token, input)
@@ -100,7 +102,7 @@ export default function Profile() {
                     </div>
                     {/* Modal edit bio */}
                     <Modal title="Chỉnh sửa tiểu sử" open={isBioModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <Input value={bio} name="bio" onChange={(e) => setBio(e.target.value)} />
+                        <Input defaultValue={userData.bio} name="bio" onChange={(e) => setBio(e.target.value)} />
                     </Modal>
                 </div>
             </div>

@@ -81,8 +81,8 @@ export const Sidebar = ({ children }: Props) => {
 					<CgProfile />
 				</NavItem>
 				{/* Logout */}
-				<NavItem title="Đăng xuất" route="/users/logout" className="pb-3 pt-1 pl-3 pr-3">
-					<LogoutOutlined className="align-middle" />
+				<NavItem title="Đăng xuất" className="pb-3 pt-1 pl-3 pr-3" >
+					<a onClick={() => {console.log("logout")}}><LogoutOutlined className="align-middle" /></a>
 				</NavItem>
 			</div>
 			{/* Body */}
