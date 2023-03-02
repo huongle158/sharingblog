@@ -13,14 +13,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from "@/store/redux/actions/userAction";
 
 interface Props {
 	children: ReactNode;
 }
 
 export const Sidebar = ({ children }: Props) => {
-	// const router = useRouter();
-
+	const router = useRouter();
+	const dispath = useDispatch()
+	const { user } = useSelector((reduxData: any) => {
+        return reduxData.userReducer
+    })
 	const [showModal, setShowModal] = useState(false);
 	const openToModal = () => {
 		setShowModal(true);
@@ -31,6 +36,11 @@ export const Sidebar = ({ children }: Props) => {
 	// 		toast.success(message)
 	// 	}
 	// })
+	const onClicklogoutUser = async () => {
+		dispath(logoutUser())
+		await  Cookies.remove('token');
+		router.push('/login')
+	}
 
 	return (
 		<div className="flex">
@@ -82,7 +92,7 @@ export const Sidebar = ({ children }: Props) => {
 				</NavItem>
 				{/* Logout */}
 				<NavItem title="Đăng xuất" className="pb-3 pt-1 pl-3 pr-3" >
-					<a onClick={() => {console.log("logout")}}><LogoutOutlined className="align-middle" /></a>
+					<a onClick={onClicklogoutUser}><LogoutOutlined className="align-middle" /></a>
 				</NavItem>
 			</div>
 			{/* Body */}

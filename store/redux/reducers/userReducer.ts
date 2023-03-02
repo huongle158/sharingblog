@@ -1,4 +1,5 @@
-import { GET_USER_INFO } from "../constant/userConstant"
+import { GET_USER_INFO,
+         LOGOUT_USER } from "../constant/userConstant"
 const initialState: any = {
     user: {}
 }
@@ -6,7 +7,12 @@ const initialState: any = {
 const userReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_USER_INFO :
-        state.user = action.payload
+            state.user = action.payload
+            break;
+        case LOGOUT_USER :
+            state.user = {}
+            break;
+
     }
     return {...state}
 }

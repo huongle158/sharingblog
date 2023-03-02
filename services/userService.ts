@@ -73,7 +73,28 @@ const userService = {
       console.error(err);
       return null;
     }
+  },
+  updateAvatar: async (token: string, formData: FormData) => {
+    try {
+      const res = await fetch(`${BASE_URL}/avatar`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData,
+      });
+  
+      if (res.status === OK) {
+        return await res.json();
+      }
+  
+      return null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 };
+
 
 export default userService;
