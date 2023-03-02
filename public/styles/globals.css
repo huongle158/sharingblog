@@ -5,3 +5,11 @@
 .ant-popover-arrow {
     top: 20% !important;
 }
+
+.ant-btn-primary {
+    background-color: #1677ff!important;
+}
+
+.ant-btn-primary:hover {
+    background-color: #3e8af5!important;
+}

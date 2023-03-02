@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
 import blogService from '../services/blogService';
+import { Button, FloatButton } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 
@@ -41,14 +44,19 @@ const formats = [
 const CreateBlog = () => {
 	const [content, setContent] = useState("");
 	const [title, setTitle] = useState("");
+	const router = useRouter();
 
 	const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setTitle(event.target.value);
 	};
 
-  const handleContentChange = (value: string) => {
-    setContent(value);
-  };
+	const handleContentChange = (value: string) => {
+		setContent(value);
+	};
+	
+	const pushPreview = () => {
+		router.push("/preview");
+	}
 
 	return (
 		<Sidebar>
@@ -66,6 +74,14 @@ const CreateBlog = () => {
 					<div
 						className="preview overflow-y-scroll h-screen"
 						dangerouslySetInnerHTML={{ __html: content }}
+					/>
+					<FloatButton
+						onClick={pushPreview}
+						shape="square"
+						type="primary"
+						className="w-[90px] right-12"
+						description={'Tiếp tục'}
+						// icon={<ArrowRightOutlined />}
 					/>
 				</div>
 			</div>

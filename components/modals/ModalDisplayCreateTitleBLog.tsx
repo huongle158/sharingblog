@@ -13,7 +13,7 @@ export default function ModalDisplayCreateTitleBLog({
 
     const createTitleBlog = () => {
         setShowModal();
-        router.push("/createBlog");
+        router.push("/create");
         dispatch(getTitleNewBlog(title));
     };
     const [title, setTitle] = useState("Title");
@@ -45,12 +45,8 @@ export default function ModalDisplayCreateTitleBLog({
                     </div>
                     {/*footer*/}
                     <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                        <Button className="mr-2" onClick={setShowModal} >
-                            Đóng
-                        </Button>
-                        <Button type="primary" className="bg-blue-500 hover:bg-blue-400" onClick={createTitleBlog}>
-                            Viết bài
-                        </Button>
+                        <Button className="mr-2" onClick={setShowModal} >Đóng</Button>
+                        <Button type="primary" onClick={createTitleBlog}>Viết bài</Button>
                     </div>
                 </div>
                 </div>

@@ -1,7 +1,7 @@
 import { Tag, Typography } from "antd"
 
 interface Props {
-    title: string,
+    title?: string,
     tags: string[]
 }
 

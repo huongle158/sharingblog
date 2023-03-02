@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Sidebar, BlogItem, ListUsers } from "@/components/index"
+import { Sidebar, BlogItem, ListUsers, ModalInput } from "@/components/index"
 import { blogs, tags, users } from "@/fake-data"
 import Cookies from 'js-cookie'
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,7 +58,8 @@ export default function Profile() {
                 bio: ''
             });
         }
-    }, [token,userData]);   
+    }, [token, userData]); 
+    
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
     const showModal = () => {
         setIsBioModalOpen(true);
@@ -77,6 +78,7 @@ export default function Profile() {
     const handleCancel = () => {
         setIsBioModalOpen(false);
     };
+    
     // update avt
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState<string>(userData.avatar);
@@ -146,23 +148,28 @@ export default function Profile() {
                         </div>
                         <div>
                             <h1 className="text-3xl font-bold mb-1 mt-1">{userData?.fullname}</h1>
-                            {/* <p className="mb-2">@{user.username}</p> */}
-                            <Button type="primary" className="bg-blue-500 hover:bg-blue-400">Theo dõi</Button>
+                            <p className="mb-2">@{user.username}</p>
+                            <Button type="primary" onClick={() => {}}>Theo dõi</Button>
                             <Button hidden>Đang theo dõi</Button>
                         </div>
                     </div>
                     <div className="lg:flex w-full">
-                        <div className="lg:flex-[40%] lg:mr-10 h-auto my-8">
+                        <div className="lg:flex-[30%] lg:mr-10 h-auto my-8">
                             <Typography.Title level={5}>Giới thiệu</Typography.Title>
-                            <Card className="lg:p-8 mt-6">
-                                <EditOutlined size={4} onClick={showModal} />
-                                <h2 className="text-center">
+                            <Card className="lg:p-2 mt-2 flex flex-col">
+                                <div className="flex-1 flex flex-col items-end">
+                                    <EditOutlined size={4} onClick={showModal}/>
+                                </div>
+                                <h2 className="text-center flex-1">
                                     {userData.bio}
                                 </h2>
                             </Card>
                         </div>
-                        <div className="lg:flex-[60%] my-8">
-                            <ListUsers title="Bạn bè (255)" users={users} />
+                        <div className="lg:flex-[33%] my-8 mr-8">
+                            <ListUsers title="Người theo dõi (255)" users={users} />
+                        </div>
+                        <div className="lg:flex-[33%] my-8">
+                            <ListUsers title="Đang theo dõi (333)" users={users} />
                         </div>
                     </div>
                     <div className="mt-8">
@@ -174,9 +181,14 @@ export default function Profile() {
                         </div>
                     </div>
                     {/* Modal edit bio */}
-                    <Modal title="Chỉnh sửa tiểu sử" open={isBioModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <Input defaultValue={userData.bio} name="bio" onChange={(e) => setBio(e.target.value)} />
-                    </Modal>
+                    <ModalInput
+                        title="Tiểu sử"
+                        isModalOpen={isBioModalOpen}
+                        handleOk={handleOk}
+                        handleCancel={handleCancel}
+                        defaultValue={userData.bio}
+                        onChange={(e) => setBio(e.target.value)}
+                    />
                 </div>
             </div>
         </Sidebar>

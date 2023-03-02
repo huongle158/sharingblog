@@ -2,7 +2,8 @@ import { CommentOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Card, Tag } from 'antd';
 
 interface Props {
-    blog: Blog
+    blog: Blog,
+    className?: string,
 }
 
 interface Blog {
@@ -18,14 +19,14 @@ interface Blog {
 }
 
 
-export const BlogItem = ({ blog }: Props) => {
+export const BlogItem = ({ blog, className }: Props) => {
     return (
         <Card
-            className="mb-8 w-full border-gray-200 -z-10"
+            className={`mb-8 w-full border-gray-200 -z-10 ` + className}
             title={
                 // Header card
-                <a href="#" className="flex justify-left items-left hover:text-black">
-                    <div className="mr-4">
+                <a href="#" className="flex justify-left items-left hover:text-black mt-2">
+                    <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
                             src={blog.author.avatar}
@@ -33,7 +34,8 @@ export const BlogItem = ({ blog }: Props) => {
                         />
                     </div>
                     <div>
-                        <h5 className="text-xl font-bold mb-2">{blog.author.name}</h5>
+                        <h5 className="text-xl font-bold mb-1">{blog.author.name}</h5>
+                        <p className="text-gray-500 mb-2 font-normal italic text-sm">Đăng ngày 1/1/2022</p>
                     </div>
                 </a>
             }>
@@ -46,28 +48,25 @@ export const BlogItem = ({ blog }: Props) => {
                     <img src={blog.image} alt="Post" className="w-40 rounded-lg object-cover" />
                 </div>
             </a>
-            <div className="mt-4">
-                <span>Chủ đề: </span>
-                {blog.tags.map((tag, index) => (
-                    <a key={index} href="#"><Tag>{tag}</Tag></a>
-                ))}
-            </div>
-
 
             {/* Footer card */}
-            <div className="flex mt-5 mb-2">
+            <div className="flex mt-6 mb-2">
                 <div className="flex-1">
                     {/* unlike */}
-                    <a href="#" className="hover:text-gray-400 mr-2"><HeartOutlined className="border-black text-lg" /> 22</a>
+                    <a href="#" className="hover:text-gray-400 mr-2"><HeartOutlined className="border-black text-[22px]" size={20}/> 22</a>
                     {/* liked */}
-                    <a href="#" hidden className="mr-2"><HeartFilled className="text-red-600 text-lg" /> 23</a>
+                    <a href="#" hidden className="mr-2"><HeartFilled className="text-red-600 text-[22px]" /> 23</a>
 
                     {/* comments */}
-                    <a href="#" className="hover:text-gray-400"><CommentOutlined className="text-lg" /> 25</a>
+                    <a href="#" className="hover:text-gray-400"><CommentOutlined className="text-[22px]" /> 25</a>
                 </div>
 
-                <div>
-                    <p className="text-gray-400 italic">Đăng ngày {blog.time}</p>
+                <div className='flex-1'>
+                    <span>Chủ đề: </span>
+                    {blog.tags.map((tag, index) => (
+                        <a key={index} href="#"><Tag>{tag}</Tag></a>
+                    ))}
+                    {/* <p className="text-gray-400 italic">Đăng ngày {blog.time}</p> */}
                 </div>
             </div>
         </Card>
