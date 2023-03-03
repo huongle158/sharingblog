@@ -38,27 +38,32 @@ export default function Profile() {
         username: '',
         bio: ''
     })
-
-    const [bio, setBio] = useState(userData.bio)
+    const [avatar, setAvatar] = useState('');
+    const [fullname, setFullname] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [bio, setBio] = useState('');
     useEffect(() => {
         const fetchUserInfo = async () => {
             const userInfo = await userService.getInfo(token);
             if (userInfo && userInfo.user) {
-                setUserData(userInfo.user)
+                setAvatar(userInfo.user.avatar);
+                setFullname(userInfo.user.fullname);
+                setEmail(userInfo.user.email);
+                setUsername(userInfo.user.username);
+                setBio(userInfo.user.bio);
                 dispath(getUserInfo(userInfo.user));
             }
         };
         fetchUserInfo();
         if (!token) {
-            setUserData({
-                avatar: '',
-                fullname: '',
-                email: '',
-                username: '',
-                bio: ''
-            });
+            setAvatar('');
+            setFullname('');
+            setEmail('');
+            setUsername('');
+            setBio('');
         }
-    }, [token, userData]); 
+    }, [token, avatar]);
     
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
     const showModal = () => {
@@ -67,10 +72,12 @@ export default function Profile() {
     const handleOk = async () => {
         const input = {
             user: {
-                ...userData,
-                fullname: userData.fullname,
+                avatar: avatar,
+                fullname: fullname,
+                email: email,
+                username: username,
                 bio: bio
-            }
+              }
         }
         await userService.updateInfo(token, input)
         setIsBioModalOpen(false);
@@ -81,8 +88,6 @@ export default function Profile() {
     
     // update avt
     const [loading, setLoading] = useState(false);
-    const [imageUrl, setImageUrl] = useState<string>(userData.avatar);
-
     const handleChange: UploadProps['onChange'] = async (info: UploadChangeParam<UploadFile>) => {
         if (info.file.status === 'uploading') {
             setLoading(true);
@@ -92,14 +97,14 @@ export default function Profile() {
         if (info.file.status === 'done') {
             getBase64(info.file.originFileObj as RcFile, (url) => {
                 setLoading(false);
-                setImageUrl(url);
+                setAvatar(url);
             });
     
           try {
             const formData = new FormData();
             formData.append('avatar', info.file.originFileObj as RcFile);
             const res = await userService.updateAvatar(token, formData); // gọi hàm updateAvatar
-            console.log(res); // in ra kết quả
+
           } catch (error) {
             message.error('Cập nhật avatar không thành công');
             console.log(error)
@@ -129,9 +134,9 @@ export default function Profile() {
                             showUploadList={false}
                             beforeUpload={beforeUpload}
                             onChange= {handleChange}>
-                            {userData?.avatar ? (
+                            {avatar ? (
                                 <Avatar size={128} 
-                                src={userData?.avatar} 
+                                src={avatar} 
                                 alt="Avatar"
                                 className="w-full h-full object-cover" />
                             ) : (
@@ -147,8 +152,8 @@ export default function Profile() {
                           
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold mb-1 mt-1">{userData?.fullname}</h1>
-                            <p className="mb-2">@{user.username}</p>
+                            <h1 className="text-3xl font-bold mb-1 mt-1">{fullname}</h1>
+                            <p className="mb-2">@{username}</p>
                             <Button type="primary" onClick={() => {}}>Theo dõi</Button>
                             <Button hidden>Đang theo dõi</Button>
                         </div>
@@ -161,7 +166,7 @@ export default function Profile() {
                                     <EditOutlined size={4} onClick={showModal}/>
                                 </div>
                                 <h2 className="text-center flex-1">
-                                    {userData.bio}
+                                    {bio}
                                 </h2>
                             </Card>
                         </div>
@@ -186,7 +191,7 @@ export default function Profile() {
                         isModalOpen={isBioModalOpen}
                         handleOk={handleOk}
                         handleCancel={handleCancel}
-                        defaultValue={userData.bio}
+                        defaultValue={bio}
                         onChange={(e) => setBio(e.target.value)}
                     />
                 </div>

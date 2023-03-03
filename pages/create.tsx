@@ -8,8 +8,6 @@ import { Button, FloatButton } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
-
 const modules = {
 	toolbar: [
 		[{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -43,19 +41,14 @@ const formats = [
 ];
 const CreateBlog = () => {
 	const [content, setContent] = useState("");
-	const [title, setTitle] = useState("");
 	const router = useRouter();
-
-	const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setTitle(event.target.value);
-	};
-
 	const handleContentChange = (value: string) => {
 		setContent(value);
 	};
 	
 	const pushPreview = () => {
-		router.push("/preview");
+		//router.push("/preview");
+		console.log(content)
 	}
 
 	return (

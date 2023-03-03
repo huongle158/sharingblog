@@ -18,12 +18,6 @@ const Preview = () => {
             setIsValidFileImage(false)
             return false
         }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Hình ảnh đăng tải phải nhỏ hơn 2MB!');
-            setIsValidFileImage(false)
-            return false
-        }
         setFileImage(file)
         setIsValidFileImage(true)
         return true;
@@ -54,6 +48,15 @@ const Preview = () => {
                         Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
                         tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
                         trong những năm tới.....
+                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
+                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
+                        trong những năm tới.
+                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
+                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
+                        trong những năm tới.....
+                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
+                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
+                        trong những năm tới.
                         Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
                         tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
                         trong những năm tới.

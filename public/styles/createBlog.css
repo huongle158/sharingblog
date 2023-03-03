@@ -29,6 +29,7 @@
     border-left: 1px solid #000;
     font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 14px;
+    white-space: pre-wrap; /* thêm thuộc tính này để giải quyết khoảng trắng */
 }
 .editor-input{
     height: 100%;
