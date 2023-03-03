@@ -1,0 +1,147 @@
+.review {
+  max-height: 96px; /* thiết lập chiều cao tối đa cho div */
+  overflow-y: scroll; /* tạo thanh cuộn khi nội dung vượt quá chiều cao */
+  padding: 8px; /* tạo khoảng cách giữa nội dung và viền của div */
+  background-color: #f9f9f9; /* tạo màu nền cho div */
+  border-radius: 8px; /* bo tròn viền của div */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* tạo bóng cho div */
+  white-space: pre-wrap; /* thêm thuộc tính này để giải quyết khoảng trắng */
+}
+
+/* thiết lập kiểu chữ cho nội dung của div */
+.review p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.review h1,
+.review h2,
+.review h3,
+.review h4,
+.review h5,
+.review h6 {
+  font-weight: bold;
+}
+
+.review h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.review h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.review h3 {
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.review h4 {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.review h5 {
+  font-size: 1.125rem;
+  line-height: 1.375rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.review h6 {
+  font-size: 1rem;
+  line-height: 1.125rem;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.review p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.review blockquote {
+  border-left: 4px solid #ccc;
+  color: #666;
+  font-style: italic;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 8px;
+}
+
+.review ul,
+.review ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 2em;
+}
+.review ul {
+    list-style-type: disc;
+  }
+  
+.review ol {
+    list-style-type: decimal;
+  }
+
+.review li {
+  margin-bottom: 8px;
+}
+
+.review a {
+  color: #0645AD;
+  text-decoration: underline;
+}
+/* CSS cho các lựa chọn font và kích thước */
+.ql-font-serif {
+  font-family: serif;
+}
+.ql-font-sans-serif {
+  font-family: sans-serif;
+}
+.ql-size-small {
+  font-size: 0.75em;
+}
+.ql-size-large {
+  font-size: 1.55em;
+}
+.ql-size-huge {
+  font-size: 2em;
+}
+
+/* CSS cho các phần tử in đậm, in nghiêng, gạch chân, gạch đầu dòng */
+.ql-bold {
+  font-weight: bold;
+}
+.ql-italic {
+  font-style: italic;
+}
+.ql-underline {
+  text-decoration: underline;
+}
+.ql-strike {
+  text-decoration: line-through;
+}
+.ql-blockquote {
+  margin-left: 1em;
+  border-left: 3px solid #ccc;
+  padding-left: 0.5em;
+}
+
+.review img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}

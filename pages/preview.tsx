@@ -5,9 +5,17 @@ import { RcFile, UploadFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { tags } from '@/fake-data';
 import CheckBoxGrid from '@/components/ui/CheckBoxGrid';
+import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import blogService from '../services/blogService';
+import { useRouter } from "next/router";
 
 const Preview = () => {
-    const [fileImage, setFileImage] = useState({}) // image file upload
+    const router = useRouter();
+    const { newTitle, newContent } = useSelector((reduxData: any) => {
+        return reduxData.sharingBlogReducers
+    })
+    const [fileImage, setFileImage] = useState("") // image file upload
     const [isValidFileImage, setIsValidFileImage] = useState(false); // to prevent show image on error
 
     // Check before upload file image type
@@ -26,6 +34,28 @@ const Preview = () => {
     const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
         console.log('checked = ', checkedValues);
     };
+    const onClickCreateBlog = async () => {
+        const token = Cookies.get('token') ;
+        if(fileImage === "") {
+            message.error('Avatar Blog không được để trống');
+            return false
+        }
+        const newBlog = {
+            title: newTitle,
+            description: 'Ko có gì',
+            content: newContent,
+            banner: fileImage,
+            tagList: ['FE', 'BE'],
+        };
+        try {
+            const post = await blogService.createPost(token, newBlog);
+            console.log(post);
+            router.push("/profile");
+          } catch (error) {
+            console.error(error);
+          }
+          
+    }
 
     return (
         <div className='flex py-8 px-10'>
@@ -34,40 +64,13 @@ const Preview = () => {
                 {/* Preview title, content */}
                 <Typography.Title level={3}>Xem trước</Typography.Title>
                 <div className='mt-10 max-w-full'>
-                    <Typography.Title level={4} className="text-center">Ngành gì đang hot hiện nay? Top ngành nghề dự báo trở thành xu thế </Typography.Title>
-                    <div className='mt-4 lg:max-h-96 overflow-scroll'>
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.....
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.....
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.....
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.....
-                        Mặc dù “IT - vua của mọi nghề” chỉ là câu nói đùa vui của các anh em trong ngành, thế nhưng thực
-                        tế thì IT vẫn sẽ là một trong những ngành nghề được dự đoán sẽ hot và được săn đón nhiều nhất
-                        trong những năm tới.
+                    <Typography.Title level={4} className="text-center">{newTitle} </Typography.Title>
+                    {newContent && (
+                    <div className="mt-4 lg:max-h-96 overflow-scroll review" 
+                        dangerouslySetInnerHTML={{__html: newContent}} 
+                    />
+                    )}
                     </div>
-                </div>
             </div>
 
             {/* Right part */}
@@ -93,7 +96,7 @@ const Preview = () => {
 
                 {/* Button post blog */}
                 <FloatButton
-                    onClick={() => {}}
+                    onClick={onClickCreateBlog}
                     shape="square"
                     type="primary"
                     className="w-[90px] right-12"

@@ -2,7 +2,8 @@ import blogService from '@/services/blogService';
 import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_REQUEST,
         GET_ALL_BLOG_SUCCESS,
-        GET_ALL_BLOG_FAILURE } from '../constant/sharingblogConstant';
+        GET_ALL_BLOG_FAILURE,
+        CREATE_CONTENT_BLOG } from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
 export const getAllBlogs = () => {
@@ -32,6 +33,12 @@ export const getTitleNewBlog = (title: any) => {
     return {
         type: CREATE_TITLE_BLOG,
         payload: title
+    }
+}
+export const getContentNewBlog = (content: any) => {
+    return {
+        type: CREATE_CONTENT_BLOG,
+        payload: content
     }
 }
 

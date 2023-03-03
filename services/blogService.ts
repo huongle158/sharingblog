@@ -1,22 +1,33 @@
-const BASE_URL = 'http://localhost:8002/api/Customer';
+const BASE_URL = 'http://localhost:3000/articles';
 import { CREATED, INTERNAL_SERVER_ERROR, OK } from './../types/status';
 
 const blogService = {
-  createPost: async (newBlog: object) => {
-      try {
-        const res = await fetch(`${BASE_URL}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newBlog),
-        });
-        if (res.status === CREATED) {
-          return await res.json();
-        }
-      } catch (err) {
-        console.error(err);
+  createPost: async (token: string, newBlog: object) => {
+    try {
+      const formData = new FormData();
+      formData.append('title', newBlog.title);
+      formData.append('description', newBlog.description);
+      formData.append('content', newBlog.content);
+      formData.append('banner', newBlog.banner);
+      newBlog.tagList.forEach((tag: string) => {
+        formData.append('tagList', tag);
+      });
+  
+      const res = await fetch(`${BASE_URL}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData,
+      });
+      if (res.status === CREATED) {
+        return await res.json();
       }
-      return null;
-    },
+    } catch (err) {
+      console.error(err);
+    }
+    return null;
+  },
 
     getAllPosts: async () => {
       try {

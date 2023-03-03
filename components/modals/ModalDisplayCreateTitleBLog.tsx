@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { getTitleNewBlog } from "@/store/redux/actions/sharingblogAction";
-import { Button } from "antd";
+import { Button, message } from "antd";
 
 export default function ModalDisplayCreateTitleBLog({
     modal,
@@ -12,11 +12,16 @@ export default function ModalDisplayCreateTitleBLog({
     const dispatch = useDispatch();
 
     const createTitleBlog = () => {
+        if(title === "Tiêu đề" ) {
+            message.error('Tiêu đề không được để trống');
+            return false
+        }
         setShowModal();
         router.push("/create");
         dispatch(getTitleNewBlog(title));
+        //console.log(title)
     };
-    const [title, setTitle] = useState("Title");
+    const [title, setTitle] = useState("Tiêu đề");
     const onChangeTitleHandle = (event: any) => {
         setTitle(event.target.value);
     };
@@ -36,7 +41,7 @@ export default function ModalDisplayCreateTitleBLog({
                     {/*body*/}
                     <div className="relative p-6 flex-auto justify-self-center">
                     <input
-                        value={title == "Title" ? "" : title}
+                        value={title == "Tiêu đề" ? "" : title}
                         onChange={onChangeTitleHandle}
                         type="text"
                         className="border-0 w-full h-12 p-2 rounded-md"

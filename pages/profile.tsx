@@ -10,6 +10,7 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Button, Card, Input, Modal, Typography, Upload, message } from 'antd'
 import type { UploadChangeParam } from 'antd/es/upload';
+import { useRouter } from "next/router";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
     const reader = new FileReader();
@@ -26,6 +27,7 @@ const beforeUpload = (file: File) => {
   };
 
 export default function Profile() {
+    const router = useRouter();
     const token = Cookies.get('token') || '';
     const dispath = useDispatch();
     const { user } = useSelector((reduxData: any) => {
@@ -56,6 +58,9 @@ export default function Profile() {
             }
         };
         fetchUserInfo();
+        // if (token) {
+        //     router.push("/");
+        // }
         if (!token) {
             setAvatar('');
             setFullname('');
@@ -63,7 +68,7 @@ export default function Profile() {
             setUsername('');
             setBio('');
         }
-    }, [token, avatar]);
+    }, [token, avatar, router]);
     
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
     const showModal = () => {

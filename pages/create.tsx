@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import blogService from '../services/blogService';
-import { Button, FloatButton } from "antd";
+import { Button, FloatButton, message } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { getContentNewBlog } from "@/store/redux/actions/sharingblogAction";
+
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const modules = {
 	toolbar: [
@@ -40,6 +42,7 @@ const formats = [
 	"video",
 ];
 const CreateBlog = () => {
+	const dispatch = useDispatch();
 	const [content, setContent] = useState("");
 	const router = useRouter();
 	const handleContentChange = (value: string) => {
@@ -47,8 +50,13 @@ const CreateBlog = () => {
 	};
 	
 	const pushPreview = () => {
-		//router.push("/preview");
-		console.log(content)
+		if(content === "") {
+			message.error('Nội dung bài Blog không được để trống');
+            return false
+		}
+		dispatch(getContentNewBlog(content))
+		router.push("/preview");
+
 	}
 
 	return (
