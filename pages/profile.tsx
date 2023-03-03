@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Sidebar, BlogItem, ListUsers, ModalInput } from "@/components/index"
+import { Sidebar, BlogItem, ListUsers, ModalInput, ModalMultipleInput } from "@/components/index"
 import { blogs, tags, users } from "@/fake-data"
 import Cookies from 'js-cookie'
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Button, Card, Input, Modal, Typography, Upload, message } from 'antd'
 import type { UploadChangeParam } from 'antd/es/upload';
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
     const reader = new FileReader();
@@ -71,8 +72,12 @@ export default function Profile() {
     }, [token, avatar, router]);
     
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
-    const showModal = () => {
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const showBioModal = () => {
         setIsBioModalOpen(true);
+    }; 
+    const showInfoModal = () => {
+        setIsInfoModalOpen(true);
     }; 
     const handleOk = async () => {
         const input = {
@@ -86,9 +91,11 @@ export default function Profile() {
         }
         await userService.updateInfo(token, input)
         setIsBioModalOpen(false);
+        setIsInfoModalOpen(false);
     };
     const handleCancel = () => {
         setIsBioModalOpen(false);
+        setIsInfoModalOpen(false);
     };
     
     // update avt
@@ -108,80 +115,103 @@ export default function Profile() {
           try {
             const formData = new FormData();
             formData.append('avatar', info.file.originFileObj as RcFile);
-            const res = await userService.updateAvatar(token, formData); // gọi hàm updateAvatar
-
+              const res = await userService.updateAvatar(token, formData); // gọi hàm updateAvatar
+              toast.success('Cập nhật avatar thành công');
           } catch (error) {
-            message.error('Cập nhật avatar không thành công');
+            toast.error('Cập nhật avatar không thành công');
             console.log(error)
           }
         }
-        
-      };
-      const uploadButton = (
-        <div>
-          {loading ? <LoadingOutlined /> : <PlusOutlined />}
-          <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-      );
+    };
+    
+    const uploadButton = (
+    <div>
+        {loading ? <LoadingOutlined /> : <PlusOutlined />}
+        <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+    );
+
+    const itemsInfoModal = [
+        {
+            title: 'Full name',
+            value: fullname,
+            onChange: (e: any) => setFullname(e.target.value)
+        },
+        {
+            title: 'Username',
+            value: username,
+            onChange: (e: any) => setUsername(e.target.value)
+        },
+    ]
 
     return (
         <Sidebar>
             <div className="overflow-y-scroll h-screen">
+                {/* Header profile */}
                 <div className="h-60 bg-gradient-to-r from-gray-100 to-gray-200">
                 </div>
                 <div className="max-w-screen-lg mx-auto -mt-20 px-2">
                     <div className="flex justify-center items-center mb-8">
+                        {/* Avatar */}
                         <div className="mr-4">
-                        <Upload
-                            name="avatar"
-                            listType="picture-circle"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            beforeUpload={beforeUpload}
-                            onChange= {handleChange}>
-                            {avatar ? (
-                                <Avatar size={128} 
-                                src={avatar} 
-                                alt="Avatar"
-                                className="w-full h-full object-cover" />
-                            ) : (
-                                <> 
-                                <Avatar 
-                                size={128} 
-                                icon={<PlusOutlined />} 
-                                alt="Avatar"
-                                className="w-full h-full object-cover" />
-                                </>
-                            )}  
-                        </Upload>
-                          
+                            <Upload
+                                name="avatar"
+                                listType="picture-circle"
+                                className="avatar-uploader"
+                                showUploadList={false}
+                                beforeUpload={beforeUpload}
+                                onChange= {handleChange}>
+                                {avatar ? (
+                                    <Avatar size={128} 
+                                    src={avatar} 
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover" />
+                                ) : (
+                                    <> 
+                                    <Avatar 
+                                    size={128} 
+                                    icon={<PlusOutlined />} 
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover" />
+                                    </>
+                                )}  
+                            </Upload>
                         </div>
+                        {/* Info */}
                         <div>
                             <h1 className="text-3xl font-bold mb-1 mt-1">{fullname}</h1>
                             <p className="mb-2">@{username}</p>
                             <Button type="primary" onClick={() => {}}>Theo dõi</Button>
                             <Button hidden>Đang theo dõi</Button>
                         </div>
+                        <EditOutlined size={4} onClick={showInfoModal} />
                     </div>
+
+                    {/* Body */}
                     <div className="lg:flex w-full">
-                        <div className="lg:flex-[30%] lg:mr-10 h-auto my-8">
+                        {/* Bio */}
+                        <div className="lg:flex-[30%] lg:mr-10 h-auto my-8 lg:max-w-[300px]">
                             <Typography.Title level={5}>Giới thiệu</Typography.Title>
                             <Card className="lg:p-2 mt-2 flex flex-col">
                                 <div className="flex-1 flex flex-col items-end">
-                                    <EditOutlined size={4} onClick={showModal}/>
+                                    <EditOutlined size={4} onClick={showBioModal}/>
                                 </div>
-                                <h2 className="text-center flex-1">
+                                <p className="text-center flex-1 mt-2 break-words">
                                     {bio}
-                                </h2>
+                                </p>
                             </Card>
                         </div>
+                        {/* Followers */}
                         <div className="lg:flex-[33%] my-8 mr-8">
                             <ListUsers title="Người theo dõi (255)" users={users} />
                         </div>
+                        {/* Following */}
                         <div className="lg:flex-[33%] my-8">
                             <ListUsers title="Đang theo dõi (333)" users={users} />
                         </div>
                     </div>
+
+                    {/* Blogs */}
                     <div className="mt-8">
                         <h3 className="text-2xl font-bold">Bài viết</h3>
                         <div className="mt-10">
@@ -190,6 +220,7 @@ export default function Profile() {
                             ))}
                         </div>
                     </div>
+                    
                     {/* Modal edit bio */}
                     <ModalInput
                         title="Tiểu sử"
@@ -198,6 +229,16 @@ export default function Profile() {
                         handleCancel={handleCancel}
                         defaultValue={bio}
                         onChange={(e) => setBio(e.target.value)}
+                        isTextArea
+                        maxLength={200}
+                    />
+                    {/* Modal edit fullname, username */}
+                    <ModalMultipleInput
+                        title="Chỉnh sửa thông tin"
+                        isModalOpen={isInfoModalOpen}
+                        handleOk={handleOk}
+                        handleCancel={handleCancel}
+                        items={itemsInfoModal}
                     />
                 </div>
             </div>

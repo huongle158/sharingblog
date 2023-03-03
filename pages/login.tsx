@@ -28,7 +28,7 @@ const Login: React.FC = () => {
 			// }, undefined, { shallow: true });
 		}
 		else {
-			toast.error('Đăng nhập thất bại');
+			toast.error('Tài khoản hoặc mật khẩu không đúng! Vui lòng kiểm tra lại!');
 		}
 		
 	};
@@ -52,9 +52,9 @@ const Login: React.FC = () => {
 				<Form.Item
 					label="Email"
 					name="email"
-					rules={[{ required: true, message: "Vui lòng nhập tài khoản!" }]}
+					rules={[{ required: true, message: "Vui lòng nhập tài khoản email!" }]}
 				>
-					<Input />
+					<Input type="email"/>
 				</Form.Item>
 
 				<Form.Item

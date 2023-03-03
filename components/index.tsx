@@ -16,3 +16,4 @@ export * from "./blog/CommentItem";
 export * from "./user/ListUsers";
 
 export * from "./modals/ModalInput";
+export * from "./modals/ModalMultipleInput";
