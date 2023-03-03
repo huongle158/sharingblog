@@ -144,9 +144,29 @@ export default function Profile() {
         },
     ]
 
+    const handleViewFollowers = () => {
+        router.push({
+            pathname: "/users",
+            query: {
+                title: "Danh sách người theo dõi",
+                items: JSON.stringify(users), //the 'users page' is using fake data too, please edit when u do it
+            },
+        });
+    };
+
+    const handleViewFollowing = () => {
+        router.push({
+            pathname: "/users",
+            query: {
+                title: "Danh sách đang theo dõi",
+                items: JSON.stringify(users), //fake data too
+            },
+        });
+    };
+
     return (
         <Sidebar>
-            <div className="overflow-y-scroll h-screen">
+            <div className="overflow-y-scroll h-screen relative">
                 {/* Header profile */}
                 <div className="h-60 bg-gradient-to-r from-gray-100 to-gray-200">
                 </div>
@@ -203,11 +223,11 @@ export default function Profile() {
                         </div>
                         {/* Followers */}
                         <div className="lg:flex-[33%] my-8 mr-8">
-                            <ListUsers title="Người theo dõi (255)" users={users} />
+                            <ListUsers title="Người theo dõi (255)" users={users} onClickButton={handleViewFollowers} />
                         </div>
                         {/* Following */}
                         <div className="lg:flex-[33%] my-8">
-                            <ListUsers title="Đang theo dõi (333)" users={users} />
+                            <ListUsers title="Đang theo dõi (333)" users={users} onClickButton={handleViewFollowing} />
                         </div>
                     </div>
 

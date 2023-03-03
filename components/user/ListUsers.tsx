@@ -4,7 +4,8 @@ import { SingleLineList } from "../ui/SingleLineList"
 
 interface Props {
     users: Users[],
-    title?: string
+    title?: string,
+    onClickButton?: () => void,
 }
 
 interface Users {
@@ -12,12 +13,12 @@ interface Users {
     avatar: string
 }
 
-export const ListUsers: FC<Props> = ({users, title}) => {
+export const ListUsers: FC<Props> = ({ users, title, onClickButton }) => {
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
                 <Typography.Title level={5}>{title}</Typography.Title>
-                <Button>Xem tất cả</Button>
+                <Button onClick={onClickButton}>Xem tất cả</Button>
             </div>
             <List
                 dataSource={users}
