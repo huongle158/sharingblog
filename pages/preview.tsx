@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, FloatButton, message, Row, Typography, Upload } from 'antd'
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { tags } from '@/fake-data';
 import CheckBoxGrid from '@/components/ui/CheckBoxGrid';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import blogService from '../services/blogService';
 import { useRouter } from "next/router";
+import tagService from '@/services/tagService';
+import { getAllTags } from '@/store/redux/actions/tagAction';
 
 const Preview = () => {
     const router = useRouter();
@@ -56,6 +57,18 @@ const Preview = () => {
           }
           
     }
+
+    const [tags, setTags] = useState([])
+    useEffect(() => {
+        const fetchTags = async () => {
+            const allTags = await tagService.getAllTags()
+            if (allTags && allTags.tags) {
+                setTags(allTags.tags)
+                getAllTags()
+            }
+        }
+        fetchTags()
+    }, []);
 
     return (
         <div className='flex py-8 px-10'>

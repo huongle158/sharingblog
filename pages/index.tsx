@@ -5,13 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllBlogs } from './../store/redux/actions/sharingblogAction';
 import blogService from './../services/blogService';
 import { useState, useEffect, Suspense } from 'react';
+import { getAllTags } from "@/store/redux/actions/tagAction";
+import tagService from "@/services/tagService";
 
 
 export default function Home() {
 	const dispatch = useDispatch();
+	const [tags, setTags] = useState([])
 	useEffect(() => {
-		dispatch(getAllBlogs());
+		const fetchTags = async () => {
+			const allTags = await tagService.getAllTags()
+			if (allTags && allTags.tags) {
+				setTags(allTags.tags)
+				getAllTags()
+			}
+		}
+		fetchTags()
+		// dispatch(getAllBlogs());
 	}, []);
+
 	return (
 		<Sidebar>
 			<div className="flex items-center justify-center lg:ml-40 mt-4 lg:w-[50%] w-[98%] ml-2">

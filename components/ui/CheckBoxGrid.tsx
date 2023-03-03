@@ -15,7 +15,7 @@ const CheckBoxGrid = ({ title, items, onChange }: Props) => {
                 <Row className='space-y-2 max-h-80 overflow-scroll'>
                     {items.map((item, index) => (
                         <Col span={8} key={index}>
-                            <Checkbox value={index}>{item}</Checkbox>
+                            <Checkbox value={item}>{item}</Checkbox>
                         </Col>
                     ))}
                 </Row>
