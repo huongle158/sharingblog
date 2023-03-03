@@ -45,7 +45,7 @@ export const Sidebar = ({ children }: Props) => {
 	return (
 		<div className="flex">
 			{/* Toast top right */}
-			{/* <ToastContainer
+			<ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -56,7 +56,7 @@ export const Sidebar = ({ children }: Props) => {
 				draggable
 				pauseOnHover
 				theme="light"
-			/> */}
+			/>
 			{/* Sidebar */}
 			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}
@@ -66,7 +66,7 @@ export const Sidebar = ({ children }: Props) => {
 					</li>
 				))} trigger="click">
 					<Badge count={99}>
-						<Avatar shape="circle" src="https://i.pinimg.com/originals/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg" size="large"/>
+						<Avatar shape="circle" src={user.avatar} size={46} />
 					</Badge>
 				</Popover>
 
@@ -75,7 +75,7 @@ export const Sidebar = ({ children }: Props) => {
 				<a onClick={openToModal}>
 					<div
 						className="bg-blue-600 rounded-full text-white text-xl hover:bg-blue-400 cursor-pointer 
-						mt-4 mb-5 p-3 inline-block"
+						mt-4 mb-4 p-3 inline-block"
 					>
 						<Tooltip placement="right" title={"Viết bài"}>
 							<AiOutlinePlus />

@@ -1,27 +1,27 @@
-import { Button, Input, Modal } from "antd"
+import { Button, Input, Modal, Typography } from "antd"
 
 interface Props {
     title: string,
     isModalOpen: boolean,
     handleOk: () => void,
     handleCancel: () => void,
-    defaultValue?: string,
+    items: Item[],
+}
+
+interface Item {
+    title: string,
+    value: string,
     onChange: (e: any) => void,
-    isTextArea?: boolean,
-    maxLength?: number,
 }
 
 const { TextArea } = Input;
 
-export const ModalInput = ({
+export const ModalMultipleInput = ({
     title,
     isModalOpen,
     handleOk,
     handleCancel,
-    defaultValue,
-    onChange,
-    isTextArea = false,
-    maxLength,
+    items,
 }: Props) => {
     return (
         <Modal
@@ -39,21 +39,18 @@ export const ModalInput = ({
             ]}
         >
             {
-                isTextArea ? (
-                    <TextArea
-                        defaultValue={defaultValue}
-                        onChange={onChange}
-                        className="h-20 mb-8"
-                        showCount
-                        maxLength={maxLength}
-                    />
-                ) : (
-                    <Input
-                        defaultValue={defaultValue}
-                        onChange={onChange}
-                    />
-                )
+                items.map((item, index) => (
+                    <div className="mt-4" key={index}>
+                        <p>{item.title} <span className="text-red-600">(*)</span></p>
+                        <Input
+                            defaultValue={item.value}
+                            onChange={item.onChange}
+                            required
+                        />
+                    </div>
+                ))
             }
+             
         </Modal>
     )
 }
