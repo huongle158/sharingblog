@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from "@/store/redux/actions/userAction";
+import ModalLogout from "../modals/ModalLogoutUser";
 
 interface Props {
 	children: ReactNode;
@@ -26,7 +27,11 @@ export const Sidebar = ({ children }: Props) => {
 	const { user } = useSelector((reduxData: any) => {
         return reduxData.userReducer
     })
+	// modal create Blog
 	const [showModal, setShowModal] = useState(false);
+	// modal logout 
+	const [modalLogout,setModalLogout] = useState(false);
+	
 	const openToModal = () => {
 		setShowModal(true);
 	};
@@ -92,7 +97,7 @@ export const Sidebar = ({ children }: Props) => {
 				</NavItem>
 				{/* Logout */}
 				<NavItem title="Đăng xuất" className="pb-3 pt-1 pl-3 pr-3" >
-					<a onClick={onClicklogoutUser}><LogoutOutlined className="align-middle" /></a>
+					<a onClick={() => setModalLogout(true)}><LogoutOutlined className="align-middle" /></a>
 				</NavItem>
 			</div>
 			{/* Body */}
@@ -103,6 +108,8 @@ export const Sidebar = ({ children }: Props) => {
 				modal={showModal}
 				setShowModal={() => setShowModal(!showModal)}
 			/>
+			{/* Modal logout User */}
+			<ModalLogout modal={modalLogout} setModal={setModalLogout} handleLogout= {onClicklogoutUser}  />
 		</div>
 	);
 };

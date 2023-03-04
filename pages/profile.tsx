@@ -31,21 +31,15 @@ export default function Profile() {
     const router = useRouter();
     const token = Cookies.get('token') || '';
     const dispath = useDispatch();
-    const { user } = useSelector((reduxData: any) => {
-        return reduxData.userReducer
-    })
-    const [userData, setUserData] = useState({
-        avatar: '',
-        fullname: '',
-        email: '',
-        username: '',
-        bio: ''
-    })
+    // const { user } = useSelector((reduxData: any) => {
+    //     return reduxData.userReducer
+    // })
     const [avatar, setAvatar] = useState('');
     const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
+    const [initialBio, setInitialBio] = useState('');
     useEffect(() => {
         const fetchUserInfo = async () => {
             const userInfo = await userService.getInfo(token);
@@ -55,6 +49,7 @@ export default function Profile() {
                 setEmail(userInfo.user.email);
                 setUsername(userInfo.user.username);
                 setBio(userInfo.user.bio);
+                setInitialBio(userInfo.user.bio);
                 dispath(getUserInfo(userInfo.user));
             }
         };
@@ -70,11 +65,14 @@ export default function Profile() {
             setBio('');
         }
     }, [token, avatar, router]);
-    
+    // tăng giá trị key mới để component được khởi tạo lại
+    const [bioKey, setBioKey] = useState(0);
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+
     const showBioModal = () => {
         setIsBioModalOpen(true);
+        setBioKey(bioKey + 1);
     }; 
     const showInfoModal = () => {
         setIsInfoModalOpen(true);
@@ -93,9 +91,11 @@ export default function Profile() {
         setIsBioModalOpen(false);
         setIsInfoModalOpen(false);
     };
+    
     const handleCancel = () => {
         setIsBioModalOpen(false);
         setIsInfoModalOpen(false);
+        setBio(initialBio);
     };
     
     // update avt
@@ -243,6 +243,7 @@ export default function Profile() {
                     
                     {/* Modal edit bio */}
                     <ModalInput
+                        key={bioKey}
                         title="Tiểu sử"
                         isModalOpen={isBioModalOpen}
                         handleOk={handleOk}

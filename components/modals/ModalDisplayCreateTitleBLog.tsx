@@ -10,7 +10,7 @@ export default function ModalDisplayCreateTitleBLog({
 }: any) {
     const router = useRouter();
     const dispatch = useDispatch();
-
+    const [title, setTitle] = useState("Tiêu đề");
     const createTitleBlog = () => {
         if(title === "Tiêu đề" ) {
             message.error('Tiêu đề không được để trống');
@@ -21,7 +21,11 @@ export default function ModalDisplayCreateTitleBLog({
         dispatch(getTitleNewBlog(title));
         //console.log(title)
     };
-    const [title, setTitle] = useState("Tiêu đề");
+    const handleCancel = () => {
+        setShowModal()
+        setTitle("Tiêu đề")
+      };
+    
     const onChangeTitleHandle = (event: any) => {
         setTitle(event.target.value);
     };
@@ -45,12 +49,12 @@ export default function ModalDisplayCreateTitleBLog({
                         onChange={onChangeTitleHandle}
                         type="text"
                         className="border-0 w-full h-12 p-2 rounded-md"
-                        placeholder="Enter your blog title here..."
+                        placeholder="Nhập tiêu đề bài Blog của bạn ở đây ..."
                     />
                     </div>
                     {/*footer*/}
                     <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                        <Button className="mr-2" onClick={setShowModal} >Đóng</Button>
+                        <Button className="mr-2" onClick={handleCancel} >Đóng</Button>
                         <Button type="primary" onClick={createTitleBlog}>Viết bài</Button>
                     </div>
                 </div>

@@ -21,7 +21,7 @@ const Login: React.FC = () => {
 		const result  = await userService.login(input)
 		if (result) {
 			Cookies.set('token', result.user.token, { expires: 7 });
-			router.push('/')
+			router.push('/profile')
 			// router.push({
 			// 	pathname: '/',
 			// 	query: { showToast: true, message: 'Đăng nhập thành công!'},

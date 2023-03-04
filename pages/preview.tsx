@@ -10,6 +10,7 @@ import blogService from '../services/blogService';
 import { useRouter } from "next/router";
 import tagService from '@/services/tagService';
 import { getAllTags } from '@/store/redux/actions/tagAction';
+import { toast } from "react-toastify";
 
 const Preview = () => {
     const router = useRouter();
@@ -31,9 +32,9 @@ const Preview = () => {
         setIsValidFileImage(true)
         return true;
     };
-
+    const [tagList, setTagList] = useState([])
     const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
-        console.log('checked = ', checkedValues);
+        setTagList(checkedValues)
     };
     const onClickCreateBlog = async () => {
         const token = Cookies.get('token') ;
@@ -43,19 +44,19 @@ const Preview = () => {
         }
         const newBlog = {
             title: newTitle,
-            description: 'Ko có gì',
             content: newContent,
             banner: fileImage,
-            tagList: ['FE', 'BE'],
+            tagList: tagList,
         };
         try {
             const post = await blogService.createPost(token, newBlog);
             console.log(post);
             router.push("/profile");
+            toast.success('Tạo bài Blog thành công');
           } catch (error) {
             console.error(error);
+            toast.error('Tạo bài Blog thất bại');
           }
-          
     }
 
     const [tags, setTags] = useState([])
@@ -113,7 +114,7 @@ const Preview = () => {
                     shape="square"
                     type="primary"
                     className="w-[90px] right-12"
-                    description={'Đăng bài'}
+                    description={'Xuất bản'}
                 />
             </div>
         </div>

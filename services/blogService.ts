@@ -6,7 +6,6 @@ const blogService = {
     try {
       const formData = new FormData();
       formData.append('title', newBlog.title);
-      formData.append('description', newBlog.description);
       formData.append('content', newBlog.content);
       formData.append('banner', newBlog.banner);
       newBlog.tagList.forEach((tag: string) => {
