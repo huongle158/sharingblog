@@ -2,9 +2,32 @@ import { CommentOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Card, Spin, Tag } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const BlogItem = ({ blog }: any) => {
+interface Props {
+    blog: Blog,
+    className?: string,
+}
+
+interface Blog {
+    title: string,
+    content: string,
+    banner: string,
+    tagList: string[],
+    createdAt: string,
+    updatedAt?: string,
+    author: {
+        avatar: string,
+        bio?: string,
+        email?: string,
+        fullname: string,
+        id?: number,
+        username?: string,
+    }
+}
+
+
+export const BlogItem = ({ blog, className }: Props) => {
     // giới hạn content 150 chữ
-    const previewContten : string = blog.content.substring(0, 600) + '...'
+    const previewContten: string = blog.content.substring(0, 600) + '...'
     return (
         <Card
             className={`mb-8 w-full border-gray-200 -z-10 ` }
@@ -20,8 +43,8 @@ export const BlogItem = ({ blog }: any) => {
                         />
                     </div>
                     <div>
-                        <h5 className="text-xl font-bold mb-1">{blog.author.username}</h5>
-                        <p className="text-gray-500 mb-2 font-normal italic text-sm">Đăng ngày 1/1/2022</p>
+                        <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
+                        <p className="text-gray-500 mb-2 font-normal italic text-sm">{blog.createdAt}</p>
                     </div>
                 </a>
             }>
@@ -54,7 +77,6 @@ export const BlogItem = ({ blog }: any) => {
                     {blog.tagList && blog.tagList.map((tag, index) => (
                         <a key={index} href="#"><Tag>{tag}</Tag></a>
                     ))}
-                    {/* <p className="text-gray-400 italic">Đăng ngày {blog.time}</p> */}
                 </div>
             </div> 
         </Card>

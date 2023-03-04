@@ -50,12 +50,16 @@ const Preview = () => {
         };
         try {
             const post = await blogService.createPost(token, newBlog);
-            console.log(post);
-            router.push("/profile");
-            toast.success('Tạo bài Blog thành công');
+            const slug = post.article.slug
+            router.push({
+                pathname: `/blog/${slug}`,
+                query: {
+                    showToast: true,
+                    message: "Tạo bài Blog thành công"
+                },
+            }, `/blog/${slug}`);
           } catch (error) {
-            console.error(error);
-            toast.error('Tạo bài Blog thất bại');
+                toast.error('Tạo bài Blog thất bại');
           }
     }
 

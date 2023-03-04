@@ -37,22 +37,21 @@ export const Sidebar = ({ children }: Props) => {
 	const openToModal = () => {
 		setShowModal(true);
 	};
-	// useEffect(() => {
-	// 	const { showToast, message } = router.query;
-	// 	if (showToast) {
-	// 		toast.success(message)
-	// 	}
-	// })
 	const onClicklogoutUser = async () => {
 		dispath(logoutUser());
 		await Cookies.remove("token");
 		router.push("/login");
 	};
 
+	// const { showToast, message } = router.query;
+	// if (showToast) {
+	// 	toast.success(message)
+	// }
+
 	return (
 		<div className="flex">
 			{/* Toast top right */}
-			<ToastContainer
+			{/* <ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -63,7 +62,7 @@ export const Sidebar = ({ children }: Props) => {
 				draggable
 				pauseOnHover
 				theme="light"
-			/>
+			/> */}
 			{/* Sidebar */}
 			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}

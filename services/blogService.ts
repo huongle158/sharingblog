@@ -39,6 +39,25 @@ const blogService = {
       }
       return null;
     },
+    
+  getPostBySlug: async (token: string, slug: string) => {
+      try {
+        const res = await fetch(`${BASE_URL}/${slug}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (res.status === OK) {
+          return await res.json();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      return null;
+    },
 
     updatePost: async (id: string, updatedBlog: object) => {
       try {
