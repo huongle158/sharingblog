@@ -19,9 +19,6 @@ export default function App({ Component, pageProps }: AppProps) {
 		if (!token && router.pathname !== "/login" && router.pathname !== "/register") {
 			router.push("/login");
 		  }
-		if(token) {
-			router.push("/profile");
-		}
 		}, [token, router.pathname]);
 	return (
 		<React.StrictMode>

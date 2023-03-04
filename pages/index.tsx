@@ -13,6 +13,7 @@ export default function Home() {
 	const dispatch = useDispatch();
 	const [tags, setTags] = useState([])
 	useEffect(() => {
+		// get ALL tags
 		const fetchTags = async () => {
 			const allTags = await tagService.getAllTags()
 			if (allTags && allTags.tags) {
