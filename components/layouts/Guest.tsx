@@ -11,7 +11,7 @@ export const Guest = ({ label, children }: Props) => {
   return (
 	<div className="min-h-screen flex flex-col justify-center py-12 md:px-4 sm:px-6 lg:px-8 sm:w-full bg-gradient-to-r from-indigo-100 to-blue-200">
 		{/* Toast top right */}
-		<ToastContainer
+		{/* <ToastContainer
 			position="top-right"
 			autoClose={5000}
 			hideProgressBar={false}
@@ -22,7 +22,7 @@ export const Guest = ({ label, children }: Props) => {
 			draggable
 			pauseOnHover
 			theme="light"
-		/>
+		/> */}
 		<div className="sm:mx-auto sm:w-full sm:max-w-md">
 			<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
 			{label}

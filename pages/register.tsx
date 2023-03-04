@@ -22,7 +22,7 @@ const register: React.FC = () => {
 		const result = await userService.register(input)
 		
 		if (result) {
-			router.push('/users/login')
+			router.push('/login')
 			toast.success("Bạn đã đăng ký tài khoản thành công! Hãy đăng nhập!")
 		} else {
 			toast.error("Đăng ký tài khoản không thành công!")
@@ -54,9 +54,9 @@ const register: React.FC = () => {
 				</Form.Item>
 
 				<Form.Item
-					label="Tên đăng nhập"
+					label="Username"
 					name="username"
-					rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập!" }]}
+					rules={[{ required: true, message: "Vui lòng nhập username!" }]}
 				>
 					<Input />
 				</Form.Item>

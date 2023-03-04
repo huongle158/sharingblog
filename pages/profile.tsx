@@ -65,6 +65,7 @@ export default function Profile() {
             setBio('');
         }
     }, [token, avatar, router]);
+    
     // tăng giá trị key mới để component được khởi tạo lại
     const [bioKey, setBioKey] = useState(0);
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);

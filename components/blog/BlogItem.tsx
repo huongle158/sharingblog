@@ -9,12 +9,17 @@ interface Props {
 interface Blog {
     title: string,
     content: string,
-    image: string,
-    time: string,
-    tags: string[],
+    banner: string,
+    tagList: string[],
+    createdAt: string,
+    updatedAt?: string,
     author: {
-        name: string,
-        avatar: string
+        avatar: string,
+        bio?: string,
+        email?: string,
+        fullname: string,
+        id?: number,
+        username?: string,
     }
 }
 
@@ -34,8 +39,8 @@ export const BlogItem = ({ blog, className }: Props) => {
                         />
                     </div>
                     <div>
-                        <h5 className="text-xl font-bold mb-1">{blog.author.name}</h5>
-                        <p className="text-gray-500 mb-2 font-normal italic text-sm">Đăng ngày 1/1/2022</p>
+                        <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
+                        <p className="text-gray-500 mb-2 font-normal italic text-sm">{blog.createdAt}</p>
                     </div>
                 </a>
             }>
@@ -45,7 +50,7 @@ export const BlogItem = ({ blog, className }: Props) => {
             <a href="#" className="lg:flex h-fit hover:text-black">
                 <p className="lg:flex-1 mb-4 lg:mr-2">{blog.content}</p>
                 <div className="lg:flex-2">
-                    <img src={blog.image} alt="Post" className="w-40 rounded-lg object-cover" />
+                    <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
                 </div>
             </a>
 
@@ -63,10 +68,9 @@ export const BlogItem = ({ blog, className }: Props) => {
 
                 <div className='flex-1'>
                     <span>Chủ đề: </span>
-                    {blog.tags.map((tag, index) => (
+                    {blog.tagList.map((tag, index) => (
                         <a key={index} href="#"><Tag>{tag}</Tag></a>
                     ))}
-                    {/* <p className="text-gray-400 italic">Đăng ngày {blog.time}</p> */}
                 </div>
             </div>
         </Card>
