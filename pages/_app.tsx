@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "../public/styles/globals.css";
 import "../public/styles/createBlog.css";
 import "../public/styles/review.css"
+import "../public/styles/contentBlog.css"
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";

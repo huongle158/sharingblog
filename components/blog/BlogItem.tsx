@@ -1,40 +1,26 @@
 import { CommentOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { Avatar, Card, Tag } from 'antd';
+import { Avatar, Card, Spin, Tag } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
-interface Props {
-    blog: Blog,
-    className?: string,
-}
-
-interface Blog {
-    title: string,
-    content: string,
-    image: string,
-    time: string,
-    tags: string[],
-    author: {
-        name: string,
-        avatar: string
-    }
-}
-
-
-export const BlogItem = ({ blog, className }: Props) => {
+export const BlogItem = ({ blog }: any) => {
+    // giới hạn content 150 chữ
+    const previewContten : string = blog.content.substring(0, 600) + '...'
     return (
         <Card
-            className={`mb-8 w-full border-gray-200 -z-10 ` + className}
+            className={`mb-8 w-full border-gray-200 -z-10 ` }
             title={
                 // Header card
                 <a href="#" className="flex justify-left items-left hover:text-black mt-2">
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
-                            src={blog.author.avatar}
+                            // src={blog.author.avatar}
+                            src=" https://anhhd.com/wp-content/uploads/2021/10/Chiem-nguong-89-avatar-dep-nhat-co-luong-dowload-nhieu-nhat.jpg"
                             alt="Avatar"
                         />
                     </div>
                     <div>
-                        <h5 className="text-xl font-bold mb-1">{blog.author.name}</h5>
+                        <h5 className="text-xl font-bold mb-1">{blog.author.username}</h5>
                         <p className="text-gray-500 mb-2 font-normal italic text-sm">Đăng ngày 1/1/2022</p>
                     </div>
                 </a>
@@ -43,9 +29,11 @@ export const BlogItem = ({ blog, className }: Props) => {
             {/* Body card */}
             <h1 className="text-xl font-bold mb-2">{blog.title}</h1>
             <a href="#" className="lg:flex h-fit hover:text-black">
-                <p className="lg:flex-1 mb-4 lg:mr-2">{blog.content}</p>
+                <div className="lg:flex-1 mb-4 lg:mr-2 "
+                        dangerouslySetInnerHTML={{__html: previewContten}}
+                    />
                 <div className="lg:flex-2">
-                    <img src={blog.image} alt="Post" className="w-40 rounded-lg object-cover" />
+                    <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
                 </div>
             </a>
 
@@ -63,12 +51,12 @@ export const BlogItem = ({ blog, className }: Props) => {
 
                 <div className='flex-1'>
                     <span>Chủ đề: </span>
-                    {blog.tags.map((tag, index) => (
+                    {blog.tagList && blog.tagList.map((tag, index) => (
                         <a key={index} href="#"><Tag>{tag}</Tag></a>
                     ))}
                     {/* <p className="text-gray-400 italic">Đăng ngày {blog.time}</p> */}
                 </div>
-            </div>
+            </div> 
         </Card>
     );
 };

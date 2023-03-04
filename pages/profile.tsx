@@ -64,7 +64,7 @@ export default function Profile() {
             setUsername('');
             setBio('');
         }
-    }, [token, avatar, router]);
+    }, [token, avatar, router, fullname, username]);
     // tăng giá trị key mới để component được khởi tạo lại
     const [bioKey, setBioKey] = useState(0);
     const [isBioModalOpen, setIsBioModalOpen] = useState(false);
@@ -90,6 +90,7 @@ export default function Profile() {
         await userService.updateInfo(token, input)
         setIsBioModalOpen(false);
         setIsInfoModalOpen(false);
+        console.log(input.user.fullname)
     };
     
     const handleCancel = () => {
@@ -181,7 +182,7 @@ export default function Profile() {
                                 showUploadList={false}
                                 beforeUpload={beforeUpload}
                                 onChange= {handleChange}>
-                                {avatar ? (
+                                {avatar && avatar ? (
                                     <Avatar size={128} 
                                     src={avatar} 
                                     alt="Avatar"

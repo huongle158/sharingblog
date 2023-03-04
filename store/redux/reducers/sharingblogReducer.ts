@@ -8,7 +8,7 @@ const initialState: any = {
     newTitle : "",
     newContent: "",
     loading: false,
-    posts: [],
+    blogs: [],
     error: ''
 }
 
@@ -19,6 +19,13 @@ const sharingblogReducers = (state = initialState, action: any) => {
             break;
         case CREATE_CONTENT_BLOG: 
             state.newContent = action.payload;
+            break;
+        case GET_ALL_BLOG_REQUEST: 
+            state.loading = true;
+            break;
+        case GET_ALL_BLOG_SUCCESS: 
+            state.loading = false;
+            state.blogs = action.payload.articles;
             break;
         
     }
