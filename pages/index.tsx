@@ -32,7 +32,6 @@ export default function Home() {
 		};
 		fetchTags();
 		fetchBlogs();
-		// dispatch(getAllBlogs());
 	}, []);
 
 	return (

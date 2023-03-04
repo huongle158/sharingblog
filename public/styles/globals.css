@@ -13,3 +13,6 @@
 .ant-btn-primary:hover {
     background-color: #3e8af5!important;
 }
+a:hover {
+    cursor: pointer!important;
+}

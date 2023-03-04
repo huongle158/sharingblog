@@ -1,8 +1,7 @@
 import { Sidebar } from "../../components/layouts/Sidebar";
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Card, Input, Typography } from "antd";
-import { BlogItem, CommentItem, ModalInput } from "@/components";
-import { blogs } from "@/fake-data";
+import { Button, Card, Input } from "antd";
+import { BlogDetails, CommentItem, ModalInput } from "@/components";
 import { useRouter } from "next/router";
 import blogService from "@/services/blogService";
 import Cookies from "js-cookie";
@@ -43,14 +42,13 @@ export default function BlogDetail() {
         }
         fetchBlogDetail()
     }, [token, slug])
-    console.log(blog)
     
     return (
         <Sidebar>
             {blog ? (
                 <div className="container mx-auto py-8 h-screen overflow-scroll">
                     <div className="w-[82%] mx-auto">
-                        <BlogItem blog={blog.article} className="mb-0"/>
+                        <BlogDetails blog={blog.article} className="mb-0"/>
                         <Card>
                             <Input.Group compact>
                                 <TextArea
