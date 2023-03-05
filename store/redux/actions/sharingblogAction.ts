@@ -3,7 +3,8 @@ import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_REQUEST,
         GET_ALL_BLOG_SUCCESS,
         GET_ALL_BLOG_FAILURE,
-        CREATE_CONTENT_BLOG } from '../constant/sharingblogConstant';
+        CREATE_CONTENT_BLOG, 
+        GET_BLOG_BY_SLUG} from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
 export const getAllBlogs = () => {
@@ -42,3 +43,9 @@ export const getContentNewBlog = (content: any) => {
     }
 }
 
+export const getBlogBySlug = (blog: any) => {
+    return {
+        type: GET_BLOG_BY_SLUG,
+        payload: blog
+    }
+}

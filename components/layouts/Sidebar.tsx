@@ -9,11 +9,11 @@ import ModalDisplayCreateTitleBLog from "../modals/ModalDisplayCreateTitleBLog";
 import { NavItem } from "./NavItem";
 import { SingleLineList } from "../ui/SingleLineList";
 import { notifications } from "@/fake-data/notifications";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/redux/actions/userAction";
 import ModalLogout from "../modals/ModalLogoutUser";
 
@@ -23,34 +23,35 @@ interface Props {
 
 export const Sidebar = ({ children }: Props) => {
 	const router = useRouter();
-	const dispath = useDispatch()
+	const dispath = useDispatch();
 	const { user } = useSelector((reduxData: any) => {
-        return reduxData.userReducer
-    })
+		return reduxData.userReducer;
+	});
+	// console.log("This's ~ user sidebar", user.avatar);
+
 	// modal create Blog
 	const [showModal, setShowModal] = useState(false);
-	// modal logout 
-	const [modalLogout,setModalLogout] = useState(false);
-	
+	// modal logout
+	const [modalLogout, setModalLogout] = useState(false);
+
 	const openToModal = () => {
 		setShowModal(true);
 	};
-	// useEffect(() => {
-	// 	const { showToast, message } = router.query;
-	// 	if (showToast) {
-	// 		toast.success(message)
-	// 	}
-	// })
 	const onClicklogoutUser = async () => {
-		dispath(logoutUser())
-		await  Cookies.remove('token');
-		router.push('/login')
-	}
+		dispath(logoutUser());
+		await Cookies.remove("token");
+		router.push("/login");
+	};
+
+	// const { showToast, message } = router.query;
+	// if (showToast) {
+	// 	toast.success(message)
+	// }
 
 	return (
 		<div className="flex">
 			{/* Toast top right */}
-			<ToastContainer
+			{/* <ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -61,15 +62,24 @@ export const Sidebar = ({ children }: Props) => {
 				draggable
 				pauseOnHover
 				theme="light"
-			/>
+			/> */}
 			{/* Sidebar */}
 			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}
-				<Popover placement="right" title={"Thông báo"} content={notifications.map((item, index) => (
-					<li key={index} className="px-4 py-2 hover:bg-gray-100 w-[450px]">
-						<SingleLineList user={item.user} title={item.blog.title} image={item.blog.image} />
-					</li>
-				))} trigger="click">
+				<Popover
+					placement="right"
+					title={"Thông báo"}
+					content={notifications.map((item, index) => (
+						<li key={index} className="px-4 py-2 hover:bg-gray-100 w-[450px]">
+							<SingleLineList
+								user={item.user}
+								title={item.blog.title}
+								image={item.blog.image}
+							/>
+						</li>
+					))}
+					trigger="click"
+				>
 					<Badge count={99}>
 						<Avatar shape="circle" src={user.avatar} size={46} />
 					</Badge>
@@ -96,8 +106,10 @@ export const Sidebar = ({ children }: Props) => {
 					<CgProfile />
 				</NavItem>
 				{/* Logout */}
-				<NavItem title="Đăng xuất" className="pb-3 pt-1 pl-3 pr-3" >
-					<a onClick={() => setModalLogout(true)}><LogoutOutlined className="align-middle" /></a>
+				<NavItem title="Đăng xuất" className="pb-3 pt-1 pl-3 pr-3">
+					<a onClick={() => setModalLogout(true)}>
+						<LogoutOutlined className="align-middle" />
+					</a>
 				</NavItem>
 			</div>
 			{/* Body */}
@@ -109,7 +121,11 @@ export const Sidebar = ({ children }: Props) => {
 				setShowModal={() => setShowModal(!showModal)}
 			/>
 			{/* Modal logout User */}
-			<ModalLogout modal={modalLogout} setModal={setModalLogout} handleLogout= {onClicklogoutUser}  />
+			<ModalLogout
+				modal={modalLogout}
+				setModal={setModalLogout}
+				handleLogout={onClicklogoutUser}
+			/>
 		</div>
 	);
 };

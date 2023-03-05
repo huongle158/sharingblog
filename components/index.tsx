@@ -12,8 +12,11 @@ export * from "./ui/CheckBoxGrid";
 export * from "./blog/BlogItem";
 export * from "./blog/TagsBox";
 export * from "./blog/CommentItem";
+export * from "./blog/BlogDetails";
 
 export * from "./user/ListUsers";
 
 export * from "./modals/ModalInput";
 export * from "./modals/ModalMultipleInput";
+
+export * from "./NotFound"

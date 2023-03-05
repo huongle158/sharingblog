@@ -10,6 +10,7 @@ import thunk from "redux-thunk";
 import Cookies from 'js-cookie'
 import rootReducers from "../store/redux/reducers/index";
 import { useRouter } from "next/router";
+import { toast, ToastContainer } from "react-toastify";
 
 const store = createStore(rootReducers, applyMiddleware(thunk));
 
@@ -19,11 +20,30 @@ export default function App({ Component, pageProps }: AppProps) {
 	useEffect(() => {
 		if (!token && router.pathname !== "/login" && router.pathname !== "/register") {
 			router.push("/login");
-		  }
+		}
 		}, [token, router.pathname]);
+	useEffect(() => {
+		const { showToast, message } = router.query;
+		if (showToast && router.query) {
+			toast.success(message)
+		}
+	}, [router.query]);
+	
 	return (
 		<React.StrictMode>
 			<Provider store={store}>
+				<ToastContainer
+					position="top-right"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+					theme="light"
+				/>
 				<Component {...pageProps} />
 			</Provider>
 		</React.StrictMode>
