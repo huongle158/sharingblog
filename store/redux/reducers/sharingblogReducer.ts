@@ -7,7 +7,7 @@ import { CREATE_TITLE_BLOG,
 const initialState: any = {
     newTitle : "",
     newContent: "",
-    loading: false,
+    pending: false,
     blogs: [],
     error: ''
 }
@@ -21,10 +21,10 @@ const sharingblogReducers = (state = initialState, action: any) => {
             state.newContent = action.payload;
             break;
         case GET_ALL_BLOG_REQUEST: 
-            state.loading = true;
+            state.pending = true;
             break;
         case GET_ALL_BLOG_SUCCESS: 
-            state.loading = false;
+            state.pending = false;
             state.blogs = action.payload.articles;
             break;
         

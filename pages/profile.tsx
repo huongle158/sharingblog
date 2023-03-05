@@ -24,10 +24,13 @@ import {
 	Typography,
 	Upload,
 	message,
+	Spin,
 } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import blogService from "@/services/blogService";
+import { getAllBlogs } from './../store/redux/actions/sharingblogAction';
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 	const reader = new FileReader();
@@ -46,10 +49,11 @@ const beforeUpload = (file: File) => {
 export default function Profile() {
 	const router = useRouter();
 	const token = Cookies.get("token") || "";
-	const dispath = useDispatch();
-	// const { user } = useSelector((reduxData: any) => {
-	//     return reduxData.userReducer
-	// })
+	const dispatch = useDispatch();
+	const { blogs, pending } = useSelector((reduxData: any) => {
+		return reduxData.sharingBlogReducers;
+	});
+	console.log("redux", blogs)
 	const [avatar, setAvatar] = useState("");
 	const [fullname, setFullname] = useState("");
 	const [email, setEmail] = useState("");
@@ -67,10 +71,18 @@ export default function Profile() {
 				setUsername(userInfo.user.username);
 				setBio(userInfo.user.bio);
 				setInitialBio(userInfo.user.bio);
-				dispath(getUserInfo(userInfo.user));
+				dispatch(getUserInfo(userInfo.user));
 			}
 		};
+		// const fetchAllPostsByAutor = async () => {
+		// 	const allBLogs = await blogService.getAllPosts(undefined, username);
+		// 	if(allBLogs && allBLogs.articles) {
+		// 		dispatch(getAllBlogs(allBLogs.articles));
+		// 	}
+		// }
+		dispatch(getAllBlogs(undefined, username));
 		fetchUserInfo();
+		// fetchAllPostsByAutor();
 		// if (token) {
 		//     router.push("/");
 		// }
@@ -81,7 +93,7 @@ export default function Profile() {
 			setUsername("");
 			setBio("");
 		}
-	}, [token, avatar, router, fullname, username]);
+	}, [token, avatar, router, fullname, username, dispatch]);
 	// tăng giá trị key mới để component được khởi tạo lại
 	const [bioKey, setBioKey] = useState(0);
 	const [isBioModalOpen, setIsBioModalOpen] = useState(false);
@@ -265,14 +277,21 @@ export default function Profile() {
 					</div>
 
 					{/* Blogs */}
-					{/* <div className="mt-8">
-						<h3 className="text-2xl font-bold">Bài viết</h3>
-						<div className="mt-10">
-							{blogs.map((item, index) => (
-								<BlogItem key={index} blog={item} />
-							))}
+					{
+						pending ?
+						<div className="flex justify-center h-screen">
+							<Spin className="w-12 h-12" />
 						</div>
-					</div> */}
+						:
+						<div className="mt-8">
+							<h3 className="text-2xl font-bold">Bài viết của bạn</h3>
+							<div className="mt-10">
+								{blogs.map((item, index) => (
+									<BlogItem key={index} blog={item} />
+								))}
+							</div>
+						</div>
+					}
 
 					{/* Modal edit bio */}
 					<ModalInput

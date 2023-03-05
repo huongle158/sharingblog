@@ -13,7 +13,7 @@ export default function Home() {
 	const dispatch = useDispatch();
 	const [tags, setTags] = useState([]);
 	//const [blogs, setBlogs] = useState([])
-	const { blogs, loading } = useSelector((reduxData: any) => {
+	const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
 	useEffect(() => {
@@ -24,15 +24,16 @@ export default function Home() {
 				getAllTags();
 			}
 		};
-		const fetchBlogs = async () => {
-			const allBlogs = await blogService.getAllPosts();
-			if (allBlogs && allBlogs.articles) {
-				//setBlogs(allBlogs.articles)
-				dispatch(getAllBlogs(allBlogs.articles));
-			}
-		};
+		// const fetchBlogs = async () => {
+		// 	const allBlogs = await blogService.getAllPosts();
+		// 	if (allBlogs && allBlogs.articles) {
+		// 		//setBlogs(allBlogs.articles)
+		// 		dispatch(getAllBlogs(allBlogs.articles));
+		// 	}
+		// };
+		dispatch(getAllBlogs());
 		fetchTags();
-		fetchBlogs();
+		// fetchBlogs();
 	}, []);
 
 	return (
@@ -40,7 +41,7 @@ export default function Home() {
 			<div className="flex items-center justify-center lg:ml-40 mt-4 lg:w-[50%] w-[98%] ml-2">
 				<SearchOptions onSearch={() => {}} />
 			</div>
-			{loading ? (
+			{pending ? (
 				<div className="flex items-center justify-center h-screen">
 					<Spin className="w-12 h-12" />
 				</div>

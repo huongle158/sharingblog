@@ -28,18 +28,28 @@ const blogService = {
     return null;
   },
 
-    getAllPosts: async () => {
-      try {
-        const res = await fetch(`${BASE_URL}`);
-        if (res.status === OK) {
-          return await res.json();
-        }
-      } catch (err) {
-        console.error(err);
+  getAllPosts: async (limit?: number, author?: string, offset?: number) => {
+    let url = `${BASE_URL}?`;
+    if (limit) {
+      url += `limit=${limit}&`;
+    }
+    if (author) {
+      url += `author=${author}&`;
+    }
+    if (offset) {
+      url += `offset=${offset}&`;
+    }
+    try {
+      const res = await fetch(url);
+      if (res.status === OK) {
+        return await res.json();
       }
-      return null;
-    },
-    
+    } catch (err) {
+      console.error(err);
+    }
+    return null;
+  },
+  
   getPostBySlug: async (token: string, slug: string) => {
       try {
         const res = await fetch(`${BASE_URL}/${slug}`, {

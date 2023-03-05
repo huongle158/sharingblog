@@ -2,6 +2,7 @@ import { CommentOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Card, Spin, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { getTimeDiffInWords } from './../formatTime';
 interface Props {
     blog: Blog,
     className?: string,
@@ -50,7 +51,7 @@ export const BlogItem = ({ blog, className }: Props) => {
                         </div>
                         <div>
                             <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
-                            <p className="text-gray-500 mb-2 font-normal italic text-sm">{blog.createdAt}</p>
+                            <p className="text-gray-500 mb-2 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
                         </div>
                     </a>
                 }>

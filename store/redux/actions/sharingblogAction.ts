@@ -7,14 +7,14 @@ import { CREATE_TITLE_BLOG,
         GET_BLOG_BY_SLUG} from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
-export const getAllBlogs = () => {
+export const getAllBlogs = (limit?: number, author?: string, offset?: number) => {
     return (
         async (dispatch: any) => {
             await dispatch( {
                 type: GET_ALL_BLOG_REQUEST
             })
             try {
-                const blogs = await blogService.getAllPosts();
+                const blogs = await blogService.getAllPosts(limit, author, offset);
                 return dispatch({
                     type: GET_ALL_BLOG_SUCCESS,
                     payload: blogs
