@@ -9,6 +9,7 @@ interface Props {
     onChange: (e: any) => void,
     isTextArea?: boolean,
     maxLength?: number,
+    placeHolder?: string,
 }
 
 const { TextArea } = Input;
@@ -22,6 +23,7 @@ export const ModalInput = ({
     onChange,
     isTextArea = false,
     maxLength,
+    placeHolder,
 }: Props) => {
     return (
         <Modal
@@ -42,6 +44,7 @@ export const ModalInput = ({
                 isTextArea ? (
                     <TextArea
                         defaultValue={defaultValue}
+                        placeholder={placeHolder}
                         onChange={onChange}
                         className="h-20 mb-8"
                         showCount
