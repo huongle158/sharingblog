@@ -7,7 +7,9 @@ import { useState, useEffect, Suspense } from "react";
 import { getAllTags } from "@/store/redux/actions/tagAction";
 import tagService from "@/services/tagService";
 import { Spin } from "antd";
-import { users } from '@/fake-data';
+import { users } from "@/fake-data";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function Home() {
 	const dispatch = useDispatch();
@@ -16,6 +18,8 @@ export default function Home() {
 	const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const router = useRouter();
 	useEffect(() => {
 		const fetchTags = async () => {
 			const allTags = await tagService.getAllTags();
@@ -36,6 +40,16 @@ export default function Home() {
 		// fetchBlogs();
 	}, []);
 
+	useEffect(() => {
+		// Xử lý điều huong
+		const isLoggedInCookie = Cookies.get("token");
+		if (!isLoggedInCookie) {
+			router.push("/login");
+		} else {
+			setIsLoggedIn(true);
+		}
+	}, []);
+
 	return (
 		<Sidebar>
 			<div className="flex items-center justify-center lg:ml-40 mt-4 lg:w-[50%] w-[98%] ml-2">
@@ -54,7 +68,9 @@ export default function Home() {
 							))}
 					</div>
 					<div className="lg:flex-2 lg:order-2 order-1 mt-4 lg:right-0 lg:sticky">
-						<Suspense fallback={<div>Loading...</div>}><ListUsers title="Danh sách gợi ý" users={users} /></Suspense>
+						<Suspense fallback={<div>Loading...</div>}>
+							<ListUsers title="Danh sách gợi ý" users={users} />
+						</Suspense>
 						<div className="mt-4 lg:w-[280px]">
 							<TagsBox title="Các chủ đề được đề xuất" tags={tags} />
 						</div>
