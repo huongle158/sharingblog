@@ -1,6 +1,5 @@
 import { CommentOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Card, Spin, Tag } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
 
 export const BlogItem = ({ blog }: any) => {
     // giới hạn content 150 chữ
@@ -28,7 +27,7 @@ export const BlogItem = ({ blog }: any) => {
 
             {/* Body card */}
             <h1 className="text-xl font-bold mb-2">{blog.title}</h1>
-            <a href="#" className="lg:flex h-fit hover:text-black">
+            <a href="#" className="lg:flex h-fit hover:text-black content">
                 <div className="lg:flex-1 mb-4 lg:mr-2 "
                         dangerouslySetInnerHTML={{__html: previewContten}}
                     />
