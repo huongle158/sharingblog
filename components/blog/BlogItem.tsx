@@ -26,13 +26,8 @@ interface Blog {
 }
 
 export const BlogItem = ({ blog, className }: Props) => {
-    const router = useRouter()
     // giới hạn content 150 chữ
     const previewContent: string = blog.content.substring(0, 600) + '...'
-    const handleBlogDetails = () => {
-        router.push(`/blog/${blog.slug}`)
-    }
-    console.log(blog)
 
     return (
             <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
@@ -52,11 +47,11 @@ export const BlogItem = ({ blog, className }: Props) => {
                 <Divider className="border-gray-300"/>
                 {/* Body card */}
                 <div className="px-6">
-                <a href={`/blog/${blog.slug}`} className="h-fit hover:text-black content">
+                    <a href={`/blog/${blog.slug}`} className="h-fit hover:text-black content">
                         <h1 className="text-xl font-bold mb-2">{blog.title}</h1>
                         <div className="lg:flex">
                             <div className="lg:flex-1 mb-4 lg:mr-2 "
-                                    dangerouslySetInnerHTML={{__html: blog.content}}
+                                    dangerouslySetInnerHTML={{__html: previewContent}}
                                 />
                             <div className="lg:flex-2">
                                 <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
@@ -69,12 +64,12 @@ export const BlogItem = ({ blog, className }: Props) => {
                 <div className="flex my-3 mx-4">
                     <div className="flex-1">
                         {/* unlike */}
-                        <a href="#" className="hover:text-gray-400 mr-2"><HeartOutlined className="border-black text-[22px]" size={20}/> 22</a>
+                        <a href="#" className="hover:text-gray-400"><HeartOutlined className="border-black text-[22px]" size={20} /></a> 22
                         {/* liked */}
-                        <a href="#" hidden className="mr-2"><HeartFilled className="text-red-600 text-[22px]" /> 23</a>
+                        {/* <a href="#"><HeartFilled className="text-red-600 text-[22px]" /></a> 23 */}
 
                         {/* comments */}
-                        <a href="#" className="hover:text-gray-400"><CommentOutlined className="text-[22px]" /> 25</a>
+                        <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> 25
                     </div>
 
                     <div className='flex-1'>

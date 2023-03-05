@@ -26,7 +26,7 @@ interface Blog {
 
 export const BlogDetails = ({ blog, className }: Props) => {
     // giới hạn content 150 chữ
-    const previewContent: string = blog.content.substring(0, 600) + '...'
+    // const previewContent: string = blog.content.substring(0, 600) + '...'
     return (
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
             {/* Header card */}
@@ -49,14 +49,14 @@ export const BlogDetails = ({ blog, className }: Props) => {
             {/* Body card */}
             <div className="h-fit px-6 py-2">
                 <h1 className="text-xl font-bold mb-2">{blog.title}</h1>
-                <div className="lg:flex">
-                    <div className="lg:flex-1 mb-4 lg:mr-2 content"
+                {/* <div className="lg:flex"> */}
+                    <div className="mb-4 lg:mr-2 content"
                             dangerouslySetInnerHTML={{__html: blog.content}}
                         />
-                    <div className="lg:flex-2">
+                    {/* <div className="lg:flex-2">
                         <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
             </div>
 
             <Divider className="border-gray-300" />
