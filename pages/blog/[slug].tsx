@@ -34,7 +34,6 @@ export default function BlogDetail() {
     useEffect(() => {
         const fetchBlogDetail = async () => {
             const blogDetail = await blogService.getPostBySlug(token, slug)
-            console.log(blogDetail)
             if (blogDetail) {
                 setBlog(blogDetail)
             }
