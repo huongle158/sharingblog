@@ -21,11 +21,11 @@ const Login: React.FC = () => {
 		const result  = await userService.login(input)
 		if (result) {
 			Cookies.set('token', result.user.token, { expires: 7 });
-			router.push('/profile')
-			// router.push({
-			// 	pathname: '/',
-			// 	query: { showToast: true, message: 'Đăng nhập thành công!'},
-			// }, undefined, { shallow: true });
+
+			router.push({
+				pathname: '/profile',
+				query: { showToast: true, message: 'Đăng nhập thành công!'},
+			}, '/profile');
 		}
 		else {
 			toast.error('Tài khoản hoặc mật khẩu không đúng! Vui lòng kiểm tra lại!');
