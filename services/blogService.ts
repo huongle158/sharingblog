@@ -69,11 +69,14 @@ const blogService = {
       return null;
     },
 
-    updatePost: async (id: string, updatedBlog: object) => {
+    updatePost: async (token: string, slug: string, updatedBlog: object) => {
       try {
-        const res = await fetch(`${BASE_URL}/${id}`, {
+        const res = await fetch(`${BASE_URL}/update/${slug}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
           body: JSON.stringify(updatedBlog),
         });
         if (res.status === OK) {
@@ -85,10 +88,14 @@ const blogService = {
       return null;
     },
   
-    deletePost: async (id: string) => {
+    deletePost: async (token: string, slug: string) => {
       try {
-        const res = await fetch(`${BASE_URL}/${id}`, {
+        const res = await fetch(`${BASE_URL}/${slug}`, {
           method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
         });
         if (res.status === OK) {
           return await res.json();

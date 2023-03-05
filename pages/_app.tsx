@@ -21,11 +21,16 @@ export default function App({ Component, pageProps }: AppProps) {
 		if (!token && router.pathname !== "/login" && router.pathname !== "/register") {
 			router.push("/login");
 		}
-		}, [token, router.pathname]);
+	}, [token, router.pathname]);
 	useEffect(() => {
-		const { showToast, message } = router.query;
+		const { showToast, message, error } = router.query;
 		if (showToast && router.query) {
-			toast.success(message)
+			if (message) {
+				toast.success(message)
+			}
+			if (error) {
+				toast.error(error)
+			}
 		}
 	}, [router.query]);
 	
@@ -34,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<Provider store={store}>
 				<ToastContainer
 					position="top-right"
-					autoClose={5000}
+					autoClose={2000}
 					hideProgressBar={false}
 					newestOnTop={false}
 					closeOnClick
