@@ -75,6 +75,7 @@ const UpdateBlog = () => {
             toast.error('Cập nhật blog thất bại');
         }
     }
+    // console.log(typeof banner)
 
     return (
         <Sidebar>

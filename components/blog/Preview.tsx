@@ -42,7 +42,7 @@ const Preview = ({ title, content, fileImage, setFileImage, tagList, setTagList,
         }
         fetchTags()
     }, []);
-console.log(fileImage)
+    
     const defaultFileList: UploadFile[] = [
         {
             uid: '1',

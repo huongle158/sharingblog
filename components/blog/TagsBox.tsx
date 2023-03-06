@@ -9,7 +9,7 @@ interface Props {
 
 export const TagsBox = ({title, tags}: Props) => {
     const [selectedTag, setSelectedTag] = useState('');
-    const filterBlogByTags = (item: any) => {
+    const filterBlogByTags = (item: string) => {
         if (selectedTag === item) {
             setSelectedTag('');
           } else {
