@@ -1,21 +1,24 @@
 import { BlogItem, ListUsers, SearchOptions, TagsBox } from "@/components";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBlogs } from "./../store/redux/actions/sharingblogAction";
+import { getAllBlogs, getAllBlogsByArthor, getAllBlogsByTags } from "./../store/redux/actions/sharingblogAction";
 import blogService from "./../services/blogService";
 import { useState, useEffect, Suspense } from "react";
 import { getAllTags } from "@/store/redux/actions/tagAction";
 import tagService from "@/services/tagService";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 import { users } from '@/fake-data';
+import Cookies from "js-cookie";
 
 export default function Home() {
 	const dispatch = useDispatch();
 	const [tags, setTags] = useState([]);
+	const token = Cookies.get("token") || "";
 	//const [blogs, setBlogs] = useState([])
 	const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
+
 	useEffect(() => {
 		const fetchTags = async () => {
 			const allTags = await tagService.getAllTags();
@@ -24,22 +27,43 @@ export default function Home() {
 				getAllTags();
 			}
 		};
-		// const fetchBlogs = async () => {
-		// 	const allBlogs = await blogService.getAllPosts();
-		// 	if (allBlogs && allBlogs.articles) {
-		// 		//setBlogs(allBlogs.articles)
-		// 		dispatch(getAllBlogs(allBlogs.articles));
-		// 	}
-		// };
-		dispatch(getAllBlogs());
+		dispatch(getAllBlogs(token));
 		fetchTags();
-		// fetchBlogs();
 	}, []);
 
+	const handleSearch = async (searchOption: string, searchValue: string) => {
+		const filter = searchValue.toLocaleLowerCase().trim()
+		if(searchOption === "Author") {
+			await blogService.getAllPosts(token,undefined,filter)
+			.then((result) => {
+				if(result.articles.length === 0) {
+					message.info('Không tìm thấy bài viết của tác giả này');
+					return false
+				}
+			  dispatch(getAllBlogsByArthor(result.articles));
+			})
+			.catch((err) => {
+				message.error(`Không tìm thấy tác giả: ${filter}`);
+			})
+		}
+		if(searchOption === "Tags") {
+			await blogService.getAllPosts(token,undefined,undefined,filter)
+			.then((result) => {
+				if( result.articles.length == 0) {
+					message.info('Không tìm thấy bài viết nào liên quan đến tag này');
+					return false
+				}
+				dispatch(getAllBlogsByTags(result.articles));
+			})
+			.catch((err) => {
+				message.error(err);
+			})
+		}
+	  };
 	return (
 		<Sidebar>
 			<div className="flex items-center justify-center lg:ml-40 mt-4 lg:w-[50%] w-[98%] ml-2">
-				<SearchOptions onSearch={() => {}} />
+				<SearchOptions onSearch={handleSearch} />
 			</div>
 			{pending ? (
 				<div className="flex items-center justify-center h-screen">

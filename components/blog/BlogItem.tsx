@@ -28,7 +28,7 @@ interface Blog {
 
 export const BlogItem = ({ blog, className }: Props) => {
     // giới hạn content 150 chữ
-    const previewContent: string = blog.content.substring(0, 600) + '...'
+    const previewContent: string = blog.content.substring(0, 200) + '...'
 
     return (
             <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
