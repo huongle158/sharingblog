@@ -28,7 +28,7 @@ const blogService = {
     return null;
   },
 
-  getAllPosts: async (limit?: number, author?: string, offset?: number) => {
+  getAllPosts: async (token: string, limit?: number, author?: string, tag?: string, offset?: number) => {
     let url = `${BASE_URL}?`;
     if (limit) {
       url += `limit=${limit}&`;
@@ -39,8 +39,15 @@ const blogService = {
     if (offset) {
       url += `offset=${offset}&`;
     }
+    if (tag) {
+      url += `tag=${tag}&`;
+    }
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (res.status === OK) {
         return await res.json();
       }

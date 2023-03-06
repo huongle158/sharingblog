@@ -60,6 +60,8 @@ export default function Profile() {
 	const [username, setUsername] = useState("");
 	const [bio, setBio] = useState("");
 	const [initialBio, setInitialBio] = useState("");
+	const [initialuseName, setInitialuseName] = useState("");
+	const [initialfullName, setInitialFullname] = useState("");
 	useEffect(() => {
 		const fetchUserInfo = async () => {
 			const userInfo = await userService.getInfo(token);
@@ -70,22 +72,16 @@ export default function Profile() {
 				setEmail(userInfo.user.email);
 				setUsername(userInfo.user.username);
 				setBio(userInfo.user.bio);
+
 				setInitialBio(userInfo.user.bio);
+				setInitialFullname(userInfo.user.fullname);
+				setInitialuseName(userInfo.user.username);
 				dispatch(getUserInfo(userInfo.user));
 			}
 		};
-		// const fetchAllPostsByAutor = async () => {
-		// 	const allBLogs = await blogService.getAllPosts(undefined, username);
-		// 	if(allBLogs && allBLogs.articles) {
-		// 		dispatch(getAllBlogs(allBLogs.articles));
-		// 	}
-		// }
-		dispatch(getAllBlogs(undefined, username));
+		dispatch(getAllBlogs(token,undefined, username));
 		fetchUserInfo();
-		// fetchAllPostsByAutor();
-		// if (token) {
-		//     router.push("/");
-		// }
+
 		if (!token) {
 			setAvatar("");
 			setFullname("");
@@ -93,9 +89,10 @@ export default function Profile() {
 			setUsername("");
 			setBio("");
 		}
-	}, [token, avatar, router, fullname, username, dispatch]);
+	}, [token, avatar, router, dispatch]);
 	// tăng giá trị key mới để component được khởi tạo lại
 	const [bioKey, setBioKey] = useState(0);
+	const [infoKey, setInfoKey] = useState(0);
 	const [isBioModalOpen, setIsBioModalOpen] = useState(false);
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
@@ -105,6 +102,7 @@ export default function Profile() {
 	};
 	const showInfoModal = () => {
 		setIsInfoModalOpen(true);
+		setInfoKey(infoKey + 1);
 	};
 	const handleOk = async () => {
 		const input = {
@@ -121,12 +119,26 @@ export default function Profile() {
 		setIsInfoModalOpen(false);
 		// console.log(input.user.fullname);
 	};
+	const handleOkUpdateInfo = async () => {
+		const input = {
+		  user: {
+			username: username,
+			fullname: fullname,
+		  },
+		};
+		await userService.updateInfo(token, input);
+		setIsInfoModalOpen(false);
+	  };
 
 	const handleCancel = () => {
 		setIsBioModalOpen(false);
-		setIsInfoModalOpen(false);
 		setBio(initialBio);
 	};
+	const handleCancelUpdateInfo = () => {
+		setIsInfoModalOpen(false);
+		setUsername(initialuseName);
+		setFullname(initialfullName);
+	  };
 
 	// update avt
 	const [loading, setLoading] = useState(false);
@@ -307,10 +319,11 @@ export default function Profile() {
 					/>
 					{/* Modal edit fullname, username */}
 					<ModalMultipleInput
+						key={infoKey}
 						title="Chỉnh sửa thông tin"
 						isModalOpen={isInfoModalOpen}
-						handleOk={handleOk}
-						handleCancel={handleCancel}
+						handleOk={handleOkUpdateInfo}
+						handleCancel={handleCancelUpdateInfo}
 						items={itemsInfoModal}
 					/>
 				</div>

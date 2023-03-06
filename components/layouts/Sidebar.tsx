@@ -18,6 +18,7 @@ import { logoutUser } from "@/store/redux/actions/userAction";
 import ModalLogout from "../modals/ModalLogoutUser";
 import { ModalInput } from "../modals/ModalInput";
 import { getTitleNewBlog } from "@/store/redux/actions/sharingblogAction";
+import userService  from '@/services/userService';
 
 interface Props {
 	children: ReactNode;
@@ -30,7 +31,7 @@ export const Sidebar = ({ children }: Props) => {
 		return reduxData.userReducer;
 	});
 	// console.log("This's ~ user sidebar", user.avatar);
-
+	const token = Cookies.get("token") || "";
 	// modal create Blog
 	const [showModal, setShowModal] = useState(false);
 	// const [showTitleModal, setShowTitleModal] = useState(false);
@@ -46,23 +47,16 @@ export const Sidebar = ({ children }: Props) => {
 		await Cookies.remove("token");
 		router.push("/login");
 	};
-
-	// const [title, setTitle] = useState("Tiêu đề");
-	// const handleOkTitle = () => {
-	// 	if (title === "Tiêu đề") {
-	// 		message.error('Tiêu đề không được để trống');
-	// 		return false
-	// 	}
-	// 	setShowTitleModal(!showTitleModal);
-	// 	router.push("/create");
-	// 	dispatch(getTitleNewBlog(title));
-	// 	setShowTitleModal(false);
-	// };
-
-	// const handleCancel = () => {
-	// 	setTitle("Tiêu đề");
-	// 	setShowTitleModal(false);
-	// };
+	const [avatar, setAvatar] = useState("");
+	useEffect(() => {
+		const fetchUserInfo = async () => {
+			const userInfo = await userService.getInfo(token);
+			if (userInfo && userInfo.user) {
+				setAvatar(userInfo.user.avatar);
+				}
+			}
+		fetchUserInfo();
+	}, [avatar]);
 
 	return (
 		<div className="flex">
@@ -84,7 +78,7 @@ export const Sidebar = ({ children }: Props) => {
 					trigger="click"
 				>
 					<Badge count={99}>
-						<Avatar shape="circle" src={user.avatar} size={46} />
+						<Avatar shape="circle" src={avatar} size={46} />
 					</Badge>
 				</Popover>
 

@@ -1,4 +1,5 @@
 import { Input, Select } from "antd"
+import { useState } from 'react';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -8,14 +9,29 @@ interface Props {
 }
 
 export const SearchOptions = ({onSearch}: Props) => {
+    const [searchOption, setSearchOption] = useState("Title");
+    const [searchValue, setSearchValue] = useState("");
+
+    const handleOnSearch = () => {
+        onSearch(searchOption, searchValue);
+      };
+
     return (
         <Input.Group compact size="large">
-            <Select defaultValue="Title" className="lg:w-[20%] w-[30%]" size="large">
-                <Option value="Title">Title</Option>
-                <Option value="Author">Author</Option>
+            <Select 
+                defaultValue="Title" 
+                className="lg:w-[20%] w-[30%]"
+                onChange={(value: string) => setSearchOption(value)}
+                size="large">
+                <Option value="Title">Tiêu đề</Option>
+                <Option value="Author">Tác giả</Option>
                 <Option value="Tags">Tags</Option>
             </Select>
-            <Search placeholder="Tìm kiếm..." onSearch={onSearch} className="lg:w-[80%] w-[70%]" size="large" />
+            <Search placeholder="Tìm kiếm..." 
+                    onSearch={handleOnSearch} 
+                    className="lg:w-[80%] w-[70%]" 
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    size="large" />
         </Input.Group>
     )
 }
