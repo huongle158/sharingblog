@@ -1,6 +1,11 @@
-import { Tag, Typography } from "antd"
+import { message, Tag, Typography } from "antd"
 import cx from 'classnames';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import  blogService  from '@/services/blogService';
+import Cookies from "js-cookie";
+import { getAllBlogsByTags } from "@/store/redux/actions/sharingblogAction";
+import { useEffect } from 'react';
 
 interface Props {
     title?: string,
@@ -9,10 +14,42 @@ interface Props {
 
 export const TagsBox = ({title, tags}: Props) => {
     const [selectedTag, setSelectedTag] = useState('');
-    const filterBlogByTags = (item: string) => {
-        setSelectedTag(prevSelectedTag => prevSelectedTag === item ? '' : item);
-        console.log(selectedTag)
+    const token = Cookies.get("token") || "";
+    const dispatch = useDispatch();
+    const filterBlogByTags = async (item: string) => {
+        if (selectedTag === item) {
+            setSelectedTag('');
+            const result = await blogService.getAllPosts(token, undefined, undefined, '');
+            dispatch(getAllBlogsByTags(result.articles));
+   
+          } else {
+            setSelectedTag(item);
+            const result = await blogService.getAllPosts(token, undefined, undefined, item);
+            dispatch(getAllBlogsByTags(result.articles));
+
+          }
+  
+        // try {
+        //     const result = await blogService.getAllPosts(token, undefined, undefined, newTag);
+        //     dispatch(getAllBlogsByTags(result.articles));
+        //     console.log(result)
+        //   } catch (err) {
+        //     message.error(err);
+        //   }
+    
     }
+    // useEffect( () => {
+    //     if (selectedTag) {
+    //         blogService.getAllPosts(token, undefined, undefined, selectedTag)
+    //         .then((result) => {
+    //             dispatch(getAllBlogsByTags(result.articles));
+    //         })
+    //         .catch((err) => {
+    //             message.error(err);
+    //         })
+    //     }
+    // }, [selectedTag])
+    
     return (
         <div>
             <Typography.Title level={5}>{ title }</Typography.Title>
@@ -21,7 +58,8 @@ export const TagsBox = ({title, tags}: Props) => {
                     <a key={index} >
                     <Tag
                       className={cx('cursor-pointer mb-1', {
-                        'text-blue-800': item === selectedTag,
+                        'text-blue-800'
+                        : item === selectedTag,
                       })}
                       onClick={() => filterBlogByTags(item)}
                     >
