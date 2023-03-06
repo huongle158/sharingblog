@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { useDispatch } from "react-redux";
 import blogService from "@/services/blogService";
-import { Input, message, Modal } from "antd";
+import { Input, message, Modal, Typography } from "antd";
 import { useRouter } from "next/router";
 import { getBlogBySlug, getContentNewBlog } from "@/store/redux/actions/sharingblogAction";
 import CreateContent from "@/components/blog/CreateContent";
@@ -79,7 +79,9 @@ const UpdateBlog = () => {
     return (
         <Sidebar>
             <div className="container overflow-y-scroll h-screen">
-                <Input onChange={(e) => setTitle(e.target.value)} value={title} />
+                <Typography.Title level={4} className="ml-2">Tiêu đề:</Typography.Title>
+                <Input onChange={(e) => setTitle(e.target.value)} value={title} maxLength={300} showCount/>
+                <Typography.Title level={4} className="ml-2 mt-4">Nội dung:</Typography.Title>
                 <CreateContent content={content} handleContentChange={handleContentChange} pushPreview={pushPreview} />
             </div>
             {/* Modal */}

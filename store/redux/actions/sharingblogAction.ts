@@ -5,7 +5,7 @@ import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_FAILURE,
         CREATE_CONTENT_BLOG, 
         GET_BLOG_BY_SLUG,
-        FILTER_ALL_BLOG_BY_ARTHOR,
+        FILTER_ALL_BLOG_BY_AUTHOR,
         FILTER_ALL_BLOG_BY_TAGS} from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
@@ -52,15 +52,15 @@ export const getBlogBySlug = (blog: any) => {
     }
 }
 
-export const getAllBlogsByArthor = (blog: any) => {
+export const getAllBlogsByAuthor = (blog: any) => {
     return {
-        type: FILTER_ALL_BLOG_BY_ARTHOR,
+        type: FILTER_ALL_BLOG_BY_AUTHOR,
         payload: blog
     }
 }
 export const getAllBlogsByTags = (blog: any) => {
     return {
-        type: FILTER_ALL_BLOG_BY_ARTHOR,
+        type: FILTER_ALL_BLOG_BY_AUTHOR,
         payload: blog
     }
 }
