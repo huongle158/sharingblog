@@ -53,7 +53,6 @@ export default function Profile() {
 	const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
-	console.log("redux", blogs)
 	const [avatar, setAvatar] = useState("");
 	const [fullname, setFullname] = useState("");
 	const [email, setEmail] = useState("");
