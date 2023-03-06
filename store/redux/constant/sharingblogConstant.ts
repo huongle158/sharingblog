@@ -4,5 +4,5 @@ export const GET_ALL_BLOG_FAILURE: string = 'GET_ALL_BLOG_FAILURE';
 export const CREATE_TITLE_BLOG: string =  "CREATE_TITLE_BLOG"
 export const CREATE_CONTENT_BLOG: string = "CREATE_CONTENT_BLOG"
 export const GET_BLOG_BY_SLUG: string = 'GET_BLOG_BY_SLUG'
-export const FILTER_ALL_BLOG_BY_ARTHOR: string = 'FILTER_ALL_BLOG_BY_ARTHOR'
+export const FILTER_ALL_BLOG_BY_AUTHOR: string = 'FILTER_ALL_BLOG_BY_AUTHOR'
 export const FILTER_ALL_BLOG_BY_TAGS: string = 'FILTER_ALL_BLOG_BY_TAGS'

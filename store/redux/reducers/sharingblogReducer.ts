@@ -3,7 +3,7 @@ import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_SUCCESS,
         GET_ALL_BLOG_FAILURE,
         CREATE_CONTENT_BLOG,
-        FILTER_ALL_BLOG_BY_ARTHOR,
+        FILTER_ALL_BLOG_BY_AUTHOR,
         FILTER_ALL_BLOG_BY_TAGS } from '../constant/sharingblogConstant';
 
 const initialState: any = {
@@ -29,7 +29,7 @@ const sharingblogReducers = (state = initialState, action: any) => {
             state.pending = false;
             state.blogs = action.payload.articles;
             break;
-        case FILTER_ALL_BLOG_BY_ARTHOR: 
+        case FILTER_ALL_BLOG_BY_AUTHOR: 
             state.blogs = action.payload;
             break;
         case FILTER_ALL_BLOG_BY_TAGS: 

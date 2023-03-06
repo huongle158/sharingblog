@@ -1,7 +1,7 @@
 import { BlogItem, ListUsers, SearchOptions, TagsBox } from "@/components";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBlogs, getAllBlogsByArthor, getAllBlogsByTags } from "./../store/redux/actions/sharingblogAction";
+import { getAllBlogs, getAllBlogsByAuthor, getAllBlogsByTags } from "./../store/redux/actions/sharingblogAction";
 import blogService from "./../services/blogService";
 import { useState, useEffect, Suspense } from "react";
 import { getAllTags } from "@/store/redux/actions/tagAction";
@@ -48,7 +48,7 @@ export default function Home() {
 					message.info('Không tìm thấy bài viết của tác giả này');
 					return false
 				}
-			  dispatch(getAllBlogsByArthor(result.articles));
+			  dispatch(getAllBlogsByAuthor(result.articles));
 			})
 			.catch((err) => {
 				message.error(`Không tìm thấy tác giả: ${filter}`);
