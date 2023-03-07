@@ -9,6 +9,7 @@ import CreateContent from "@/components/blog/CreateContent";
 import Cookies from "js-cookie";
 import Preview from "@/components/blog/Preview";
 import { toast } from "react-toastify";
+import { RcFile } from "antd/es/upload";
 
 const UpdateBlog = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const UpdateBlog = () => {
     const { slug } = router.query
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    const [banner, setBanner] = useState("");
+    const [oldBanner, setOldBanner] = useState("");
+    const [newBanner, setNewBanner] = useState<RcFile | null > (null);
     const [tagList, setTagList] = useState([]);
 
     const handleContentChange = (value: string) => {
@@ -29,9 +31,9 @@ const UpdateBlog = () => {
         const fetchBlogDetail = async () => {
             const blogDetail = await blogService.getPostBySlug(token, slug)
             if (blogDetail && blogDetail.article) {
-                setContent(blogDetail.article.content)
                 setTitle(blogDetail.article.title)
-                setBanner(blogDetail.article.banner)
+                setContent(blogDetail.article.content)
+                setOldBanner(blogDetail.article.banner)
                 setTagList(blogDetail.article.tagList)
 
                 dispatch(getBlogBySlug(blogDetail))
@@ -46,23 +48,22 @@ const UpdateBlog = () => {
             message.error('Nội dung bài Blog không được để trống');
             return false
         }
+        console.log("banner: " + newBanner)
         setShowPreview(true)
     }
 
     const saveBlog = async () => {
-        const token = Cookies.get('token') || "";
-        if (banner === "") {
-            message.error('Avatar Blog không được để trống');
-            return false
-        }
-        const newBlog = {
+        console.log("banner on update: " + newBanner)
+       
+        const blogUpdate = {
             title: title,
             content: content,
-            banner: banner,
             tagList: tagList,
+            banner: newBanner
         };
         try {
-            const post = await blogService.updatePost(token, slug, newBlog);
+            console.log(typeof newBanner)
+            const post = await blogService.updatePost(token, slug, blogUpdate);
             console.log(post)
             router.push({
                 pathname: `/blog/${slug}`,
@@ -75,7 +76,6 @@ const UpdateBlog = () => {
             toast.error('Cập nhật blog thất bại');
         }
     }
-    // console.log(typeof banner)
 
     return (
         <Sidebar>
@@ -99,8 +99,11 @@ const UpdateBlog = () => {
                     <Preview
                         title={title}
                         content={content}
-                        fileImage={banner}
-                        setFileImage={setBanner}
+                        // isValidFileImage={isValidFileImage}
+                        // setIsValidFileImage={setIsValidFileImage}
+                        oldBanner={oldBanner}
+                        newBanner={newBanner}
+                        setNewBanner={setNewBanner}
                         tagList={tagList}
                         setTagList={setTagList}
                         saveBlog={saveBlog}

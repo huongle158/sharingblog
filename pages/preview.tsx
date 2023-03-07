@@ -62,6 +62,7 @@ const Preview = () => {
                 toast.error('Tạo bài Blog thất bại');
           }
     }
+    // console.log("file create: " + fileImage)
 
     const [tags, setTags] = useState([])
     useEffect(() => {
