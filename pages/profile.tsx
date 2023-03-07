@@ -80,6 +80,7 @@ export default function Profile() {
 				setInitialBio(userInfo.user.bio);
 				setInitialFullname(userInfo.user.fullname);
 				setInitialuseName(userInfo.user.username);
+				setNewUsername(userInfo.user.username)
 				dispatch(getUserInfo(userInfo.user));
 			}
 		};
@@ -139,14 +140,19 @@ export default function Profile() {
 		toast.success("Cập nhật bio thành công");
 		// console.log(input.user.fullname);
 	};
+	const [newUsername, setNewUsername] = useState("");
 	const handleOkUpdateInfo = async () => {
-		try {
+		  try {
 			const input = {
 				user: {
-					username: username,
 					fullname: fullname,
+					// username: username
 				},
 			};
+			//Kiểm tra xem nếu username được cập nhật thì mới thêm vào input
+			if (newUsername !== username) {
+				input.user.username = username;
+			  }
 			await userService.updateInfo(token, input);
 			setIsInfoModalOpen(false);
 			toast.success("Cập nhật thông tin thành công");
@@ -209,7 +215,7 @@ export default function Profile() {
 		},
 		{
 			title: "Username",
-			value: username,
+			value: newUsername,
 			onChange: (e: any) => setUsername(e.target.value),
 		},
 	];
