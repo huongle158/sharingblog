@@ -2,6 +2,7 @@ import blogService from '@/services/blogService';
 import { CommentOutlined, EllipsisOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { Avatar, Card, Divider, Dropdown, MenuProps, Spin, Tag } from 'antd';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -38,7 +39,7 @@ export const BlogDetails = ({ blog, className }: Props) => {
 
     const items: MenuProps['items'] = [
         {
-            label: <a href={`/blog/update/${blog.slug}`} >Chỉnh sửa</a>,
+            label: <Link href={`/blog/update/${blog.slug}`} >Chỉnh sửa</Link>,
             key: 0
 
         },
@@ -79,7 +80,7 @@ export const BlogDetails = ({ blog, className }: Props) => {
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
             {/* Header card */}
             <div className="flex">
-                <a href="#" className="flex-1 flex justify-left items-left hover:text-black mx-4">
+                <Link href="#" className="flex-1 flex justify-left items-left hover:text-black mx-4">
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
@@ -91,7 +92,7 @@ export const BlogDetails = ({ blog, className }: Props) => {
                         <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
                         <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
                     </div>
-                </a>
+                </Link>
                 <Dropdown menu={{ items }} trigger={['click']} arrow={{ pointAtCenter: true }} placement="bottomRight">
                     <a className="flex-4 w-auto flex justify-end mr-8 pt-4"><EllipsisOutlined className="text-3xl text-gray-600" /></a>
                 </Dropdown>
@@ -100,15 +101,13 @@ export const BlogDetails = ({ blog, className }: Props) => {
 
             {/* Body card */}
             <div className="h-fit px-6 py-2">
-                <h1 className="text-xl font-bold mb-2">{blog.title}</h1>
-                {/* <div className="lg:flex"> */}
-                    <div className="mb-4 lg:mr-2 content"
-                            dangerouslySetInnerHTML={{__html: blog.content}}
-                        />
-                    {/* <div className="lg:flex-2">
-                        <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
-                    </div> */}
-                {/* </div> */}
+                <h1 className="text-xl font-bold mb-2 text-center">{blog.title}</h1>
+                <div className="lg:flex-2 flex justify-center">
+                    <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
+                </div>
+                <div className="mb-4 lg:mr-2 content"
+                        dangerouslySetInnerHTML={{__html: blog.content}}
+                    />
             </div>
 
             <Divider className="border-gray-300" />
