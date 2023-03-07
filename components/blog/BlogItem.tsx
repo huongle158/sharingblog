@@ -43,7 +43,7 @@ export const BlogItem = ({ blog, className }: Props) => {
                         </div>
                         <div>
                             <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
-                            <p className="text-gray-500 mb-2 font-bold text-sm">{blog.author.username}</p>
+                            <p className="text-gray-500 mb-2 text-sm">@{blog.author.username}</p>
                             <p className="text-gray-500 mb-2 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
                         </div>
                     </Link>

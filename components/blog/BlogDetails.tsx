@@ -1,6 +1,6 @@
 import blogService from '@/services/blogService';
 import { CommentOutlined, EllipsisOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { Avatar, Card, Divider, Dropdown, MenuProps, Spin, Tag } from 'antd';
+import { Avatar, Card, Divider, Dropdown, MenuProps, Spin, Tag, Typography } from 'antd';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -89,7 +89,8 @@ export const BlogDetails = ({ blog, className }: Props) => {
                         />
                     </div>
                     <div>
-                        <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
+                        <Typography.Title level={4} className="font-bold mb-1">{blog.author.fullname}</Typography.Title>
+                        <h5 className="text-gray-500 mb-1">@{blog.author.username}</h5>
                         <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
                     </div>
                 </Link>

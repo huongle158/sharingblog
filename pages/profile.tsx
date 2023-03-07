@@ -6,6 +6,10 @@ import {
 	ListUsers,
 	ModalInput,
 	ModalMultipleInput,
+	ProfilePosts,
+	ProfileGroupBox,
+	ProfileHeader,
+	ProfileFrame,
 } from "@/components/index";
 import { blogs, tags, users } from "@/fake-data";
 import Cookies from "js-cookie";
@@ -137,7 +141,7 @@ export default function Profile() {
 		await userService.updateInfo(token, input);
 		setIsBioModalOpen(false);
 		setIsInfoModalOpen(false);
-		toast.success("Cập nhật bio thành công");
+		toast.success("Cập nhật tiểu sử thành công");
 		// console.log(input.user.fullname);
 	};
 	const [newUsername, setNewUsername] = useState("");
@@ -226,7 +230,7 @@ export default function Profile() {
 			pathname: "/users",
 			query: {
 				title: "Danh sách người theo dõi",
-				items: JSON.stringify(followerList), //the 'users page' is using fake data too, please edit when u do it
+				items: JSON.stringify(followerList),
 			},
 		});
 	};
@@ -237,107 +241,56 @@ export default function Profile() {
 			pathname: "/users",
 			query: {
 				title: "Danh sách đang theo dõi",
-				items: JSON.stringify(followingList), //fake data too
+				items: JSON.stringify(followingList),
 			},
 		});
 	};
 
-
 	return (
 		<ErrorBoundary fallback={<div>Loading...</div>}>
 			<Sidebar>
-			<div className="overflow-y-scroll h-screen relative">
-				{/* Header profile */}
-				<div className="h-60 bg-gradient-to-r from-gray-100 to-gray-200"></div>
-				<div className="max-w-screen-lg mx-auto -mt-20 px-2">
-					<div className="flex justify-center items-center mb-8">
-						{/* Avatar */}
-						<div className="mr-4">
-							<Upload
-								name="avatar"
-								listType="picture-circle"
-								className="avatar-uploader"
-								showUploadList={false}
-								beforeUpload={beforeUpload}
-								onChange={handleChange}
-							>
-								{avatar && avatar ? (
+				<ProfileFrame>
+					<ProfileHeader fullname={fullname} username={username} showInfoModal={showInfoModal}>
+						<Upload
+							name="avatar"
+							listType="picture-circle"
+							className="avatar-uploader"
+							showUploadList={false}
+							beforeUpload={beforeUpload}
+							onChange={handleChange}
+						>
+							{avatar && avatar ? (
+								<Avatar
+									size={128}
+									src={avatar}
+									alt="Avatar"
+									className="w-full h-full object-cover"
+								/>
+							) : (
+								<>
 									<Avatar
 										size={128}
-										src={avatar}
+										icon={<PlusOutlined />}
 										alt="Avatar"
 										className="w-full h-full object-cover"
 									/>
-								) : (
-									<>
-										<Avatar
-											size={128}
-											icon={<PlusOutlined />}
-											alt="Avatar"
-											className="w-full h-full object-cover"
-										/>
-									</>
-								)}
-							</Upload>
-						</div>
-						{/* Info */}
-						<div>
-							<h1 className="text-3xl font-bold mb-1 mt-1">{fullname}</h1>
-							<p className="mb-2">@{username}</p>
-							{/* <Button type="primary" onClick={abc}>
-								Theo dõi
-							</Button> */}
-							<Button hidden>Đang theo dõi</Button>
-						</div>
-						<EditOutlined size={4} onClick={showInfoModal} />
-					</div>
+								</>
+							)}
+						</Upload>
+					</ProfileHeader>
 
 					{/* Body */}
-					<div className="lg:flex w-full">
-						{/* Bio */}
-						<div className="lg:flex-[30%] lg:mr-10 h-auto my-8 lg:max-w-[300px]">
-							<Typography.Title level={5}>Giới thiệu</Typography.Title>
-							<Card className="lg:p-2 mt-2 flex flex-col">
-								<div className="flex-1 flex flex-col items-end">
-									<EditOutlined size={4} onClick={showBioModal} />
-								</div>
-								<p className="text-center flex-1 mt-2 break-words">{bio}</p>
-							</Card>
-						</div>
-						{/* Followers */}
-						<div className="lg:flex-[33%] my-8 mr-8">
-							<ListUsers
-								title="Người theo dõi (255)"
-								users={followerList}
-								onClickButton={handleViewFollowers}
+						<ProfileGroupBox
+							showBioModal={showBioModal}
+							bio={bio}
+							followerList={followerList}
+							handleViewFollowers={handleViewFollowers}
+							followingList={followingList}
+							handleViewFollowing={handleViewFollowing}
 							/>
-						</div>
-						{/* Following */}
-						<div className="lg:flex-[33%] my-8">
-							<ListUsers
-								title="Đang theo dõi (333)"
-								users={followingList}
-								onClickButton={handleViewFollowing}
-							/>
-						</div>
-					</div>
 
 					{/* Blogs */}
-					{
-						pending ?
-						<div className="flex justify-center h-screen">
-							<Spin className="w-12 h-12" />
-						</div>
-						:
-						<div className="mt-8">
-							<h3 className="text-2xl font-bold">Bài viết của bạn</h3>
-							<div className="mt-10">
-								{blogs.map((item, index) => (
-									<BlogItem key={index} blog={item} />
-								))}
-							</div>
-						</div>
-					}
+					<ProfilePosts pending={pending} blogs={blogs} />
 
 					{/* Modal edit bio */}
 					<ModalInput
@@ -360,8 +313,7 @@ export default function Profile() {
 						handleCancel={handleCancelUpdateInfo}
 						items={itemsInfoModal}
 					/>
-				</div>
-			</div>
+				</ProfileFrame>
 			</Sidebar>
 		</ErrorBoundary>
 		
