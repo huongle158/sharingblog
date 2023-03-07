@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import blogService from "@/services/blogService";
 import { Input, message, Modal, Typography } from "antd";
 import { useRouter } from "next/router";
-import { getBlogBySlug, getContentNewBlog } from "@/store/redux/actions/sharingblogAction";
+import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
 import CreateContent from "@/components/blog/CreateContent";
 import Cookies from "js-cookie";
 import Preview from "@/components/blog/Preview";
@@ -48,19 +48,25 @@ const UpdateBlog = () => {
             message.error('Nội dung bài Blog không được để trống');
             return false
         }
-        console.log("banner: " + newBanner)
         setShowPreview(true)
     }
 
+    interface Blog {
+        title: string,
+        content: string,
+        tagList: string[],
+        banner?: RcFile | null,
+    }
     const saveBlog = async () => {
-        console.log("banner on update: " + newBanner)
-       
-        const blogUpdate = {
+        const blogUpdate: Blog = {
             title: title,
             content: content,
             tagList: tagList,
-            banner: newBanner
         };
+        if (newBanner) {
+            blogUpdate.banner = newBanner
+        }
+        
         try {
             console.log(typeof newBanner)
             const post = await blogService.updatePost(token, slug, blogUpdate);
@@ -99,8 +105,6 @@ const UpdateBlog = () => {
                     <Preview
                         title={title}
                         content={content}
-                        // isValidFileImage={isValidFileImage}
-                        // setIsValidFileImage={setIsValidFileImage}
                         oldBanner={oldBanner}
                         newBanner={newBanner}
                         setNewBanner={setNewBanner}

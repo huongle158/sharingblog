@@ -1,15 +1,11 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Col, FloatButton, Image, message, Row, Typography, Upload } from 'antd'
-import { UploadFile, RcFile } from 'antd/es/upload';
+import { Button, FloatButton, Image, message, Row, Typography, Upload } from 'antd'
+import { RcFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import CheckBoxGrid from '@/components/ui/CheckBoxGrid';
-import Cookies from 'js-cookie';
-import blogService from "@/services/blogService";
-import { useRouter } from "next/router";
 import tagService from '@/services/tagService';
 import { getAllTags } from '@/store/redux/actions/tagAction';
-import { toast } from "react-toastify";
 
 interface Props {
     title: string,
@@ -33,7 +29,6 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
             setIsValidNewBanner(false)
             return false
         }
-        // console.log("file up:" + file)
         setFileUpload(file)
         setIsValidNewBanner(true)
         return true;
@@ -52,24 +47,12 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
             }
         }
         fetchTags()
-        // console.log("tag change: " + isValidNewBanner)
     }, []);
-    
-    // const defaultFileList: UploadFile[] = [
-    //     {
-    //         uid: '1',
-    //         name: newBanner,
-    //         status: 'done',
-    //         url: newBanner,
-    //     }
-    // ]
 
     useEffect(() => {
         if (isValidNewBanner) {
             setNewBanner(fileUpload)
-            // console.log("newBanner: " + newBanner)
         }
-        // console.log("newBanner: " + newBanner)
     }, [fileUpload])
 
     console.log("file review return: " + newBanner)
@@ -100,7 +83,6 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
                         beforeUpload={beforeUpload}
                         className="upload-list-inline"
                         showUploadList={isValidNewBanner}
-                        // defaultFileList={defaultFileList}
                     >
                         <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
