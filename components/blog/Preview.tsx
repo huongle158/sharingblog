@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Col, FloatButton, message, Row, Typography, Upload } from 'antd'
-import { RcFile, UploadFile } from 'antd/es/upload';
+import { Button, FloatButton, Image, message, Row, Typography, Upload } from 'antd'
+import { RcFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import CheckBoxGrid from '@/components/ui/CheckBoxGrid';
-import Cookies from 'js-cookie';
-import blogService from "@/services/blogService";
-import { useRouter } from "next/router";
 import tagService from '@/services/tagService';
 import { getAllTags } from '@/store/redux/actions/tagAction';
-import { toast } from "react-toastify";
 
-const Preview = ({ title, content, fileImage, setFileImage, tagList, setTagList, saveBlog }: any) => {
-    const router = useRouter()
-    const [isValidFileImage, setIsValidFileImage] = useState(false); // to prevent show image on error
+interface Props {
+    title: string,
+    content: string,
+    oldBanner: string,
+    newBanner: RcFile | null,
+    setNewBanner: Dispatch<SetStateAction<RcFile | null>>,
+    tagList: never[],
+    setTagList: Dispatch<SetStateAction<never[]>>,
+    saveBlog: () => Promise<void>
+}
+const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, setTagList, saveBlog }: Props) => {
+    const [isValidNewBanner, setIsValidNewBanner] = useState(false); // to prevent show image on error
+    const [fileUpload, setFileUpload] = useState<RcFile | null>(null)
 
     // Check before upload file image type
     const beforeUpload = (file: RcFile) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('Bạn chỉ có thể upload file có đuôi png hoặc jpg!');
-            setIsValidFileImage(false)
+            setIsValidNewBanner(false)
             return false
         }
-        setFileImage(file)
-        setIsValidFileImage(true)
+        setFileUpload(file)
+        setIsValidNewBanner(true)
         return true;
     };
     const onChangeCheckBox = (checkedValues: CheckboxValueType[]) => {
@@ -42,16 +48,14 @@ const Preview = ({ title, content, fileImage, setFileImage, tagList, setTagList,
         }
         fetchTags()
     }, []);
-console.log(fileImage)
-    const defaultFileList: UploadFile[] = [
-        {
-            uid: '1',
-            name: fileImage,
-            status: 'done',
-            url: fileImage,
-        }
-    ]
 
+    useEffect(() => {
+        if (isValidNewBanner) {
+            setNewBanner(fileUpload)
+        }
+    }, [fileUpload])
+
+    console.log("file review return: " + newBanner)
     return (
         <div className='flex py-8 px-10'>
             {/* Left part */}
@@ -78,11 +82,16 @@ console.log(fileImage)
                         listType="picture"
                         beforeUpload={beforeUpload}
                         className="upload-list-inline"
-                        showUploadList={isValidFileImage}
-                        defaultFileList={defaultFileList}
+                        showUploadList={isValidNewBanner}
                     >
                         <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
+                    {!isValidNewBanner && (
+                        <div className="h-16 py-2 px-6 mt-4 flex rounded-xl border-2 border-gray-200">
+                            <Image alt={oldBanner} src={oldBanner} className="h-12 w-auto mr-2" preview={false} />
+                            {/* <p>{oldBanner}</p> */}
+                        </div>
+                    )}
                 </div>
 
                 {/* Add tags */}

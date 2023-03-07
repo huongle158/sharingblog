@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import blogService from "@/services/blogService";
 import { Input, message, Modal, Typography } from "antd";
 import { useRouter } from "next/router";
-import { getBlogBySlug, getContentNewBlog } from "@/store/redux/actions/sharingblogAction";
+import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
 import CreateContent from "@/components/blog/CreateContent";
 import Cookies from "js-cookie";
 import Preview from "@/components/blog/Preview";
 import { toast } from "react-toastify";
+import { RcFile } from "antd/es/upload";
 
 const UpdateBlog = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const UpdateBlog = () => {
     const { slug } = router.query
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    const [banner, setBanner] = useState("");
+    const [oldBanner, setOldBanner] = useState("");
+    const [newBanner, setNewBanner] = useState<RcFile | null > (null);
     const [tagList, setTagList] = useState([]);
 
     const handleContentChange = (value: string) => {
@@ -29,9 +31,9 @@ const UpdateBlog = () => {
         const fetchBlogDetail = async () => {
             const blogDetail = await blogService.getPostBySlug(token, slug)
             if (blogDetail && blogDetail.article) {
-                setContent(blogDetail.article.content)
                 setTitle(blogDetail.article.title)
-                setBanner(blogDetail.article.banner)
+                setContent(blogDetail.article.content)
+                setOldBanner(blogDetail.article.banner)
                 setTagList(blogDetail.article.tagList)
 
                 dispatch(getBlogBySlug(blogDetail))
@@ -49,20 +51,25 @@ const UpdateBlog = () => {
         setShowPreview(true)
     }
 
+    interface Blog {
+        title: string,
+        content: string,
+        tagList: string[],
+        banner?: RcFile | null,
+    }
     const saveBlog = async () => {
-        const token = Cookies.get('token') || "";
-        if (banner === "") {
-            message.error('Avatar Blog không được để trống');
-            return false
-        }
-        const newBlog = {
+        const blogUpdate: Blog = {
             title: title,
             content: content,
-            banner: banner,
             tagList: tagList,
         };
+        if (newBanner) {
+            blogUpdate.banner = newBanner
+        }
+        
         try {
-            const post = await blogService.updatePost(token, slug, newBlog);
+            console.log(typeof newBanner)
+            const post = await blogService.updatePost(token, slug, blogUpdate);
             console.log(post)
             router.push({
                 pathname: `/blog/${slug}`,
@@ -98,8 +105,9 @@ const UpdateBlog = () => {
                     <Preview
                         title={title}
                         content={content}
-                        fileImage={banner}
-                        setFileImage={setBanner}
+                        oldBanner={oldBanner}
+                        newBanner={newBanner}
+                        setNewBanner={setNewBanner}
                         tagList={tagList}
                         setTagList={setTagList}
                         saveBlog={saveBlog}

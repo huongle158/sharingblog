@@ -84,7 +84,8 @@ export default function Home() {
 						{blogs &&
 							blogs.map((item: any, index: any) => (
 								<BlogItem key={index} blog={item} />
-							))}
+							))
+						}
 					</div>
 					<div className="lg:flex-2 lg:order-2 order-1 mt-4 lg:right-0 lg:sticky">
 						<Suspense fallback={<div>Loading...</div>}>
