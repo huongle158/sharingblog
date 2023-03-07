@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:3000/users';
-import { CREATED, INTERNAL_SERVER_ERROR, OK } from './../types/status';
+import { CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from './../types/status';
 
 const userService = {
   login: async (input : any) => {
@@ -65,13 +65,16 @@ const userService = {
         },
         body: JSON.stringify(input),
       });
-      if (res.status === OK) {
-        return await res.json();
+      const data = await res.json();
+      if (!res.ok) {
+        // Throw an error if the response status is not ok
+        throw new Error(data.message);
       }
-      return null;
+      return data;
     } catch (err) {
+      // Handle the error
       console.error(err);
-      return null;
+      throw new Error('Có lỗi xảy ra khi cập nhật thông tin.');
     }
   },
   updateAvatar: async (token: string, formData: FormData) => {
@@ -93,8 +96,10 @@ const userService = {
       console.error(error);
       return null;
     }
-  }
-};
+  },
+}
+   
+
 
 
 export default userService;

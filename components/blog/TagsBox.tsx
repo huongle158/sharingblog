@@ -25,17 +25,14 @@ export const TagsBox = ({title, tags}: Props) => {
           } else {
             setSelectedTag(item);
             const result = await blogService.getAllPosts(token, undefined, undefined, item);
+            if(result.articles.length === 0) {
+              message.info("Không tìm thấy bài viết chưa tags này")
+              return false
+            }
             dispatch(getAllBlogsByTags(result.articles));
 
           }
-  
-        // try {
-        //     const result = await blogService.getAllPosts(token, undefined, undefined, newTag);
-        //     dispatch(getAllBlogsByTags(result.articles));
-        //     console.log(result)
-        //   } catch (err) {
-        //     message.error(err);
-        //   }
+
     
     }
     // useEffect( () => {

@@ -16,14 +16,14 @@ export const SingleLineList: FC<Props> = ({ user, title, image }) => {
             <List.Item className="flex">
                 <div className="justify-items-start w-[84%]">
                     <Avatar size={48} src={user.avatar} />
-                    <Typography.Text className="ml-2"><strong>{user.name}</strong> {title === null ? '' : title}</Typography.Text>
+                    <Typography.Text className="ml-2"><strong>{user.username}</strong> {title === null ? '' : title}</Typography.Text>
                 </div>
-                {image !== null
+                {/* {image !== null
                     ? (<div className="justify-items-end w-[12%]">
                         <Image src={image} alt={title} preview={false} />
                     </div>)
                     : ''
-                }
+                } */}
             </List.Item>
         </a>
     )

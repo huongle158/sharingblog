@@ -60,7 +60,7 @@ export const getAllBlogsByAuthor = (blog: any) => {
 }
 export const getAllBlogsByTags = (blog: any) => {
     return {
-        type: FILTER_ALL_BLOG_BY_AUTHOR,
+        type: FILTER_ALL_BLOG_BY_TAGS,
         payload: blog
     }
 }

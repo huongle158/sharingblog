@@ -11,8 +11,9 @@ import { blogs, tags, users } from "@/fake-data";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { EditOutlined } from "@ant-design/icons";
-import { getUserInfo } from "./../store/redux/actions/userAction";
+import { getListFollower, getListFollowing, getUserInfo } from "./../store/redux/actions/userAction";
 import userService from "./../services/userService";
+import followService from "../services/followService"
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import {
@@ -61,6 +62,10 @@ export default function Profile() {
 	const [initialBio, setInitialBio] = useState("");
 	const [initialuseName, setInitialuseName] = useState("");
 	const [initialfullName, setInitialFullname] = useState("");
+	// danh sách người đang follow user
+	const [followerList, setFollowerList] = useState([]);
+	// danh sách người user đó đang follow
+	const [followingList, setFollowingList] = useState([]);
 	useEffect(() => {
 		const fetchUserInfo = async () => {
 			const userInfo = await userService.getInfo(token);
@@ -78,9 +83,11 @@ export default function Profile() {
 				dispatch(getUserInfo(userInfo.user));
 			}
 		};
+		// lấy danh sách các bài viết của user
 		dispatch(getAllBlogs(token,undefined, username));
+	
+		
 		fetchUserInfo();
-
 		if (!token) {
 			setAvatar("");
 			setFullname("");
@@ -89,12 +96,24 @@ export default function Profile() {
 			setBio("");
 		}
 	}, [token, avatar, router, dispatch]);
+	// lấy danh sách  follow của user
+	useEffect(() => {
+		const fetchFollower =  async () => {
+			const follower = await followService.getProfileByUsername(username)
+			if (follower) {
+				//console.log(follower)
+				setFollowerList(follower.profile.listFollower)
+				setFollowingList(follower.profile.listFollowing)
+			}
+		}
+		fetchFollower(followerList, followingList);
+   }, [username]);
 	// tăng giá trị key mới để component được khởi tạo lại
 	const [bioKey, setBioKey] = useState(0);
 	const [infoKey, setInfoKey] = useState(0);
 	const [isBioModalOpen, setIsBioModalOpen] = useState(false);
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-
+	// update bio
 	const showBioModal = () => {
 		setIsBioModalOpen(true);
 		setBioKey(bioKey + 1);
@@ -103,6 +122,7 @@ export default function Profile() {
 		setIsInfoModalOpen(true);
 		setInfoKey(infoKey + 1);
 	};
+	// update info
 	const handleOk = async () => {
 		const input = {
 			user: {
@@ -116,17 +136,23 @@ export default function Profile() {
 		await userService.updateInfo(token, input);
 		setIsBioModalOpen(false);
 		setIsInfoModalOpen(false);
+		toast.success("Cập nhật bio thành công");
 		// console.log(input.user.fullname);
 	};
 	const handleOkUpdateInfo = async () => {
-		const input = {
-		  user: {
-			username: username,
-			fullname: fullname,
-		  },
-		};
-		await userService.updateInfo(token, input);
-		setIsInfoModalOpen(false);
+		try {
+			const input = {
+				user: {
+					username: username,
+					fullname: fullname,
+				},
+			};
+			await userService.updateInfo(token, input);
+			setIsInfoModalOpen(false);
+			toast.success("Cập nhật thông tin thành công");
+		} catch (err) {
+			message.error("username của bạn trùng với người khác"); 
+		}
 	  };
 
 	const handleCancel = () => {
@@ -189,24 +215,27 @@ export default function Profile() {
 	];
 
 	const handleViewFollowers = () => {
+		dispatch(getListFollower(followerList))
 		router.push({
 			pathname: "/users",
 			query: {
 				title: "Danh sách người theo dõi",
-				items: JSON.stringify(users), //the 'users page' is using fake data too, please edit when u do it
+				items: JSON.stringify(followerList), //the 'users page' is using fake data too, please edit when u do it
 			},
 		});
 	};
 
 	const handleViewFollowing = () => {
+		dispatch(getListFollower(followingList))
 		router.push({
 			pathname: "/users",
 			query: {
 				title: "Danh sách đang theo dõi",
-				items: JSON.stringify(users), //fake data too
+				items: JSON.stringify(followingList), //fake data too
 			},
 		});
 	};
+
 
 	return (
 		<ErrorBoundary fallback={<div>Loading...</div>}>
@@ -249,9 +278,9 @@ export default function Profile() {
 						<div>
 							<h1 className="text-3xl font-bold mb-1 mt-1">{fullname}</h1>
 							<p className="mb-2">@{username}</p>
-							<Button type="primary" onClick={() => {}}>
+							{/* <Button type="primary" onClick={abc}>
 								Theo dõi
-							</Button>
+							</Button> */}
 							<Button hidden>Đang theo dõi</Button>
 						</div>
 						<EditOutlined size={4} onClick={showInfoModal} />
@@ -273,7 +302,7 @@ export default function Profile() {
 						<div className="lg:flex-[33%] my-8 mr-8">
 							<ListUsers
 								title="Người theo dõi (255)"
-								users={users}
+								users={followerList}
 								onClickButton={handleViewFollowers}
 							/>
 						</div>
@@ -281,7 +310,7 @@ export default function Profile() {
 						<div className="lg:flex-[33%] my-8">
 							<ListUsers
 								title="Đang theo dõi (333)"
-								users={users}
+								users={followingList}
 								onClickButton={handleViewFollowing}
 							/>
 						</div>
