@@ -28,7 +28,7 @@ const blogService = {
         return null;
     },
 
-    getAllPosts: async (token: string, limit?: number, author?: string, tag?: string, offset?: number) => {
+    getAllPosts: async (token: string, limit?: number, author?: string, tag?: string, title?: string, offset?: number) => {
         let url = `${BASE_URL}?`;
         if (limit) {
             url += `limit=${limit}&`;
@@ -41,6 +41,9 @@ const blogService = {
         }
         if (tag) {
             url += `tag=${tag}&`;
+        }
+        if (title) {
+            url += `title=${title}&`;
         }
         try {
             const res = await fetch(url, {

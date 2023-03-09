@@ -4,7 +4,7 @@ import { SingleLineList } from "../ui/SingleLineList"
 
 interface Props {
     users: Users[],
-    title?: string,
+    title?: any,
     onClickButton?: () => void,
 }
 
@@ -21,7 +21,7 @@ export const ListUsers: FC<Props> = ({ users, title, onClickButton }) => {
                 <Button onClick={onClickButton}>Xem tất cả</Button>
             </div>
             <List
-                dataSource={users}
+                dataSource={users.slice(0, 3)}
                 renderItem={(item) => (
                     <SingleLineList user={item} />
                 )}

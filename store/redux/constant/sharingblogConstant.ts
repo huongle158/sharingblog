@@ -6,3 +6,4 @@ export const CREATE_CONTENT_BLOG: string = "CREATE_CONTENT_BLOG"
 export const GET_BLOG_BY_SLUG: string = 'GET_BLOG_BY_SLUG'
 export const FILTER_ALL_BLOG_BY_AUTHOR: string = 'FILTER_ALL_BLOG_BY_AUTHOR'
 export const FILTER_ALL_BLOG_BY_TAGS: string = 'FILTER_ALL_BLOG_BY_TAGS'
+export const FILTER_ALL_BLOG_BY_TITLE: string = 'FILTER_ALL_BLOG_BY_TITLE'

@@ -5,9 +5,9 @@ import { ListUsers } from "./ListUsers"
 interface Props {
     showBioModal?: () => void,
     bio: string,
-    followerList: string[],
+    followerList?: string[],
     handleViewFollowers: () => void,
-    followingList: string[],
+    followingList?: string[],
     handleViewFollowing: () => void,
 }
 export const ProfileGroupBox = ({
@@ -18,6 +18,8 @@ export const ProfileGroupBox = ({
     followingList,
     handleViewFollowing
 }: any) => {
+    const titleFollower = `Người theo dõi (${followerList.length})`
+	const titleFollowing = `Đang theo dõi (${followingList.length})`
     return (
         <div className="lg:flex w-full">
             {/* Bio */}
@@ -33,7 +35,7 @@ export const ProfileGroupBox = ({
             {/* Followers */}
             <div className="lg:flex-[33%] my-8 mr-8">
                 <ListUsers
-                    title="Người theo dõi (255)"
+                    title={titleFollower}
                     users={followerList}
                     onClickButton={handleViewFollowers}
                 />
@@ -41,7 +43,7 @@ export const ProfileGroupBox = ({
             {/* Following */}
             <div className="lg:flex-[33%] my-8">
                 <ListUsers
-                    title="Đang theo dõi (333)"
+                    title={titleFollowing}
                     users={followingList}
                     onClickButton={handleViewFollowing}
                 />

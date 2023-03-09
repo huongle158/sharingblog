@@ -104,15 +104,15 @@ export default function Profile() {
 	// lấy danh sách  follow của user
 	useEffect(() => {
 		const fetchFollower =  async () => {
-			const follower = await followService.getProfileByUsername(username)
+			const follower = await followService.getProfileByUsername(token,username)
 			if (follower) {
 				//console.log(follower)
 				setFollowerList(follower.profile.listFollower)
 				setFollowingList(follower.profile.listFollowing)
 			}
 		}
-		fetchFollower(followerList, followingList);
-   }, [username]);
+		fetchFollower();
+   }, [initialuseName]);
 	// tăng giá trị key mới để component được khởi tạo lại
 	const [bioKey, setBioKey] = useState(0);
 	const [infoKey, setInfoKey] = useState(0);
@@ -245,6 +245,7 @@ export default function Profile() {
 			},
 		});
 	};
+
 
 	return (
 		<ErrorBoundary fallback={<div>Loading...</div>}>

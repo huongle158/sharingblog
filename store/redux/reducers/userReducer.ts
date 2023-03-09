@@ -1,10 +1,13 @@
 import { GET_USER_INFO, 
 		LOGOUT_USER ,
 		GET_LIST_FOLLOWER,
-		GET_LIST_FOLLOWING  } from "../constant/userConstant";
+		GET_LIST_FOLLOWING,
+	    GET_LIST_NOTFOLLOW,
+		GET_DETAIL_USERS  } from "../constant/userConstant";
 const initialState: any = {
 	user: {},
-	listFollow: []
+	listFollow: [],
+	userDetail: {}
 };
 
 const userReducer = (state = initialState, action: any) => {
@@ -22,6 +25,12 @@ const userReducer = (state = initialState, action: any) => {
 			break;
 		case GET_LIST_FOLLOWING:
 			state.listFollow = action.payload;
+			break;
+		case GET_LIST_NOTFOLLOW:
+			state.listFollow = action.payload;
+			break;
+		case GET_DETAIL_USERS:
+			state.userDetail = action.payload;
 			break;
 		default:
 	}

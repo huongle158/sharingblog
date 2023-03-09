@@ -1,15 +1,17 @@
 import { BlogItem, ListUsers, SearchOptions, TagsBox } from "@/components";
 import { Sidebar } from "@/components/layouts/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBlogs, getAllBlogsByAuthor, getAllBlogsByTags } from "./../store/redux/actions/sharingblogAction";
+import { getAllBlogs, getAllBlogsByAuthor, getAllBlogsByTags, getAllBlogsByTitle } from "./../store/redux/actions/sharingblogAction";
 import blogService from "./../services/blogService";
 import { useState, useEffect, Suspense } from "react";
 import { getAllTags } from "@/store/redux/actions/tagAction";
+import { getListNotFollow } from "./../store/redux/actions/userAction";
 import tagService from "@/services/tagService";
 import { Spin, message } from "antd";
 import { users } from '@/fake-data';
 import Cookies from "js-cookie";
 import { useRouter } from 'next/router';
+import followService from './../services/followService';
 
 
 export default function Home() {
@@ -22,6 +24,8 @@ export default function Home() {
 	const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
+	// danh sách các user chưa follow
+	const [notFollow,setNotFollow] = useState([])
 	useEffect(() => {
 		 // Xử lý điều huong
 		 if (!token) {
@@ -38,10 +42,33 @@ export default function Home() {
 		};
 		dispatch(getAllBlogs(token));
 		fetchTags();
-	}, []);
+	}, [token]);
+	useEffect(() => {
+		const fetchAllUserNotFollow =  async () => {
+			const fetchNotFollow = await followService.getAllUserNotFollow(token)
+			if (fetchNotFollow) {
+				setNotFollow(fetchNotFollow.notFollowingUsersConfigAva)
+			}
+		}
+		fetchAllUserNotFollow()
+   }, []);
 
 	const handleSearch = async (searchOption: string, searchValue: string) => {
 		const filter = searchValue.toLocaleLowerCase().trim()
+		if(searchOption === "Title") {
+			await blogService.getAllPosts(token,undefined,undefined,undefined,filter)
+			.then((result) => {
+				if(result.articles.length === 0) {
+					message.error(`Không tìm thấy bài viết có tiêu đề: ${filter}`);
+					return false
+				}
+			  dispatch(getAllBlogsByAuthor(result.articles));
+			  console.log(result)
+			})
+			.catch((err) => {
+				message.error(err);
+			})
+		}
 		if(searchOption === "Author") {
 			await blogService.getAllPosts(token,undefined,filter)
 			.then((result) => {
@@ -49,7 +76,7 @@ export default function Home() {
 					message.info('Không tìm thấy bài viết của tác giả này');
 					return false
 				}
-			  dispatch(getAllBlogsByAuthor(result.articles));
+			  dispatch(getAllBlogsByTitle(result.articles));
 			})
 			.catch((err) => {
 				message.error(`Không tìm thấy tác giả: ${filter}`);
@@ -69,6 +96,16 @@ export default function Home() {
 			})
 		}
 	  };
+	const handleViewNotFollow = () => {
+		dispatch(getListNotFollow(notFollow))
+		router.push({
+			pathname: "/users",
+			query: {
+				title: "Danh sách gợi ý",
+				items: JSON.stringify(notFollow),
+			},
+		});
+	}
 	return (
 		<Sidebar>
 			<div className="flex items-center justify-center lg:ml-40 mt-4 lg:w-[50%] w-[98%] ml-2">
@@ -89,7 +126,9 @@ export default function Home() {
 					</div>
 					<div className="lg:flex-2 lg:order-2 order-1 mt-4 lg:right-0 lg:sticky">
 						<Suspense fallback={<div>Loading...</div>}>
-							<ListUsers title="Danh sách gợi ý" users={users} />
+							<ListUsers title="Danh sách gợi ý" 
+								users={notFollow}
+								onClickButton= {handleViewNotFollow} />
 						</Suspense>
 						<div className="mt-4 lg:w-[280px]">
 							<TagsBox title="Các chủ đề được đề xuất" tags={tags} />
