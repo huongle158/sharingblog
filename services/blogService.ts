@@ -27,6 +27,37 @@ const blogService = {
         }
         return null;
     },
+    getAllPostsFollow: async (token: string, limit?: number, author?: string, tag?: string, title?: string, offset?: number) => {
+        let url = `${BASE_URL}/feed?`;
+        if (limit) {
+            url += `limit=${limit}&`;
+        }
+        if (author) {
+            url += `author=${author}&`;
+        }
+        if (offset) {
+            url += `offset=${offset}&`;
+        }
+        if (tag) {
+            url += `tag=${tag}&`;
+        }
+        if (title) {
+            url += `title=${title}&`;
+        }
+        try {
+            const res = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (res.status === OK) {
+                return await res.json();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return null;
+    },
 
     getAllPosts: async (token: string, limit?: number, author?: string, tag?: string, title?: string, offset?: number) => {
         let url = `${BASE_URL}?`;

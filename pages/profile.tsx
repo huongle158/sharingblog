@@ -35,7 +35,7 @@ import type { UploadChangeParam } from "antd/es/upload";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import blogService from "@/services/blogService";
-import { getAllBlogs } from './../store/redux/actions/sharingblogAction';
+import { getAllBlogs, getAllBlogsUser } from './../store/redux/actions/sharingblogAction';
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 	const reader = new FileReader();
@@ -89,7 +89,7 @@ export default function Profile() {
 			}
 		};
 		// lấy danh sách các bài viết của user
-		dispatch(getAllBlogs(token,undefined, username));
+		dispatch(getAllBlogsUser(token,undefined, username));
 	
 		
 		fetchUserInfo();

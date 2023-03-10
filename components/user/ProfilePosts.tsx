@@ -15,7 +15,12 @@ export const ProfilePosts = ({pending, blogs}: Props) => {
                 </div>
             ) : (
                 <div className="mt-8">
-                    <h3 className="text-2xl font-bold">Bài viết</h3>
+                    { blogs.length !== 0 ? 
+                    <h3 className="text-2xl font-bold">Bài viết ({blogs.length})</h3>
+                    :
+                    <h3 className="text-2xl font-bold">Bạn chưa có bài viết nào</h3>                      
+                    }
+                    
                     <div className="mt-10">
                         {blogs.map((item: any, index: number) => (
                             <BlogItem key={index} blog={item} />
