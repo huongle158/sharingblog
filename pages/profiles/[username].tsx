@@ -80,8 +80,8 @@ export default function ProfileOtherUser() {
                         <h1 className="text-3xl font-bold mb-1 mt-1">{userDetail.fullname}</h1>
                         <p className="mb-2">@{userDetail.username}</p>
                         { following  ?
-                            <Button type="primary" 
-                            onClick = {handleUnFollowUser}>Bỏ Theo dõi</Button>
+                            <Button
+                            onClick = {handleUnFollowUser}>Đang theo dõi</Button>
                             :
                             <Button type="primary" 
                             onClick = {handleFollowUser}>Theo dõi</Button>

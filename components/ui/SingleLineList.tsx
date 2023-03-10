@@ -65,8 +65,8 @@ export const SingleLineList = ({ user, title }: any) => {
   </div>
   <div>
     {following ? (
-      <Button type="primary" onClick={handleUnFollowUser}>
-        Bỏ Theo dõi
+      <Button onClick={handleUnFollowUser}>
+        Đang theo dõi
       </Button>
     ) : (
       <Button type="primary" onClick={handleFollowUser}>

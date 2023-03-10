@@ -57,7 +57,7 @@ export const BlogItem = ({ blog, className }: Props) => {
                                     dangerouslySetInnerHTML={{__html: previewContent}}
                                 />
                             <div className="lg:flex-2">
-                                <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
+                                <img src={blog.banner} alt="Post" className="w-60 h-40 rounded-lg object-cover" />
                             </div>
                         </div>
                     </Link>
