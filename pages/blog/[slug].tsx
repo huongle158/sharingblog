@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
 import { useDispatch } from "react-redux";
 import NotFound from "@/components/NotFound";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
