@@ -120,7 +120,7 @@ export default function Home() {
 					<div className="lg:flex-1 lg:pr-10 lg:order-1 order-2 mt-4 lg:overflow-y-scroll h-screen">
 						{blogs &&
 							blogs.map((item: any, index: any) => (
-								<BlogItem key={index} blog={item} />
+								<BlogItem key={index} blog={item} token={token} />
 							))
 						}
 					</div>

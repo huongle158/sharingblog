@@ -2,8 +2,8 @@ import Link from "next/link";
 import React, { ReactNode, Suspense, useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import { Button, message, Popover, Tooltip } from "antd";
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, FloatButton, message, Popover, Tooltip } from "antd";
+import { ArrowLeftOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Badge, Avatar } from "antd";
 import ModalDisplayCreateTitleBLog from "../modals/ModalDisplayCreateTitleBLog";
 import { NavItem } from "./NavItem";
@@ -63,7 +63,7 @@ export const Sidebar = ({ children }: Props) => {
 			{/* Sidebar */}
 			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}
-				<Popover
+				{/* <Popover
 					placement="right"
 					title={"Thông báo"}
 					content={notifications.map((item, index) => (
@@ -76,11 +76,9 @@ export const Sidebar = ({ children }: Props) => {
 						</li>
 					))}
 					trigger="click"
-				>
-					<Badge count={99}>
-						<Avatar shape="circle" src={avatar} size={46} />
-					</Badge>
-				</Popover>
+				> */}
+					<Avatar shape="circle" src={avatar} size={46} />
+				{/* </Popover> */}
 
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
 				{/* Create blog */}
@@ -110,7 +108,16 @@ export const Sidebar = ({ children }: Props) => {
 				</NavItem>
 			</div>
 			{/* Body */}
-			<main className="grow w-full">{children}</main>
+			<main className="grow w-full">
+				{/* <Button onClick={() => { router.back() }} className="ml-4 mt-4"><ArrowLeftOutlined /></Button> */}
+				<FloatButton
+					shape="circle"
+					style={{ left: '10%', top:16 }}
+					icon={<ArrowLeftOutlined />}
+					onClick={() => { router.back() }}
+				/>
+				{children}
+			</main>
 
 			{/* Modal create title blog */}
 			<ModalDisplayCreateTitleBLog

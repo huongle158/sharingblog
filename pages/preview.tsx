@@ -77,7 +77,7 @@ const Preview = () => {
     }, []);
 
     return (
-        <div className='flex py-8 px-10'>
+        <div className='flex py-16 px-10'>
             {/* Left part */}
             <div className='w-1/2 p-10'>
                 {/* Preview title, content */}
@@ -85,7 +85,7 @@ const Preview = () => {
                 <div className='mt-10 max-w-full'>
                     <Typography.Title level={4} className="text-center">{newTitle} </Typography.Title>
                     {newContent && (
-                    <div className="mt-4 lg:max-h-96 overflow-scroll review" 
+                    <div className="mt-4 lg:max-h-96 h-80 overflow-scroll review" 
                         dangerouslySetInnerHTML={{__html: newContent}} 
                     />
                     )}
@@ -95,7 +95,7 @@ const Preview = () => {
             {/* Right part */}
             <div className='w-1/2 p-10'>
                 {/* Add image */}
-                <div className='h-40'>
+                <div className='h-60'>
                     <Typography.Title level={3} className='mb-4'>Thêm hình ảnh</Typography.Title>
                     <Upload
                         maxCount={1}
