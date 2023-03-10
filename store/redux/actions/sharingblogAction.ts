@@ -17,6 +17,29 @@ export const getAllBlogs = (token: string, limit?: number, author?: string, offs
                 type: GET_ALL_BLOG_REQUEST
             })
             try {
+                const blogs = await blogService.getAllPostsFollow(token, limit, author, offset);
+                return dispatch({
+                    type: GET_ALL_BLOG_SUCCESS,
+                    payload: blogs
+                })
+            }
+            catch (err) {
+                return dispatch({
+                    type: GET_ALL_BLOG_FAILURE,
+                    payload: err
+                })
+            }
+        }
+    )
+}
+
+export const getAllBlogsUser = (token: string, limit?: number, author?: string, offset?: number) => {
+    return (
+        async (dispatch: any) => {
+            await dispatch( {
+                type: GET_ALL_BLOG_REQUEST
+            })
+            try {
                 const blogs = await blogService.getAllPosts(token, limit, author, offset);
                 return dispatch({
                     type: GET_ALL_BLOG_SUCCESS,

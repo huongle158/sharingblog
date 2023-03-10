@@ -56,7 +56,7 @@ export default function Home() {
 	const handleSearch = async (searchOption: string, searchValue: string) => {
 		const filter = searchValue.toLocaleLowerCase().trim()
 		if(searchOption === "Title") {
-			await blogService.getAllPosts(token,undefined,undefined,undefined,filter)
+			await blogService.getAllPostsFollow(token,undefined,undefined,undefined,filter)
 			.then((result) => {
 				if(result.articles.length === 0) {
 					message.error(`Không tìm thấy bài viết có tiêu đề: ${filter}`);
@@ -70,7 +70,7 @@ export default function Home() {
 			})
 		}
 		if(searchOption === "Author") {
-			await blogService.getAllPosts(token,undefined,filter)
+			await blogService.getAllPostsFollow(token,undefined,filter)
 			.then((result) => {
 				if(result.articles.length === 0) {
 					message.info('Không tìm thấy bài viết của tác giả này');
@@ -83,7 +83,7 @@ export default function Home() {
 			})
 		}
 		if(searchOption === "Tags") {
-			await blogService.getAllPosts(token,undefined,undefined,filter)
+			await blogService.getAllPostsFollow(token,undefined,undefined,filter)
 			.then((result) => {
 				if( result.articles.length == 0) {
 					message.info('Không tìm thấy bài viết nào liên quan đến tag này');

@@ -19,12 +19,12 @@ export const TagsBox = ({title, tags}: Props) => {
     const filterBlogByTags = async (item: string) => {
         if (selectedTag === item) {
             setSelectedTag('');
-            const result = await blogService.getAllPosts(token, undefined, undefined, '');
+            const result = await blogService.getAllPostsFollow(token, undefined, undefined, '');
             dispatch(getAllBlogsByTags(result.articles));
    
           } else {
             setSelectedTag(item);
-            const result = await blogService.getAllPosts(token, undefined, undefined, item);
+            const result = await blogService.getAllPostsFollow(token, undefined, undefined, item);
             if(result.articles.length === 0) {
               message.info("Không tìm thấy bài viết chưa tags này")
               return false

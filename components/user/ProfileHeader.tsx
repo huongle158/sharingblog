@@ -13,7 +13,6 @@ interface Props {
 }
 
 export const ProfileHeader = ({ children, fullname, username, showInfoModal, handleFollow, handleUnFollow }: Props) => {
-    console.log(showInfoModal)
     return (
         <div className="flex justify-center items-center mb-8">
             {/* Avatar */}
