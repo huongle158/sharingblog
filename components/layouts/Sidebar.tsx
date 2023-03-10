@@ -78,7 +78,7 @@ export const Sidebar = ({ children }: Props) => {
 					trigger="click"
 				> */}
 					<Avatar shape="circle" src={avatar} size={46} />
-				{/* </Popover>#f0f */}
+				{/* </Popover> */}
 
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
 				{/* Create blog */}
