@@ -48,7 +48,7 @@ export default function BlogDetail() {
             {blog ? (
                 <div className="container mx-auto py-8 h-screen overflow-scroll">
                     <div className="w-[82%] mx-auto">
-                        <BlogDetails blog={blog.article} className="mb-0"/>
+                        <BlogDetails blog={blog} className="mb-0"/>
                         <Card>
                             <Input.Group compact>
                                 <TextArea

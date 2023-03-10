@@ -55,12 +55,17 @@ export const SingleLineList = ({ user, title }: any) => {
     }
     return (
 <List.Item className="flex items-center justify-between">
-  <div className="flex items-center">
-    <a className="cursor-default hover:cursor-pointer" onClick={handleViewProfileUser}>
-      <Avatar size={48} src={user.avatar} />
-      <Typography.Text className="ml-2">
-        <strong>{user.username}</strong> {title === null ? '' : title}
-      </Typography.Text>
+        <div className="flex items-center">
+          <a className="cursor-default hover:cursor-pointer flex" onClick={handleViewProfileUser}>
+            
+            <Avatar size={48} src={user.avatar} />
+            <div>
+              <Typography.Text className="ml-2 font-bold">{user.fullname}</Typography.Text><br/>
+              <Typography.Text className="ml-2">
+                @{user.username}
+                {/* {title === null ? '' : title} */}
+              </Typography.Text>
+            </div>
     </a>
   </div>
   <div>

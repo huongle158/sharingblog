@@ -1,12 +1,12 @@
-import { CommentOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
+import blogService from '@/services/blogService';
+import { getBlogBySlug } from '@/store/redux/actions/sharingblogAction';
 import { Avatar, Divider, Spin, Tag } from 'antd';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
 import { getTimeDiffInWords } from './../formatTime';
 interface Props {
     blog: Blog,
     className?: string,
+    token: string,
 }
 
 interface Blog {
@@ -25,9 +25,11 @@ interface Blog {
         id?: number,
         username?: string,
     }
+    favoritesCount: number,
+    // favoriteStatus: boolean,
 }
 
-export const BlogItem = ({ blog, className }: Props) => {
+export const BlogItem = ({ blog, className, token }: Props) => {
     // giới hạn content 150 chữ
     const previewContent: string = blog.content.substring(0, 200) + '...'
 
@@ -66,13 +68,12 @@ export const BlogItem = ({ blog, className }: Props) => {
                 {/* Footer card */}
                 <div className="flex my-3 mx-4">
                     <div className="flex-1">
-                        {/* unlike */}
-                        <a onClick={() => {}} className="hover:text-gray-400"><HeartOutlined className="border-black text-[22px]" size={20} /></a> 22
-                        {/* liked */}
-                        {/* <a onClick={() => {}}><HeartFilled className="text-red-600 text-[22px]" /></a> 23 */}
-
+                        {/* favorite */}
+                        <span className="mr-4">Lượt thích: {blog.favoritesCount}</span>
+                        
+                        <span className="mr-4">-</span>
                         {/* comments */}
-                        <a onClick={() => { }} className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> 25
+                        <span>Lượt bình luận: 25</span>
                     </div>
 
                     <div className='flex-1'>

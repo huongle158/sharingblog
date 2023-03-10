@@ -121,7 +121,43 @@ const blogService = {
             console.error(err);
         }
         return null;
-    }
+    },
+
+    favoritePost: async (token: string, slug: string) => {
+        try {
+            const res = await fetch(`${BASE_URL}/${slug}/favorite`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }) 
+            if (res.status === OK) {
+                return await res.json()
+            }
+        } catch (err) {
+            console.error(err)
+        }
+        return null
+    },
+
+    unFavoritePost: async (token: string, slug: string) => {
+        try {
+            const res = await fetch(`${BASE_URL}/${slug}/unfavorite`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (res.status === OK) {
+                return await res.json()
+            }
+        } catch (err) {
+            console.error(err)
+        }
+        return null
+    },
 };
 
 export default blogService;

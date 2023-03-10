@@ -15,21 +15,25 @@ interface Props {
 }
 
 interface Blog {
-    slug: string,
-    title: string,
-    content: string,
-    banner: string,
-    tagList: string[],
-    createdAt: string,
-    updatedAt?: string,
-    author: {
-        avatar: string,
-        bio?: string,
-        email?: string,
-        fullname: string,
-        id?: number,
-        username?: string,
+    article: {
+        slug: string,
+        title: string,
+        content: string,
+        banner: string,
+        tagList: string[],
+        createdAt: string,
+        updatedAt?: string,
+        author: {
+            avatar: string,
+            bio?: string,
+            email?: string,
+            fullname: string,
+            id?: number,
+            username?: string,
+        },
+        favoritesCount: number,
     }
+    favoriteStatus: boolean,
 }
 
 export const BlogDetails = ({ blog, className }: Props) => {
@@ -39,7 +43,7 @@ export const BlogDetails = ({ blog, className }: Props) => {
 
     const items: MenuProps['items'] = [
         {
-            label: <Link href={`/blog/update/${blog.slug}`} >Chỉnh sửa</Link>,
+            label: <Link href={`/blog/update/${blog.article.slug}`} >Chỉnh sửa</Link>,
             key: 0
 
         },
@@ -51,7 +55,7 @@ export const BlogDetails = ({ blog, className }: Props) => {
     ]
     const handleDeleteBlog = async () => {
         try {
-            const result = await blogService.deletePost(token, blog.slug)
+            const result = await blogService.deletePost(token, blog.article.slug)
             if (result.statusCode === 404) {
                 router.push({
                     pathname: "/profile",
@@ -76,6 +80,28 @@ export const BlogDetails = ({ blog, className }: Props) => {
         }
     }
 
+    const [isFavorite, setIsFavorite] = useState(blog.favoriteStatus)
+
+    const handleFavorite = async () => {
+        try {
+            await blogService.favoritePost(token, blog.article.slug)
+            setIsFavorite(!isFavorite)
+
+        } catch (err) {
+            toast.error("Lỗi: " + err)
+        }
+    }
+
+    const handleUnFavorite = async () => {
+        try {
+            await blogService.unFavoritePost(token, blog.article.slug)
+            setIsFavorite(!isFavorite)
+
+        } catch (err) {
+            toast.error("Lỗi: " + err)
+        }
+    }
+
     return (
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
             {/* Header card */}
@@ -84,14 +110,14 @@ export const BlogDetails = ({ blog, className }: Props) => {
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
-                            src={blog.author.avatar}
+                            src={blog.article.author.avatar}
                             alt="Avatar"
                         />
                     </div>
                     <div>
-                        <Typography.Title level={4} className="font-bold mb-1">{blog.author.fullname}</Typography.Title>
-                        <h5 className="text-gray-500 mb-1">@{blog.author.username}</h5>
-                        <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
+                        <Typography.Title level={4} className="font-bold mb-1">{blog.article.author.fullname}</Typography.Title>
+                        <h5 className="text-gray-500 mb-1">@{blog.article.author.username}</h5>
+                        <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.article.createdAt)}</p>
                     </div>
                 </Link>
                 <Dropdown menu={{ items }} trigger={['click']} arrow={{ pointAtCenter: true }} placement="bottomRight">
@@ -102,12 +128,12 @@ export const BlogDetails = ({ blog, className }: Props) => {
 
             {/* Body card */}
             <div className="h-fit px-6 py-2">
-                <h1 className="text-xl font-bold mb-2 text-center">{blog.title}</h1>
+                <h1 className="text-xl font-bold mb-2 text-center">{blog.article.title}</h1>
                 <div className="lg:flex-2 flex justify-center">
-                    <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
+                    <img src={blog.article.banner} alt="Post" className="w-40 rounded-lg object-cover" />
                 </div>
                 <div className="mb-4 lg:mr-2 content"
-                        dangerouslySetInnerHTML={{__html: blog.content}}
+                        dangerouslySetInnerHTML={{__html: blog.article.content}}
                     />
             </div>
 
@@ -116,10 +142,14 @@ export const BlogDetails = ({ blog, className }: Props) => {
             {/* Footer card */}
             <div className="flex px-6 pb-4">
                 <div className="flex-1">
-                    {/* unlike */}
-                    <a href="#" className="hover:text-gray-400"><HeartOutlined className="border-black text-[22px]" size={20}/></a> 22
-                    {/* liked */}
-                    {/* <a href="#"><HeartFilled className="text-red-600 text-[22px]" /></a> 23 */}
+                    {/* is favorite */}
+                    {
+                        isFavorite ? (
+                            <><a onClick={handleUnFavorite}><HeartFilled className="text-red-600 text-[22px]" /></a> {blog.article.favoritesCount}</>
+                        ) : (
+                            <><a onClick={handleFavorite} className="hover:text-gray-400"><HeartOutlined className="border-black text-[22px]" size={20} /></a> {blog.article.favoritesCount}</>
+                        )
+                    }
 
                     {/* comments */}
                     <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> 25
@@ -127,7 +157,7 @@ export const BlogDetails = ({ blog, className }: Props) => {
 
                 <div className='flex-1'>
                     <span>Chủ đề: </span>
-                    {blog.tagList && blog.tagList.map((tag, index) => (
+                    {blog.article.tagList && blog.article.tagList.map((tag, index) => (
                         <a key={index} href="#"><Tag>{tag}</Tag></a>
                     ))}
                 </div>
