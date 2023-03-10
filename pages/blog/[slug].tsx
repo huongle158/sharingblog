@@ -32,23 +32,27 @@ export default function BlogDetail() {
     };
     const { slug } = router.query
     const [blog, setBlog] = useState()
+    const [isFavorite, setIsFavorite] = useState(false)
+
     useEffect(() => {
         const fetchBlogDetail = async () => {
             const blogDetail = await blogService.getPostBySlug(token, slug)
+            console.log(blogDetail)
             if (blogDetail) {
-                setBlog(blogDetail)
+                setBlog(blogDetail.article)
+                setIsFavorite(blogDetail.favoriteStatus)
             }
             dispatch(getBlogBySlug(blogDetail))
         }
         fetchBlogDetail()
-    }, [token, slug])
+    }, [token, slug, isFavorite])
     
     return (
         <Sidebar>
             {blog ? (
                 <div className="container mx-auto py-8 h-screen overflow-scroll">
                     <div className="w-[82%] mx-auto">
-                        <BlogDetails blog={blog} className="mb-0"/>
+                        <BlogDetails blog={blog} isFavorite={isFavorite} setIsFavorite={setIsFavorite} className="mb-0"/>
                         <Card>
                             <Input.Group compact>
                                 <TextArea
