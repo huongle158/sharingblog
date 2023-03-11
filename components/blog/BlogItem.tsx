@@ -2,11 +2,11 @@ import blogService from '@/services/blogService';
 import { getBlogBySlug } from '@/store/redux/actions/sharingblogAction';
 import { Avatar, Divider, Spin, Tag } from 'antd';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import { getTimeDiffInWords } from './../formatTime';
 interface Props {
     blog: Blog,
     className?: string,
-    token: string,
 }
 
 interface Blog {
@@ -29,26 +29,29 @@ interface Blog {
     // favoriteStatus: boolean,
 }
 
-export const BlogItem = ({ blog, className, token }: Props) => {
+export const BlogItem = ({ blog, className }: Props) => {
     // giới hạn content 150 chữ
     const previewContent: string = blog.content.substring(0, 200) + '...'
+    const { user } = useSelector((reduxData: any) => {
+        return reduxData.userReducer;
+    });
 
     return (
             <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
-                    <Link href="#" className="flex justify-left items-left hover:text-black mx-4">
-                        <div className="mr-4 mt-1">
-                            <Avatar
-                                size={36}
-                                src={blog.author.avatar}
-                                alt="Avatar"
-                            />
-                        </div>
-                        <div>
-                            <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
-                            <p className="text-gray-500 mb-2 text-sm">@{blog.author.username}</p>
-                            <p className="text-gray-500 mb-2 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
-                        </div>
-                    </Link>
+                <Link href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`} className="flex justify-left items-left hover:text-black mx-4">
+                    <div className="mr-4 mt-1">
+                        <Avatar
+                            size={36}
+                            src={blog.author.avatar}
+                            alt="Avatar"
+                        />
+                    </div>
+                    <div>
+                        <h5 className="text-xl font-bold mb-1">{blog.author.fullname}</h5>
+                        <p className="text-gray-500 mb-2 text-sm">@{blog.author.username}</p>
+                        <p className="text-gray-500 mb-2 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
+                    </div>
+                </Link>
                 <Divider className="border-gray-300"/>
                 {/* Body card */}
                 <div className="px-6">

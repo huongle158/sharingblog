@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import ModalDeleteBlog from '../modals/ModalDeleteBlog';
 import { getTimeDiffInWords } from './../formatTime';
@@ -94,11 +95,17 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
         }
     }
 
+    const { user } = useSelector((reduxData: any) => {
+        return reduxData.userReducer;
+    });
+
     return (
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
             {/* Header card */}
             <div className="flex">
-                <Link href="#" className="flex-1 flex justify-left items-left hover:text-black mx-4">
+                <Link
+                    href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`}
+                    className="flex-1 flex justify-left items-left hover:text-black mx-4">
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
