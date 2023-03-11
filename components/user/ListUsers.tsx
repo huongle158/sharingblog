@@ -23,7 +23,7 @@ export const ListUsers: FC<Props> = ({ users, title, onClickButton }) => {
             <List
                 dataSource={users.slice(0, 3)}
                 renderItem={(item) => (
-                    <SingleLineList user={item} />
+                    <SingleLineList userDetail={item} />
                 )}
             />
         </div>

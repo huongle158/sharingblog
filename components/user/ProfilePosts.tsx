@@ -18,7 +18,7 @@ export const ProfilePosts = ({pending, blogs}: Props) => {
                     { blogs.length !== 0 ? 
                     <h3 className="text-2xl font-bold">Bài viết ({blogs.length})</h3>
                     :
-                    <h3 className="text-2xl font-bold">Bạn chưa có bài viết nào</h3>                      
+                    <h3 className="text-2xl font-bold">Chưa có bài viết nào</h3>                      
                     }
                     
                     <div className="mt-10">

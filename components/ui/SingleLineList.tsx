@@ -6,24 +6,29 @@ import followService from './../../services/followService';
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailUser } from "@/store/redux/actions/userAction";
 
-export const SingleLineList = ({ user, title }: any) => {
+export const SingleLineList = ({ userDetail, title }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const token = Cookies.get("token") || "";
+  const { user } = useSelector((reduxData: any) => {
+		return reduxData.userReducer;
+	});
+    // console.log(user)
+    // console.log(userDetail)
 
   // trạng thái follow
   const [following, setFollowing] = useState(false)
   useEffect(() => {
     const fetchFollower = async () => {
-      const follower = await followService.getProfileByUsername(token, user.username)
+      const follower = await followService.getProfileByUsername(token, userDetail.username)
       if (follower) {
         setFollowing(follower.profile.following)
       }
     }
     fetchFollower();
-  }, [user, following]);
+  }, [userDetail, following]);
   const handleFollowUser = async () => {
-    await followService.followUser(token, user.username)
+    await followService.followUser(token, userDetail.username)
       .then((result) => {
         setFollowing(result.profile.following)
         console.log(following)
@@ -33,7 +38,7 @@ export const SingleLineList = ({ user, title }: any) => {
       })
   }
   const handleUnFollowUser = async () => {
-    await followService.unfollowUser(token, user.username)
+    await followService.unfollowUser(token, userDetail.username)
       .then((result) => {
         setFollowing(result.profile.following)
         console.log("unfollow thành công")
@@ -45,13 +50,8 @@ export const SingleLineList = ({ user, title }: any) => {
   // ham call get page profiles/username
   const handleViewProfileUser = async () => {
     ;
-    dispatch(getDetailUser(user))
-    router.push({
-      pathname: '/profiles/[username]',
-      query: {
-        username: user.username
-      }
-    });
+    dispatch(getDetailUser(userDetail))
+    router.push(`/profiles/${userDetail.username}`);
 
   }
   return (
@@ -59,18 +59,19 @@ export const SingleLineList = ({ user, title }: any) => {
       <div className="flex items-center">
         <a className="cursor-default hover:cursor-pointer flex" onClick={handleViewProfileUser}>
 
-          <Avatar size={48} src={user.avatar} />
+          <Avatar size={48} src={userDetail.avatar} />
           <div>
-            <Typography.Text className="ml-2 font-bold">{user.fullname}</Typography.Text><br />
+            <Typography.Text className="ml-2 font-bold">{userDetail.fullname}</Typography.Text><br />
             <Typography.Text className="ml-2">
-              @{user.username}
+              @{userDetail.username}
               {/* {title === null ? '' : title} */}
             </Typography.Text>
           </div>
         </a>
       </div>
       <div>
-        {following ? (
+      {user.username !== userDetail.username && (
+        following ? (
           <Button onClick={handleUnFollowUser}>
             Đang theo dõi
           </Button>
@@ -78,7 +79,8 @@ export const SingleLineList = ({ user, title }: any) => {
           <Button type="primary" onClick={handleFollowUser}>
             Theo dõi
           </Button>
-        )}
+        )
+      )}
       </div>
     </List.Item>
 

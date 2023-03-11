@@ -24,7 +24,7 @@ const Users = () => {
                 <div className="w-[80%] mx-auto grid gap-x-8 gap-y-4 grid-cols-3">
                         {listFollow.map((item: any, index: number) => (
                             <Card key={index}>
-                                <SingleLineList user={item} />
+                                <SingleLineList userDetail={item} />
                             </Card>
                         ))}
                 </div>
