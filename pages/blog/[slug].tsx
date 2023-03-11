@@ -1,12 +1,12 @@
 import { Sidebar } from "../../components/layouts/Sidebar";
 import React, { useEffect, useState } from "react";
-import { Button, Card, Input } from "antd";
+import { Button, Card, Input, Spin } from "antd";
 import { BlogDetails, CommentItem, ModalInput } from "@/components";
 import { useRouter } from "next/router";
 import blogService from "@/services/blogService";
 import Cookies from "js-cookie";
 import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NotFound from "@/components/NotFound";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
@@ -31,25 +31,24 @@ export default function BlogDetail() {
         setIsCommentModalOpen(false);
     };
     const { slug } = router.query
-    const [blog, setBlog] = useState()
     const [isFavorite, setIsFavorite] = useState(false)
 
+    const { blog, pending, notFound } = useSelector((reduxData: any) => {
+        return reduxData.sharingBlogReducers;
+    });
+
     useEffect(() => {
-        const fetchBlogDetail = async () => {
-            const blogDetail = await blogService.getPostBySlug(token, slug)
-            
-            if (blogDetail) {
-                setBlog(blogDetail.article)
-                setIsFavorite(blogDetail.favoriteStatus)
-            }
-            dispatch(getBlogBySlug(blogDetail))
-        }
-        fetchBlogDetail()
+        dispatch(getBlogBySlug(token, slug));
     }, [token, slug, isFavorite])
     
     return (
         <Sidebar>
-            {blog ? (
+            {pending ? (
+                <div className="flex items-center justify-center h-screen">
+                    <Spin className="w-12 h-12" />
+                </div>
+            ) : (
+                blog && (
                 <div className="container mx-auto py-8 h-screen overflow-scroll">
                     <div className="w-[82%] mx-auto">
                         <BlogDetails blog={blog} isFavorite={isFavorite} setIsFavorite={setIsFavorite} className="mb-0"/>
@@ -87,7 +86,8 @@ export default function BlogDetail() {
                             onChange={() => { }}
                         />
                     </div>
-                </div>) : <NotFound/> }
+                    </div>) || (notFound && <NotFound/>)
+            )}
         </Sidebar>
     );
 }

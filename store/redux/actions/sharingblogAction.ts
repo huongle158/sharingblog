@@ -4,10 +4,12 @@ import { CREATE_TITLE_BLOG,
         GET_ALL_BLOG_SUCCESS,
         GET_ALL_BLOG_FAILURE,
         CREATE_CONTENT_BLOG, 
-        GET_BLOG_BY_SLUG,
         FILTER_ALL_BLOG_BY_AUTHOR,
         FILTER_ALL_BLOG_BY_TAGS,
-        FILTER_ALL_BLOG_BY_TITLE} from '../constant/sharingblogConstant';
+        FILTER_ALL_BLOG_BY_TITLE,
+        GET_BLOG_BY_SLUG_REQUEST,
+        GET_BLOG_BY_SLUG_SUCCESS,
+        GET_BLOG_BY_SLUG_FAILURE} from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
 export const getAllBlogs = (token: string, limit?: number, author?: string, offset?: number) => {
@@ -69,11 +71,27 @@ export const getContentNewBlog = (content: any) => {
     }
 }
 
-export const getBlogBySlug = (blog: any) => {
-    return {
-        type: GET_BLOG_BY_SLUG,
-        payload: blog
-    }
+export const getBlogBySlug = (token: string, slug: string) => {
+    return (
+        async (dispatch: any) => {
+            await dispatch({
+                type: GET_BLOG_BY_SLUG_REQUEST,
+            })
+            try {
+                const blog = await blogService.getPostBySlug(token, slug)
+                return dispatch({
+                    type: GET_BLOG_BY_SLUG_SUCCESS,
+                    payload: blog
+                })
+            }
+            catch (err) {
+                return dispatch({
+                    type: GET_BLOG_BY_SLUG_FAILURE,
+                    payload: err
+                })
+            }
+        }
+    )
 }
 
 export const getAllBlogsByAuthor = (blog: any) => {

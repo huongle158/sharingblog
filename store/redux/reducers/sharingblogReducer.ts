@@ -5,7 +5,10 @@ import { CREATE_TITLE_BLOG,
         CREATE_CONTENT_BLOG,
         FILTER_ALL_BLOG_BY_AUTHOR,
         FILTER_ALL_BLOG_BY_TAGS,
-        FILTER_ALL_BLOG_BY_TITLE } from '../constant/sharingblogConstant';
+        FILTER_ALL_BLOG_BY_TITLE, 
+        GET_BLOG_BY_SLUG_REQUEST,
+        GET_BLOG_BY_SLUG_SUCCESS,
+        GET_BLOG_BY_SLUG_FAILURE} from '../constant/sharingblogConstant';
 
 const initialState: any = {
     newTitle : "",
@@ -38,6 +41,19 @@ const sharingblogReducers = (state = initialState, action: any) => {
             break;
         case FILTER_ALL_BLOG_BY_TITLE: 
             state.blogs = action.payload;
+            break;
+        case GET_BLOG_BY_SLUG_REQUEST:
+            state.pending = true
+            state.notFound = false
+            break;
+        case GET_BLOG_BY_SLUG_SUCCESS:
+            state.pending = false
+            state.notFound = false
+            state.blog = action.payload.article;
+            break;
+        case GET_BLOG_BY_SLUG_FAILURE:
+            state.pending = false
+            state.notFound = true
             break;
         default:
     }
