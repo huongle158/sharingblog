@@ -63,7 +63,7 @@ export default function ProfileOtherUser() {
         }
 		fetchFollower();
         fetchPostByUserDetail();
-   }, [userDetail.username]);
+   }, [userDetail.username,followStatus, following]);
      const handleFollowUser = async () => {
          await followService.followUser(token,userDetail.username)
              .then((result) => {
