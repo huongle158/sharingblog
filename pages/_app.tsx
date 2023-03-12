@@ -22,8 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
 			router.push("/login");
 		}
 	}, [token, router.pathname]);
+	const { showToast, message, error } = router.query;
 	useEffect(() => {
-		const { showToast, message, error } = router.query;
 		if (showToast && router.query) {
 			if (message) {
 				toast.success(message)
@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				toast.error(error)
 			}
 		}
-	}, [router.query]);
+	}, [showToast]);
 	
 	return (
 		<React.StrictMode>
