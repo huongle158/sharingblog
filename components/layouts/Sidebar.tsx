@@ -1,24 +1,21 @@
 import Link from "next/link";
-import React, { ReactNode, Suspense, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import { Button, FloatButton, message, Popover, Tooltip } from "antd";
-import { ArrowLeftOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import { Badge, Avatar } from "antd";
+import { FloatButton, Popover, Tooltip } from "antd";
+import { ArrowLeftOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 import ModalDisplayCreateTitleBLog from "../modals/ModalDisplayCreateTitleBLog";
 import { NavItem } from "./NavItem";
 import { SingleLineList } from "../ui/SingleLineList";
-import { notifications } from "@/fake-data/notifications";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/redux/actions/userAction";
 import ModalLogout from "../modals/ModalLogoutUser";
-import { ModalInput } from "../modals/ModalInput";
-import { getTitleNewBlog } from "@/store/redux/actions/sharingblogAction";
 import userService  from '@/services/userService';
+import notificationService from "@/services/notificationService";
 
 interface Props {
 	children: ReactNode;
@@ -48,37 +45,47 @@ export const Sidebar = ({ children }: Props) => {
 		router.push("/login");
 	};
 	const [avatar, setAvatar] = useState("");
+	const [notifications, setNotifications] = useState([]);
+
 	useEffect(() => {
 		const fetchUserInfo = async () => {
 			const userInfo = await userService.getInfo(token);
 			if (userInfo && userInfo.user) {
 				setAvatar(userInfo.user.avatar);
-				}
 			}
+		}
+		
+		const fetchNotifications = async () => {
+			const notif = await notificationService.getNotifications(token, user.id)
+			if (notif && notif.notifications) {
+				setNotifications(notif.notifications)
+			}
+		}
+			
 		fetchUserInfo();
-	}, [avatar]);
+		fetchNotifications();
+	}, [avatar, notifications, token]);
 
 	return (
 		<div className="flex">
 			{/* Sidebar */}
 			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}
-				{/* <Popover
+				<Popover
 					placement="right"
 					title={"Thông báo"}
 					content={notifications.map((item, index) => (
 						<li key={index} className="px-4 py-2 hover:bg-gray-100 w-[450px]">
 							<SingleLineList
-								user={item.user}
-								title={item.blog.title}
-								image={item.blog.image}
+								userDetail={item.user}
+								notification={item}
 							/>
 						</li>
 					))}
 					trigger="click"
-				> */}
-					<Avatar shape="circle" src={avatar} size={46} />
-				{/* </Popover> */}
+				>
+					<Avatar shape="circle" src={avatar} size={46}/>
+				</Popover>
 
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
 				{/* Create blog */}
