@@ -89,10 +89,11 @@ export default function Profile() {
 			}
 		};
 		// lấy danh sách các bài viết của user
-		dispatch(getAllBlogsUser(token,undefined, username));
-	
-		
+		const fetchPostByUserDetail = async () => {
+            await dispatch(getAllBlogsUser(token,undefined,username));
+        }
 		fetchUserInfo();
+		fetchPostByUserDetail();
 		if (!token) {
 			setAvatar("");
 			setFullname("");
@@ -112,7 +113,7 @@ export default function Profile() {
 			}
 		}
 		fetchFollower();
-   }, [initialuseName]);
+   }, [initialuseName,]);
 	// tăng giá trị key mới để component được khởi tạo lại
 	const [bioKey, setBioKey] = useState(0);
 	const [infoKey, setInfoKey] = useState(0);
@@ -302,7 +303,7 @@ export default function Profile() {
 						handleCancel={handleCancel}
 						defaultValue={bio}
 						onChange={(e) => setBio(e.target.value)}
-						isTextArea
+						// isTextArea
 						maxLength={200}
 					/>
 					{/* Modal edit fullname, username */}

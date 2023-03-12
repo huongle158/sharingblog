@@ -35,7 +35,6 @@ export const BlogItem = ({ blog, className }: Props) => {
     const { user } = useSelector((reduxData: any) => {
         return reduxData.userReducer;
     });
-
     return (
             <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
                 <Link href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`} className="flex justify-left items-left hover:text-black mx-4">
@@ -76,7 +75,7 @@ export const BlogItem = ({ blog, className }: Props) => {
                         
                         <span className="mr-4">-</span>
                         {/* comments */}
-                        <span>Lượt bình luận: 25</span>
+                        <span>Lượt bình luân: {blog.commentCount}</span>
                     </div>
 
                     <div className='flex-1'>

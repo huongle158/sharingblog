@@ -1,17 +1,24 @@
 import { Avatar, Typography } from "antd"
+import { getTimeDiffInWords } from './../formatTime';
+import { useSelector } from 'react-redux';
 
 interface Props {
     onClickReply: () => void,
     onClickEdit: () => void,
     onClickDelete: () => void,
     content: string,
-    user: {
-        name: string,
+    userDetail: {
+        username: string,
         avatar: string
-    }
+    },
+    createdAt: any,
+    updatedAt: any
 }
 
-export const CommentItem = ({ onClickReply, onClickEdit, onClickDelete, content, user }: Props) => {
+export const CommentItem = ({ onClickReply, onClickEdit, onClickDelete, content, userDetail, createdAt, updatedAt }: Props) => {
+    const { user }: any = useSelector((reduxData: any) => {
+		return reduxData.userReducer;
+	});
     return (
         <div className="p-2 mt-3">
             <div className="bg-gray-100 p-4 rounded-3xl">
@@ -20,11 +27,11 @@ export const CommentItem = ({ onClickReply, onClickEdit, onClickDelete, content,
                         <div className="mr-2">
                             <Avatar
                                 size={36}
-                                src={user.avatar}
-                                alt={user.avatar}
+                                src={userDetail.avatar}
+                                alt={userDetail.avatar}
                             />
                         </div>
-                        <Typography.Title level={5} className="mt-1">{user.name}</Typography.Title>
+                        <Typography.Title level={5} className="mt-1">{userDetail.username}</Typography.Title>
                     </a>
                 </div>
                 <div className="px-12">
@@ -32,9 +39,20 @@ export const CommentItem = ({ onClickReply, onClickEdit, onClickDelete, content,
                 </div>
             </div>
             <div className="pl-16 mt-1 text-xs text-gray-500 font-bold space-x-4">
-                <a onClick={onClickReply}>Trả lời</a>
-                <a onClick={onClickEdit}>Chỉnh sửa</a>
-                <a onClick={onClickDelete}>Xoá</a>
+                {/* <a onClick={onClickReply}>Trả lời</a> */}
+                {user.username == userDetail.username ?
+                    <>
+                        <a onClick={onClickEdit}>Chỉnh sửa</a>
+                        <a onClick={onClickDelete}>Xoá</a>
+                    </>
+                :  <span style={{ display: 'none' }}></span>
+                }
+                {createdAt === updatedAt ?
+                <span className="inline-block align-middle ml-2 text-gray-400">{getTimeDiffInWords(createdAt)}</span>
+                :
+                <span className="inline-block align-middle ml-2 text-gray-400">Đã chỉnh sửa {getTimeDiffInWords(updatedAt)}</span>
+                }
+                
             </div>
         </div>
     )

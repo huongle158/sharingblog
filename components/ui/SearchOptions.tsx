@@ -25,7 +25,7 @@ export const SearchOptions = ({onSearch}: Props) => {
                 size="large">
                 <Option value="Title">Tiêu đề</Option>
                 <Option value="Author">Tác giả</Option>
-                <Option value="Tags">Tags</Option>
+                <Option value="Tags">Chủ đề</Option>
             </Select>
             <Search placeholder="Tìm kiếm..." 
                     onSearch={handleOnSearch} 

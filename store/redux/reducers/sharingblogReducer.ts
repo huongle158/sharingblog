@@ -15,7 +15,8 @@ const initialState: any = {
     newContent: "",
     pending: false,
     blogs: [],
-    error: ''
+    error: '',
+    lengthAllComment:0
 }
 
 const sharingblogReducers = (state = initialState, action: any) => {

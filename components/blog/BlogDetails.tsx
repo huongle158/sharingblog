@@ -37,6 +37,9 @@ interface Blog {
 }
 
 export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Props) => {
+    const { lengthAllComment } = useSelector((reduxData: any) => {
+		return reduxData.sharingBlogReducers;
+	});
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const token = Cookies.get('token') || '';
     const router = useRouter()
@@ -103,8 +106,8 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
             {/* Header card */}
             <div className="flex">
-                <Link
-                    href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`}
+                <a
+                    href="#"
                     className="flex-1 flex justify-left items-left hover:text-black mx-4">
                     <div className="mr-4 mt-1">
                         <Avatar
@@ -118,7 +121,7 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
                         <h5 className="text-gray-500 mb-1">@{blog.author.username}</h5>
                         <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
                     </div>
-                </Link>
+                </a>
                 <Dropdown menu={{ items }} trigger={['click']} arrow={{ pointAtCenter: true }} placement="bottomRight">
                     <a className="flex-4 w-auto flex justify-end mr-8 pt-4"><EllipsisOutlined className="text-3xl text-gray-600" /></a>
                 </Dropdown>
@@ -151,7 +154,7 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
                     }
 
                     {/* comments */}
-                    <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> 25
+                    <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> {lengthAllComment}
                 </div>
 
                 <div className='flex-1'>

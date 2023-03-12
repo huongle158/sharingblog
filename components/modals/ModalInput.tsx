@@ -7,7 +7,8 @@ interface Props {
     handleCancel: () => void,
     defaultValue?: string,
     onChange: (e: any) => void,
-    isTextArea?: boolean,
+    // isTextArea?: boolean,
+    content: string
     maxLength?: number,
     placeHolder?: string,
 }
@@ -21,7 +22,8 @@ export const ModalInput = ({
     handleCancel,
     defaultValue,
     onChange,
-    isTextArea = false,
+    // isTextArea = false,
+    content,
     maxLength,
     placeHolder,
 }: Props) => {
@@ -31,6 +33,7 @@ export const ModalInput = ({
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
+            maskStyle={{ background: 'rgba(0, 0, 0, 0.5)' }}
             footer={[
                 <Button key="back" onClick={handleCancel}>
                     Huỷ
@@ -41,7 +44,7 @@ export const ModalInput = ({
             ]}
         >
             {
-                isTextArea ? (
+                (
                     <TextArea
                         defaultValue={defaultValue}
                         placeholder={placeHolder}
@@ -50,12 +53,13 @@ export const ModalInput = ({
                         showCount
                         maxLength={maxLength}
                     />
-                ) : (
-                    <Input
-                        defaultValue={defaultValue}
-                        onChange={onChange}
-                    />
                 )
+                //  : (
+                //     <Input
+                //         defaultValue={defaultValue}
+                //         onChange={onChange}
+                //     />
+                // )
             }
         </Modal>
     )
