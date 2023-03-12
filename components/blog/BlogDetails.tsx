@@ -34,6 +34,7 @@ interface Blog {
         username?: string,
     },
     favoritesCount: number,
+    commentCount: number
 }
 
 export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Props) => {
@@ -154,7 +155,7 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
                     }
 
                     {/* comments */}
-                    <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> {lengthAllComment}
+                    <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> {blog.commentCount}
                 </div>
 
                 <div className='flex-1'>
