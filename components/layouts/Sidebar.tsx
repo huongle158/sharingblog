@@ -58,7 +58,7 @@ export const Sidebar = ({ children }: Props) => {
 		const fetchNotifications = async () => {
 			const notif = await notificationService.getNotifications(token, user.id)
 			if (notif && notif.notifications) {
-				setNotifications(notif.notifications)
+				setNotifications(notif)
 			}
 		}
 			
@@ -71,21 +71,21 @@ export const Sidebar = ({ children }: Props) => {
 			{/* Sidebar */}
 			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}
-				<Popover
+				{/* <Popover
 					placement="right"
 					title={"Thông báo"}
-					content={notifications.map((item, index) => (
-						<li key={index} className="px-4 py-2 hover:bg-gray-100 w-[450px]">
-							<SingleLineList
-								userDetail={item.user}
-								notification={item}
-							/>
-						</li>
-					))}
+					// content={notifications.map((item, index) => (
+					// 	<li key={index} className="px-4 py-2 hover:bg-gray-100 w-[450px]">
+					// 		<SingleLineList
+					// 			userDetail={item.user}
+					// 			notification={item}
+					// 		/>
+					// 	</li>
+					// ))}
 					trigger="click"
-				>
+				> */}
 					<Avatar shape="circle" src={avatar} size={46}/>
-				</Popover>
+				{/* </Popover> */}
 
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
 				{/* Create blog */}
