@@ -26,8 +26,8 @@ export default function ProfileOtherUser() {
 	});
     const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
-	});
-    console.log(user)
+    });
+    
      // trạng thái follow
      const [following,setFollowing] = useState(false)
      const [followStatus,setFollowStatus] = useState({})

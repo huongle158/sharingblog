@@ -6,7 +6,10 @@ import followService from './../../services/followService';
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailUser } from "@/store/redux/actions/userAction";
 
-export const SingleLineList = ({ userDetail, notification }: any) => {
+export const SingleLineList = ({
+  userDetail,
+  // notification
+}: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const token = Cookies.get("token") || "";
@@ -60,15 +63,15 @@ export const SingleLineList = ({ userDetail, notification }: any) => {
             <Typography.Text className="ml-2 font-bold">{userDetail.fullname}</Typography.Text><br />
             <Typography.Text className="ml-2">
               @{userDetail.username}
-              {notification && notification.message}
+              {/* {notification && notification.message} */}
             </Typography.Text>
           </div>
         </a>
       </div>
       <div>
         {
-          notification && <Image src={notification.article.image} alt={notification.article.image} preview={false} width="40px" height="40px" />
-          ||
+          // notification && <Image src={notification.article.image} alt={notification.article.image} preview={false} width="40px" height="40px" />
+          // ||
           user.username !== userDetail.username && (
             following ? (
               <Button onClick={handleUnFollowUser}>
