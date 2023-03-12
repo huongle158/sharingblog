@@ -68,9 +68,9 @@ const UpdateBlog = () => {
         }
         
         try {
-            console.log(typeof newBanner)
+            // console.log(typeof newBanner)
             const post = await blogService.updatePost(token, slug, blogUpdate);
-            console.log(post)
+            // console.log(post)
             router.push({
                 pathname: `/blog/${slug}`,
                 query: {

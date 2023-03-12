@@ -2,8 +2,13 @@ import blogService from '@/services/blogService';
 import { getBlogBySlug } from '@/store/redux/actions/sharingblogAction';
 import { Avatar, Divider, Spin, Tag } from 'antd';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getTimeDiffInWords } from './../formatTime';
+import  followService  from '@/services/followService';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { getDetailUser } from "@/store/redux/actions/userAction";
+import { useRouter } from 'next/router';
 interface Props {
     blog: Blog,
     className?: string,
@@ -27,17 +32,45 @@ interface Blog {
     }
     favoritesCount: number,
     // favoriteStatus: boolean,
+    commentCount: number
 }
 
 export const BlogItem = ({ blog, className }: Props) => {
     // giới hạn content 150 chữ
+    const router = useRouter();
     const previewContent: string = blog.content.substring(0, 200) + '...'
     const { user } = useSelector((reduxData: any) => {
         return reduxData.userReducer;
     });
+    const dispatch = useDispatch();
+    const token = Cookies.get("token") || "";
+    const [userDetail,setUserDetail] = useState({})
+    const [dataReady, setDataReady] = useState(false);
+	useEffect(() => {
+		const fetchGetProfileByUsername =  async () => {
+			const fetchNotFollow = await followService.getProfileByUsername(token, blog.author.username)
+			if (fetchNotFollow) {
+				setUserDetail(fetchNotFollow.profile)
+                setDataReady(true)
+			}
+		}
+		fetchGetProfileByUsername()
+   }, []);
+    
+      // ham call get page profiles/username
+    const handleViewProfileUser = async () => {
+        if(dataReady) {
+            dispatch(getDetailUser(userDetail))
+            router.push(`/profiles/${userDetail.username}`);
+            //console.log(userDetail)
+        }
+    }
     return (
             <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
-                <Link href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`} className="flex justify-left items-left hover:text-black mx-4">
+                <a 
+                    // href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`} 
+                    onClick={handleViewProfileUser}
+                    className="flex justify-left items-left hover:text-black mx-4">
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
@@ -50,7 +83,7 @@ export const BlogItem = ({ blog, className }: Props) => {
                         <p className="text-gray-500 mb-2 text-sm">@{blog.author.username}</p>
                         <p className="text-gray-500 mb-2 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
                     </div>
-                </Link>
+                </a>
                 <Divider className="border-gray-300"/>
                 {/* Body card */}
                 <div className="px-6">

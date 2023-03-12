@@ -5,10 +5,12 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import ModalDeleteBlog from '../modals/ModalDeleteBlog';
 import { getTimeDiffInWords } from './../formatTime';
+import { getDetailUser } from "@/store/redux/actions/userAction";
+import  followService  from '@/services/followService';
 
 interface Props {
     blog: Blog,
@@ -44,7 +46,28 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const token = Cookies.get('token') || '';
     const router = useRouter()
+    const dispatch = useDispatch();
 
+    const [userDetail,setUserDetail] = useState({})
+    const [dataReady, setDataReady] = useState(false);
+	useEffect(() => {
+		const fetchGetProfileByUsername =  async () => {
+			const fetchNotFollow = await followService.getProfileByUsername(token, blog.author.username)
+			if (fetchNotFollow) {
+				setUserDetail(fetchNotFollow.profile)
+                setDataReady(true)
+			}
+		}
+		fetchGetProfileByUsername()
+    }, []);
+    // ham call get page profiles/username
+    const handleViewProfileUser = async () => {
+        if(dataReady) {
+            dispatch(getDetailUser(userDetail))
+            router.push(`/profiles/${userDetail.username}`);
+            //console.log(userDetail)
+        }
+    }
     const items: MenuProps['items'] = [
         {
             label: <Link href={`/blog/update/${blog.slug}`} >Chỉnh sửa</Link>,
@@ -102,13 +125,15 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
     const { user } = useSelector((reduxData: any) => {
         return reduxData.userReducer;
     });
+    // hàm khi click vào username thì push qua profile
+
 
     return (
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
             {/* Header card */}
             <div className="flex">
                 <a
-                    href="#"
+                    onClick={handleViewProfileUser}
                     className="flex-1 flex justify-left items-left hover:text-black mx-4">
                     <div className="mr-4 mt-1">
                         <Avatar

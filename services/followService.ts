@@ -2,7 +2,7 @@ const BASE_URL = 'http://localhost:3000/profiles';
 import { CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from './../types/status';
 
 const followService = {
-  getProfileByUsername: async (token: string,username: string) => {
+  getProfileByUsername: async (token: string,username: any) => {
     try {
       const response = await fetch(`${BASE_URL}/${username}`, {
         method: 'GET',

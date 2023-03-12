@@ -55,7 +55,7 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
         }
     }, [fileUpload])
 
-    console.log("file review return: " + newBanner)
+    // console.log("file review return: " + newBanner)
     return (
         <div className='flex py-12 px-10'>
             {/* Left part */}

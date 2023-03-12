@@ -45,7 +45,6 @@ export const SingleLineList = ({ userDetail, notification }: any) => {
   }
   // ham call get page profiles/username
   const handleViewProfileUser = async () => {
-    ;
     dispatch(getDetailUser(userDetail))
     router.push(`/profiles/${userDetail.username}`);
 
