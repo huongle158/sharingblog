@@ -143,7 +143,6 @@ export default function Profile() {
 		setIsBioModalOpen(false);
 		setIsInfoModalOpen(false);
 		toast.success("Cập nhật tiểu sử thành công");
-		// console.log(input.user.fullname);
 	};
 	const [newUsername, setNewUsername] = useState("");
 	const handleOkUpdateInfo = async () => {
@@ -188,7 +187,6 @@ export default function Profile() {
 
 		if (info.file.status === "done") {
 			getBase64(info.file.originFileObj as RcFile, (url) => {
-				// console.log("This's ~ url avatar", url);
 				setLoading(false);
 				setAvatar(url);
 			});
@@ -200,7 +198,6 @@ export default function Profile() {
 				toast.success("Cập nhật avatar thành công");
 			} catch (error) {
 				toast.error("Cập nhật avatar không thành công");
-				console.log(error);
 			}
 		}
 	};

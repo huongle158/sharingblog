@@ -13,7 +13,7 @@ interface Props {
 export const NavItem = ({ route, title, children, className }: Props) => {
     const router = useRouter();
     return (
-        <Link href={route || ""} legacyBehavior>
+        <Link href={route || "#"} legacyBehavior>
             <div
                 className={`hover:bg-blue-200 rounded-full text-2xl cursor-pointer my-3 p-3 
 						inline-block ${className} ${router.pathname === route ? "bg-blue-300" : ""}`}

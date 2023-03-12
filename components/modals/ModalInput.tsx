@@ -8,7 +8,6 @@ interface Props {
     defaultValue?: string,
     onChange: (e: any) => void,
     // isTextArea?: boolean,
-    content: string
     maxLength?: number,
     placeHolder?: string,
 }
@@ -23,7 +22,6 @@ export const ModalInput = ({
     defaultValue,
     onChange,
     // isTextArea = false,
-    content,
     maxLength,
     placeHolder,
 }: Props) => {
