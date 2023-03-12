@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .ant-popover-arrow {
-    top: 20% !important;
+    top: 10% !important;
 }
 
 .ant-btn-primary {
@@ -15,4 +15,9 @@
 }
 a:hover {
     cursor: pointer!important;
+}
+
+.ant-popover-inner-content {
+    overflow: scroll;
+    max-height: 400px;
 }
