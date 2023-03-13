@@ -7,36 +7,17 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import ModalDeleteBlog from '../modals/ModalDeleteBlog';
-import { getTimeDiffInWords } from './../formatTime';
+import ModalDeleteBlog from '../../shared/modals/ModalDeleteBlog';
+import { getTimeDiffInWords } from '../../shared/format/formatTime';
 import { getDetailUser } from "@/store/redux/actions/userAction";
 import  followService  from '@/services/followService';
+import { Blog } from '@/types';
 
 interface Props {
     blog: Blog,
     className?: string,
     isFavorite: boolean,
     setIsFavorite: Dispatch<SetStateAction<boolean>>
-}
-
-interface Blog {
-    slug: string,
-    title: string,
-    content: string,
-    banner: string,
-    tagList: string[],
-    createdAt: string,
-    updatedAt?: string,
-    author: {
-        avatar: string,
-        bio?: string,
-        email?: string,
-        fullname: string,
-        id?: number,
-        username?: string,
-    },
-    favoritesCount: number,
-    commentCount: number
 }
 
 export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Props) => {
@@ -60,11 +41,11 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
 		}
 		fetchGetProfileByUsername()
     }, []);
-    // ham call get page profiles/username
+    // ham call get page profile/username
     const handleViewProfileUser = async () => {
         if(dataReady) {
             dispatch(getDetailUser(userDetail))
-            router.push(`/profiles/${userDetail.username}`);
+            router.push(`/profile/${userDetail.username}`);
             //console.log(userDetail)
         }
     }

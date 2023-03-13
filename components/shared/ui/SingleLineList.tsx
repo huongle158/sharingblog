@@ -2,7 +2,7 @@ import { Avatar, Button, Image, List, message, Typography } from "antd"
 import Cookies from "js-cookie"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react"
-import followService from './../../services/followService';
+import followService from '../../../services/followService';
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailUser } from "@/store/redux/actions/userAction";
 
@@ -46,10 +46,10 @@ export const SingleLineList = ({
         message.error(err);
       })
   }
-  // ham call get page profiles/username
+  // ham call get page profile/username
   const handleViewProfileUser = async () => {
     dispatch(getDetailUser(userDetail))
-    router.push(`/profiles/${userDetail.username}`);
+    router.push(`/profile/${userDetail.username}`);
 
   }
   return (

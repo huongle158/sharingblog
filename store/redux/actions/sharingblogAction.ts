@@ -10,7 +10,7 @@ import { CREATE_TITLE_BLOG,
         GET_BLOG_BY_SLUG_REQUEST,
         GET_BLOG_BY_SLUG_SUCCESS,
         GET_BLOG_BY_SLUG_FAILURE,
-        GET_LENGTH_ALL_COMMENT_BLOG_DETAIL} from '../constant/sharingblogConstant';
+    } from '../constant/sharingblogConstant';
 
 // hàm get ALL blogs
 export const getAllBlogs = (token: string, limit?: number, author?: string, offset?: number) => {

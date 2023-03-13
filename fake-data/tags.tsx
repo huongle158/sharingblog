@@ -1,1 +1,0 @@
-export const tags = ["CSS", "HTML", "Coding", "Javascript", "Java", "Next.js", "Others", "JS", "C#", "Python", "C++", "Java", "Next.js", "Others", "CSS", "HTML", "Coding", "Javascript", "Java", "Next.js", "Others", "CSS", "HTML", "Coding", "Javascript", "Java", "Next.js", "Others", "CSS", "HTML", "Coding", "Javascript", "Java", "Next.js", "Others"]

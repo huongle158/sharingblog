@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ErrorBoundary } from 'react-error-boundary';
-import {
-    Sidebar,
-    ProfilePosts,
-    ProfileGroupBox,
-    ProfileHeader,
-    ProfileFrame,
-} from "@/components/index";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Typography, Card, Button, message } from "antd";
 import { useRouter } from "next/router";
 import followService from "@/services/followService";
-import { ListUsers } from '@/components';
 import { getListFollower } from "@/store/redux/actions/userAction";
-import  blogService  from '@/services/blogService';
 import { getAllBlogsUser } from "@/store/redux/actions/sharingblogAction";
+import { Sidebar } from "@/components/shared";
+import { ListUsers, ProfileFrame, ProfilePosts } from "@/components/pages";
 
 export default function ProfileOtherUser() {
     const router = useRouter();
@@ -94,7 +86,6 @@ export default function ProfileOtherUser() {
 			pathname: "/users",
 			query: {
 				title: "Danh sách người theo dõi",
-				items: JSON.stringify(followerList),
 			},
 		});
 	};
@@ -105,7 +96,6 @@ export default function ProfileOtherUser() {
 			pathname: "/users",
 			query: {
 				title: "Danh sách đang theo dõi",
-				items: JSON.stringify(followingList),
 			},
 		});
 	};

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
-import { Guest, Button } from "@/components/index";
-import { Checkbox, Form, Input } from "antd";
+import { Guest, Button } from "@/components/shared";
+import { Form, Input } from "antd";
 import Link from "next/link";
 import userService from "@/services/userService";
 import { toast } from "react-toastify";

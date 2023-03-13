@@ -5,7 +5,7 @@ import { CgProfile } from "react-icons/cg";
 import { FloatButton, Popover, Tooltip } from "antd";
 import { ArrowLeftOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
-import ModalDisplayCreateTitleBLog from "../modals/ModalDisplayCreateTitleBLog";
+import ModalDisplayCreateTitleBLog from "../../pages/blog/ModalDisplayCreateTitleBLog";
 import { NavItem } from "./NavItem";
 import { SingleLineList } from "../ui/SingleLineList";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/redux/actions/userAction";
-import ModalLogout from "../modals/ModalLogoutUser";
+import ModalLogout from "../../pages/user/ModalLogoutUser";
 import userService  from '@/services/userService';
 import notificationService from "@/services/notificationService";
 

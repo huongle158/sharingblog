@@ -17,7 +17,7 @@ export default function ModalDisplayCreateTitleBLog({
             return false
         }
         setShowModal();
-        router.push("/create");
+        router.push("/blog/create");
         dispatch(getTitleNewBlog(title));
         //console.log(title)
     };

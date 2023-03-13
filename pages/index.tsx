@@ -1,5 +1,4 @@
-import { BlogItem, ListUsers, SearchOptions, TagsBox } from "@/components";
-import { Sidebar } from "@/components/layouts/Sidebar";
+import { Sidebar } from "@/components/shared/layouts/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBlogs, getAllBlogsByAuthor, getAllBlogsByTags, getAllBlogsByTitle } from "./../store/redux/actions/sharingblogAction";
 import blogService from "./../services/blogService";
@@ -8,10 +7,11 @@ import { getAllTags } from "@/store/redux/actions/tagAction";
 import { getListNotFollow } from "./../store/redux/actions/userAction";
 import tagService from "@/services/tagService";
 import { Spin, message } from "antd";
-import { users } from '@/fake-data';
 import Cookies from "js-cookie";
 import { useRouter } from 'next/router';
 import followService from './../services/followService';
+import { SearchOptions } from "@/components/shared";
+import { BlogItem, ListUsers, TagsBox } from "@/components/pages";
 
 
 export default function Home() {

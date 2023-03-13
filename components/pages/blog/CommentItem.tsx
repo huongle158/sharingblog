@@ -1,5 +1,5 @@
 import { Avatar, Typography } from "antd"
-import { getTimeDiffInWords } from './../formatTime';
+import { getTimeDiffInWords } from '../../shared/format/formatTime';
 import { useSelector } from 'react-redux';
 
 interface Props {

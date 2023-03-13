@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Sidebar } from "@/components/layouts/Sidebar";
+import { Sidebar } from "@/components/shared/layouts/Sidebar";
 import { useDispatch } from "react-redux";
 import blogService from "@/services/blogService";
 import { Input, message, Modal, Typography } from "antd";
 import { useRouter } from "next/router";
 import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
-import CreateContent from "@/components/blog/CreateContent";
+import CreateContent from "@/components/pages/blog/CreateContent";
 import Cookies from "js-cookie";
-import Preview from "@/components/blog/Preview";
+import Preview from "@/components/pages/blog/Preview";
 import { toast } from "react-toastify";
 import { RcFile } from "antd/es/upload";
 
@@ -51,12 +51,6 @@ const UpdateBlog = () => {
         setShowPreview(true)
     }
 
-    interface Blog {
-        title: string,
-        content: string,
-        tagList: string[],
-        banner?: RcFile | null,
-    }
     const saveBlog = async () => {
         const blogUpdate: Blog = {
             title: title,

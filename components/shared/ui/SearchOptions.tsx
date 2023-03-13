@@ -5,7 +5,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 interface Props {
-    onSearch: () => void
+    onSearch: (searchOption: string, searchValue: string) => void
 }
 
 export const SearchOptions = ({onSearch}: Props) => {

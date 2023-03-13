@@ -1,9 +1,8 @@
-import { Sidebar, SingleLineList } from "@/components"
+import { Sidebar, SingleLineList } from "@/components/shared"
 // import { users } from "@/fake-data";
 import { Card, Typography } from "antd"
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Users = () => {
     const { listFollow } = useSelector((reduxData: any) => {
@@ -11,10 +10,7 @@ const Users = () => {
 	});
  
     const router = useRouter();
-    const { title, items } = router.query;
-    // if (items) {
-    //     const users = JSON.parse(items);
-    // }
+    const { title } = router.query;
    
     return (
         <Sidebar>

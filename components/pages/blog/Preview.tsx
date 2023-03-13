@@ -3,7 +3,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, FloatButton, Image, message, Row, Typography, Upload } from 'antd'
 import { RcFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import CheckBoxGrid from '@/components/ui/CheckBoxGrid';
+import CheckBoxGrid from '@/components/shared/ui/CheckBoxGrid';
 import tagService from '@/services/tagService';
 import { getAllTags } from '@/store/redux/actions/tagAction';
 

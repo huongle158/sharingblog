@@ -3,10 +3,10 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, FloatButton, message, Row, Typography, Upload } from 'antd'
 import { RcFile, UploadFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import CheckBoxGrid from '@/components/ui/CheckBoxGrid';
+import CheckBoxGrid from '@/components/shared/ui/CheckBoxGrid';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import blogService from '../services/blogService';
+import blogService from '../../services/blogService';
 import { useRouter } from "next/router";
 import tagService from '@/services/tagService';
 import { getAllTags } from '@/store/redux/actions/tagAction';

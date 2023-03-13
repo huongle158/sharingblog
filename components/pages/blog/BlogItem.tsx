@@ -3,36 +3,17 @@ import { getBlogBySlug } from '@/store/redux/actions/sharingblogAction';
 import { Avatar, Divider, Spin, Tag } from 'antd';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTimeDiffInWords } from './../formatTime';
+import { getTimeDiffInWords } from '../../shared/format/formatTime';
 import  followService  from '@/services/followService';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { getDetailUser } from "@/store/redux/actions/userAction";
 import { useRouter } from 'next/router';
+import { Blog } from '@/types';
+
 interface Props {
     blog: Blog,
     className?: string,
-}
-
-interface Blog {
-    slug: string,
-    title: string,
-    content: string,
-    banner: string,
-    tagList: string[],
-    createdAt: string,
-    updatedAt?: string,
-    author: {
-        avatar: string,
-        bio?: string,
-        email?: string,
-        fullname: string,
-        id?: number,
-        username?: string,
-    }
-    favoritesCount: number,
-    // favoriteStatus: boolean,
-    commentCount: number
 }
 
 export const BlogItem = ({ blog, className }: Props) => {
@@ -44,7 +25,7 @@ export const BlogItem = ({ blog, className }: Props) => {
     });
     const dispatch = useDispatch();
     const token = Cookies.get("token") || "";
-    const [userDetail,setUserDetail] = useState({})
+    const [userDetail, setUserDetail] = useState({})
     const [dataReady, setDataReady] = useState(false);
 	useEffect(() => {
 		const fetchGetProfileByUsername =  async () => {
@@ -57,18 +38,18 @@ export const BlogItem = ({ blog, className }: Props) => {
 		fetchGetProfileByUsername()
    }, []);
     
-      // ham call get page profiles/username
+      // ham call get page profile/username
     const handleViewProfileUser = async () => {
         if(dataReady) {
             dispatch(getDetailUser(userDetail))
-            router.push(`/profiles/${userDetail.username}`);
+            router.push(`/profile/${userDetail.username}`);
             //console.log(userDetail)
         }
     }
     return (
             <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
                 <a 
-                    // href={user.username !== blog.author.username ? `profiles/${blog.author.username}` : `/profile`} 
+                    // href={user.username !== blog.author.username ? `profile/${blog.author.username}` : `/profile`} 
                     onClick={handleViewProfileUser}
                     className="flex justify-left items-left hover:text-black mx-4">
                     <div className="mr-4 mt-1">

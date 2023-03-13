@@ -1,16 +1,12 @@
+import { User } from "@/types"
 import { Avatar, Button, List, Typography } from "antd"
 import { FC } from "react"
-import { SingleLineList } from "../ui/SingleLineList"
+import { SingleLineList } from "../../shared/ui/SingleLineList"
 
 interface Props {
-    users: Users[],
-    title?: any,
+    users: User[],
+    title?: string,
     onClickButton?: () => void,
-}
-
-interface Users {
-    name: string,
-    avatar: string
 }
 
 export const ListUsers: FC<Props> = ({ users, title, onClickButton }) => {

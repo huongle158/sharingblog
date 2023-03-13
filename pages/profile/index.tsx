@@ -1,41 +1,23 @@
-import React, { useEffect, useState ,Suspense} from "react";
+import React, { useEffect, useState} from "react";
 import { ErrorBoundary } from 'react-error-boundary';
-import {
-	Sidebar,
-	BlogItem,
-	ListUsers,
-	ModalInput,
-	ModalMultipleInput,
-	ProfilePosts,
-	ProfileGroupBox,
-	ProfileHeader,
-	ProfileFrame,
-} from "@/components/index";
-import { blogs, tags, users } from "@/fake-data";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { EditOutlined } from "@ant-design/icons";
-import { getListFollower, getListFollowing, getUserInfo } from "./../store/redux/actions/userAction";
-import userService from "./../services/userService";
-import followService from "../services/followService"
+import { getListFollower, getUserInfo } from "../../store/redux/actions/userAction";
+import userService from "../../services/userService";
+import followService from "../../services/followService"
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import {
 	Avatar,
-	Button,
-	Card,
-	Input,
-	Modal,
-	Typography,
 	Upload,
 	message,
-	Spin,
 } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import blogService from "@/services/blogService";
-import { getAllBlogs, getAllBlogsUser } from './../store/redux/actions/sharingblogAction';
+import { getAllBlogsUser } from '../../store/redux/actions/sharingblogAction';
+import { ModalInput, ModalMultipleInput, Sidebar } from "@/components/shared";
+import { ProfileFrame, ProfileGroupBox, ProfileHeader, ProfilePosts } from "@/components/pages";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 	const reader = new FileReader();
@@ -74,7 +56,6 @@ export default function Profile() {
 		const fetchUserInfo = async () => {
 			const userInfo = await userService.getInfo(token);
 			if (userInfo && userInfo.user) {
-				// console.log("This's ~ userInfo avatar", userInfo.user.avatar);
 				setAvatar(userInfo.user.avatar);
 				setFullname(userInfo.user.fullname);
 				setEmail(userInfo.user.email);
@@ -228,7 +209,6 @@ export default function Profile() {
 			pathname: "/users",
 			query: {
 				title: "Danh sách người theo dõi",
-				items: JSON.stringify(followerList),
 			},
 		});
 	};
@@ -239,7 +219,6 @@ export default function Profile() {
 			pathname: "/users",
 			query: {
 				title: "Danh sách đang theo dõi",
-				items: JSON.stringify(followingList),
 			},
 		});
 	};

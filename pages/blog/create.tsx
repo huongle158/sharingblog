@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Sidebar } from "@/components/layouts/Sidebar";
+import { Sidebar } from "@/components/shared/layouts/Sidebar";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { message } from "antd";
 import { useRouter } from "next/router";
 import { getContentNewBlog } from "@/store/redux/actions/sharingblogAction";
-import CreateContent from "@/components/blog/CreateContent";
+import CreateContent from "@/components/pages/blog/CreateContent";
 
 const CreateBlog = () => {
 	const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const CreateBlog = () => {
             return false
 		}
 		dispatch(getContentNewBlog(content))
-		router.push("/preview");
+		router.push("preview");
 
 	}
 

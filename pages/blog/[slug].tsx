@@ -1,15 +1,14 @@
-import { Sidebar } from "../../components/layouts/Sidebar";
+import { Sidebar } from "../../components/shared/layouts/Sidebar";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Input, message, Modal, Spin } from "antd";
-import { BlogDetails, CommentItem, ModalInput } from "@/components";
+import { ModalInput } from "@/components/shared";
+import { BlogDetails, CommentItem } from "@/components/pages";
 import { useRouter } from "next/router";
-import blogService from "@/services/blogService";
 import Cookies from "js-cookie";
-import { getBlogBySlug, getLenghtAllCommentBlogDetail } from "@/store/redux/actions/sharingblogAction";
+import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
 import { useDispatch, useSelector } from "react-redux";
-import NotFound from "@/components/NotFound";
-import { ArrowLeftOutlined } from "@ant-design/icons";
 import commentService from "@/services/commentService";
+import NotFound from "@/components/shared/error/NotFound";
 
 const { TextArea } = Input;
 

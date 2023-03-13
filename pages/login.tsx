@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { Guest, Button } from "@/components/index";
 import { Checkbox, Form, Input, Spin  } from "antd";
 import { useRouter } from "next/router";
 import userService from '../services/userService';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+import { Button, Guest } from "@/components/shared";
 
 
 const Login: React.FC = () => {
@@ -41,10 +41,10 @@ const Login: React.FC = () => {
 	return (
 		<Guest label="Đăng nhập">
 			{loading && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 opacity-75">
-    <Spin  />
-  </div>
-)}
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 opacity-75">
+					<Spin  />
+				</div>
+				)}
 			<Form
 				name="login"
 				labelCol={{ span: 8 }}
