@@ -223,7 +223,6 @@ export default function Profile() {
 		});
 	};
 
-
 	return (
 		<ErrorBoundary fallback={<div>Loading...</div>}>
 			<Sidebar>
@@ -237,23 +236,13 @@ export default function Profile() {
 							beforeUpload={beforeUpload}
 							onChange={handleChange}
 						>
-							{avatar && avatar ? (
+						
 								<Avatar
 									size={128}
-									src={avatar}
+									src={avatar == "" ? avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
 									alt="Avatar"
 									className="w-full h-full object-cover"
 								/>
-							) : (
-								<>
-									<Avatar
-										size={128}
-										icon={<PlusOutlined />}
-										alt="Avatar"
-										className="w-full h-full object-cover"
-									/>
-								</>
-							)}
 						</Upload>
 					</ProfileHeader>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Col, FloatButton, message, Row, Typography, Upload } from 'antd'
-import { RcFile, UploadFile } from 'antd/es/upload';
+import { Button, FloatButton, message, Typography, Upload } from 'antd'
+import { RcFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import CheckBoxGrid from '@/components/shared/ui/CheckBoxGrid';
 import { useSelector } from 'react-redux';

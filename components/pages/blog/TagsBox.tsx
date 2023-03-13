@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import  blogService  from '@/services/blogService';
 import Cookies from "js-cookie";
 import { getAllBlogsByTags } from "@/store/redux/actions/sharingblogAction";
-import { useEffect } from 'react';
 
 interface Props {
     title?: string,

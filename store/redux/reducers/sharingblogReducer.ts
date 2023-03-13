@@ -50,7 +50,7 @@ const sharingblogReducers = (state = initialState, action: any) => {
         case GET_BLOG_BY_SLUG_SUCCESS:
             state.pending = false
             state.notFound = false
-            state.blog = action.payload.article;
+            state.blog = action.payload;
             break;
         case GET_BLOG_BY_SLUG_FAILURE:
             state.pending = false

@@ -1,5 +1,3 @@
-import blogService from '@/services/blogService';
-import { getBlogBySlug } from '@/store/redux/actions/sharingblogAction';
 import { Avatar, Divider, Spin, Tag } from 'antd';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';

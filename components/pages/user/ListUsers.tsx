@@ -1,5 +1,5 @@
 import { User } from "@/types"
-import { Avatar, Button, List, Typography } from "antd"
+import { Button, List, Typography } from "antd"
 import { FC } from "react"
 import { SingleLineList } from "../../shared/ui/SingleLineList"
 

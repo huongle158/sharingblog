@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, FloatButton, Image, message, Row, Typography, Upload } from 'antd'
+import { Button, FloatButton, Image, message, Typography, Upload } from 'antd'
 import { RcFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import CheckBoxGrid from '@/components/shared/ui/CheckBoxGrid';
@@ -13,8 +13,8 @@ interface Props {
     oldBanner: string,
     newBanner: RcFile | null,
     setNewBanner: Dispatch<SetStateAction<RcFile | null>>,
-    tagList: never[],
-    setTagList: Dispatch<SetStateAction<never[]>>,
+    tagList: any[],
+    setTagList: Dispatch<SetStateAction<any[]>>,
     saveBlog: () => Promise<void>
 }
 const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, setTagList, saveBlog }: Props) => {

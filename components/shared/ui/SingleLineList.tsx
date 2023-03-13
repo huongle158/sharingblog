@@ -57,7 +57,7 @@ export const SingleLineList = ({
       <div className="flex items-center">
         <a className="cursor-default hover:cursor-pointer flex" onClick={handleViewProfileUser}>
 
-          <Avatar size={48} src={userDetail.avatar} />
+          <Avatar size={48} src={userDetail.avatar == "" ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"} />
           <div>
             <Typography.Text className="ml-2 font-bold">{userDetail.fullname}</Typography.Text><br />
             <Typography.Text className="ml-2">

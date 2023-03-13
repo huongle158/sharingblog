@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Sidebar } from "@/components/layouts/Sidebar";
 import { useDispatch } from "react-redux";
 import blogService from "@/services/blogService";
 import { Input, message, Modal, Typography } from "antd";
 import { useRouter } from "next/router";
 import { getBlogBySlug } from "@/store/redux/actions/sharingblogAction";
-import CreateContent from "@/components/blog/CreateContent";
 import Cookies from "js-cookie";
-import Preview from "@/components/blog/Preview";
 import { toast } from "react-toastify";
 import { RcFile } from "antd/es/upload";
+import { Sidebar } from "@/components/shared";
+import CreateContent from "@/components/pages/blog/CreateContent";
+import Preview from "@/components/pages/blog/Preview";
 
 const UpdateBlog = () => {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const UpdateBlog = () => {
     const [title, setTitle] = useState("");
     const [oldBanner, setOldBanner] = useState("");
     const [newBanner, setNewBanner] = useState<RcFile | null > (null);
-    const [tagList, setTagList] = useState([]);
+    const [tagList, setTagList] = useState<any[]>([]);
 
     const handleContentChange = (value: string) => {
         setContent(value);

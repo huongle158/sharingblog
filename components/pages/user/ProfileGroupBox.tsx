@@ -1,3 +1,4 @@
+import { User } from "@/types"
 import { EditOutlined } from "@ant-design/icons"
 import { Card, Typography } from "antd"
 import { ListUsers } from "./ListUsers"
@@ -5,9 +6,9 @@ import { ListUsers } from "./ListUsers"
 interface Props {
     showBioModal?: () => void,
     bio: string,
-    followerList?: string[],
+    followerList: User[],
     handleViewFollowers: () => void,
-    followingList?: string[],
+    followingList: User[],
     handleViewFollowing: () => void,
 }
 export const ProfileGroupBox = ({
@@ -17,7 +18,7 @@ export const ProfileGroupBox = ({
     handleViewFollowers,
     followingList,
     handleViewFollowing
-}: any) => {
+}: Props) => {
     const titleFollower = `Người theo dõi (${followerList.length})`
 	const titleFollowing = `Đang theo dõi (${followingList.length})`
     return (

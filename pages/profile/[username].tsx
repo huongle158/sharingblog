@@ -98,7 +98,8 @@ export default function ProfileOtherUser() {
 				title: "Danh sách đang theo dõi",
 			},
 		});
-	};
+    };
+    console.log(userDetail)
     const titleFollower = `Người theo dõi (${followerList.length})`
 	const titleFollowing = `Đang theo dõi (${followingList.length})`
     return (
@@ -107,7 +108,7 @@ export default function ProfileOtherUser() {
                     <div className="flex justify-center items-center mb-8">
                         <Avatar
                             size={128}
-                            src={userDetail.avatar}
+                            src={userDetail.avatar == "" ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
                             alt="Avatar"
                             className="w-32 h-32 object-cover mr-4"
                         />

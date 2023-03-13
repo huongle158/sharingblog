@@ -1,6 +1,6 @@
 import blogService from '@/services/blogService';
 import { CommentOutlined, EllipsisOutlined, HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { Avatar, Card, Divider, Dropdown, MenuProps, Spin, Tag, Typography } from 'antd';
+import { Avatar, Divider, Dropdown, MenuProps, Tag, Typography } from 'antd';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -102,11 +102,6 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
             toast.error("Lỗi: " + error)
         }
     }
-
-    const { user } = useSelector((reduxData: any) => {
-        return reduxData.userReducer;
-    });
-    // hàm khi click vào username thì push qua profile
 
 
     return (

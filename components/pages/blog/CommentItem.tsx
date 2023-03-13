@@ -27,7 +27,7 @@ export const CommentItem = ({ onClickReply, onClickEdit, onClickDelete, content,
                         <div className="mr-2">
                             <Avatar
                                 size={36}
-                                src={userDetail.avatar}
+                                src={userDetail.avatar == "" ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
                                 alt={userDetail.avatar}
                             />
                         </div>

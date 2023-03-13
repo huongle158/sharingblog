@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from "react";
+import React, { useState } from "react";
 import { Guest, Button } from "@/components/shared";
 import { Form, Input } from "antd";
 import Link from "next/link";
@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 
 const register: React.FC = () => {
 	const router = useRouter()
+	const [form] = Form.useForm();
+	const [disableButton, setDisableButton] = useState(true);
+
 	const onFinish = async (values: any) => {
 		const { name, username, email, password } = values
 		const input = {
@@ -29,8 +32,15 @@ const register: React.FC = () => {
 		}
 	};
 
-	const onFinishFailed = (errorInfo: any) => {
-		toast.error("Lỗi: " + {errorInfo})
+	const onFieldsChange = (allFields: any) => {
+		let disable = true;
+		allFields.forEach((field: any) => {
+			const errors = field.errors;
+			if (errors && errors.length === 0) {
+				disable = false
+			}
+		});
+		setDisableButton(disable);
 	};
 
 	return (
@@ -42,13 +52,15 @@ const register: React.FC = () => {
 				style={{ maxWidth: 600 }}
 				initialValues={{ remember: true }}
 				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
 				autoComplete="off"
+				form={form}
+				onFieldsChange={onFieldsChange}
 			>
 				<Form.Item
 					label="Họ tên"
 					name="name"
 					rules={[{ required: true, message: "Vui lòng nhập tên của bạn!" }]}
+					hasFeedback
 				>
 					<Input />
 				</Form.Item>
@@ -57,6 +69,7 @@ const register: React.FC = () => {
 					label="Username"
 					name="username"
 					rules={[{ required: true, message: "Vui lòng nhập username!" }]}
+					hasFeedback
 				>
 					<Input />
 				</Form.Item>
@@ -64,7 +77,11 @@ const register: React.FC = () => {
 				<Form.Item
 					label="Email"
 					name="email"
-					rules={[{ required: true, message: "Vui lòng nhập email!" }]}
+					rules={[
+						{ required: true, message: "Vui lòng nhập email!" },
+						{ type: 'email', message: 'Vui lòng nhập địa chỉ email hợp lệ!' }
+					]}
+					hasFeedback
 				>
 					<Input type="email" />
 				</Form.Item>
@@ -72,11 +89,15 @@ const register: React.FC = () => {
 				<Form.Item
 					label="Mật khẩu"
 					name="password"
-					rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+					rules={[
+						{ required: true, message: "Vui lòng nhập mật khẩu!" },
+						{ min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự!" }
+					]}
+					hasFeedback
 				>
 					<Input.Password />
 				</Form.Item>
-{/* 
+
 				<Form.Item
 					name="confirm"
 					label="Xác nhận mật khẩu"
@@ -98,9 +119,9 @@ const register: React.FC = () => {
 					]}
 				>
 					<Input.Password />
-				</Form.Item> */}
-
-				<Button type="submit" label="Đăng ký" className="w-full"/>
+				</Form.Item>
+				
+				<Button disabled={disableButton} type="submit" label="Đăng ký" className="w-full"/>
 
 				<div className="grid text-sm mt-5">
 					<Link legacyBehavior href="/login">

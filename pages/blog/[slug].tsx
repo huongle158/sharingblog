@@ -98,10 +98,11 @@ export default function BlogDetail() {
     const handleCancelModalDel = () => {
         setIsDeletedModalOpen(false);
     };
-    const [isFavorite, setIsFavorite] = useState(false)
     const { blog, pending, notFound } = useSelector((reduxData: any) => {
         return reduxData.sharingBlogReducers;
     });
+    const [isFavorite, setIsFavorite] = useState(blog.favoriteStatus)
+
     // list comment
     const [allComment, setAllComment] = useState([])
     useEffect(() => {
@@ -124,7 +125,7 @@ export default function BlogDetail() {
                 blog && (
                 <div className="container mx-auto py-8 h-screen overflow-scroll">
                     <div className="w-[82%] mx-auto">
-                        <BlogDetails blog={blog} isFavorite={isFavorite} setIsFavorite={setIsFavorite} className="mb-0"/>
+                        <BlogDetails blog={blog.article} isFavorite={isFavorite} setIsFavorite={setIsFavorite} className="mb-0"/>
                         <Card>
                             <Input.Group compact>
                                 <TextArea

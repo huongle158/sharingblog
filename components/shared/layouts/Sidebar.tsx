@@ -69,7 +69,7 @@ export const Sidebar = ({ children }: Props) => {
 	return (
 		<div className="flex">
 			{/* Sidebar */}
-			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-100 to-blue-200 left-0 sticky pt-4">
+			<div className="lg:w-[10%] w-[14%] p-3 border-r-[1px] flex items-center flex-col bg-gradient-to-b from-blue-50 to-blue-200 left-0 sticky pt-4">
 				{/* Avatar - click to show notifications */}
 				{/* <Popover
 					placement="right"
@@ -84,7 +84,7 @@ export const Sidebar = ({ children }: Props) => {
 					// ))}
 					trigger="click"
 				> */}
-					<Avatar shape="circle" src={avatar} size={46}/>
+				<Avatar shape="circle" src={avatar == "" ? avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"} size={46} />
 				{/* </Popover> */}
 
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>
