@@ -1,7 +1,7 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Guest, Button } from "@/components/index";
-import { Checkbox, Form, Input } from "antd";
+import { Checkbox, Form, Input, Spin  } from "antd";
 import { useRouter } from "next/router";
 import userService from '../services/userService';
 import Cookies from 'js-cookie';
@@ -9,8 +9,10 @@ import { toast } from 'react-toastify';
 
 
 const Login: React.FC = () => {
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const onFinish = async (values: any) => {
+		setLoading(true);
 		const { email, password } = values;
 		const  input = {
 			user : {
@@ -30,7 +32,7 @@ const Login: React.FC = () => {
 		else {
 			toast.error('Tài khoản hoặc mật khẩu không đúng! Vui lòng kiểm tra lại!');
 		}
-		
+		setLoading(false);
 	};
 
 	const onFinishFailed = (errorInfo: any) => {
@@ -38,6 +40,11 @@ const Login: React.FC = () => {
 	};
 	return (
 		<Guest label="Đăng nhập">
+			{loading && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 opacity-75">
+    <Spin  />
+  </div>
+)}
 			<Form
 				name="login"
 				labelCol={{ span: 8 }}
