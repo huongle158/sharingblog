@@ -52,12 +52,6 @@ export const ModalInput = ({
                         maxLength={maxLength}
                     />
                 )
-                //  : (
-                //     <Input
-                //         defaultValue={defaultValue}
-                //         onChange={onChange}
-                //     />
-                // )
             }
         </Modal>
     )

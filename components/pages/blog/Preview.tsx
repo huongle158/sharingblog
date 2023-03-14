@@ -4,8 +4,7 @@ import { Button, FloatButton, Image, message, Typography, Upload } from 'antd'
 import { RcFile } from 'antd/es/upload';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import CheckBoxGrid from '@/components/shared/ui/CheckBoxGrid';
-import tagService from '@/services/tagService';
-import { getAllTags } from '@/store/redux/actions/tagAction';
+import { useSelector } from 'react-redux';
 
 interface Props {
     title: string,
@@ -37,17 +36,9 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
         setTagList(checkedValues)
     };
 
-    const [tags, setTags] = useState([])
-    useEffect(() => {
-        const fetchTags = async () => {
-            const allTags = await tagService.getAllTags()
-            if (allTags && allTags.tags) {
-                setTags(allTags.tags)
-                getAllTags()
-            }
-        }
-        fetchTags()
-    }, []);
+    const { tags, pendingTagList } = useSelector((reduxData: any) => {
+        return reduxData.tagReducer
+    })
 
     useEffect(() => {
         if (isValidNewBanner) {
@@ -55,7 +46,6 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
         }
     }, [fileUpload])
 
-    // console.log("file review return: " + newBanner)
     return (
         <div className='flex py-12 px-10'>
             {/* Left part */}
@@ -89,14 +79,13 @@ const Preview = ({ title, content, oldBanner, newBanner, setNewBanner, tagList, 
                     {!isValidNewBanner && (
                         <div className="h-16 py-2 px-6 mt-4 flex rounded-xl border-2 border-gray-200">
                             <Image alt={oldBanner} src={oldBanner} className="h-12 w-auto mr-2" preview={false} />
-                            {/* <p>{oldBanner}</p> */}
                         </div>
                     )}
                 </div>
 
                 {/* Add tags */}
                 <div className='mt-2'>
-                    <CheckBoxGrid title='Thêm tags' items={tags} itemsChecked={tagList} onChange={onChangeCheckBox} />
+                    <CheckBoxGrid title='Thêm tags' items={tags} itemsChecked={tagList} onChange={onChangeCheckBox} pending={pendingTagList} />
                 </div>
 
                 {/* Button post blog */}

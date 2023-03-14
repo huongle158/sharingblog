@@ -17,13 +17,17 @@ import { BlogItem, ListUsers, TagsBox } from "@/components/pages";
 export default function Home() {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const [tags, setTags] = useState([]);
+	// const [tags, setTags] = useState([]);
 	const token = Cookies.get("token") || "";
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	//const [blogs, setBlogs] = useState([])
 	const { blogs, pending } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
+
+	const { tags, pendingTagList } = useSelector((reduxData: any) => {
+		return reduxData.tagReducer
+	}) || {}
 	// danh sách các user chưa follow
 	const [notFollow,setNotFollow] = useState([])
 	useEffect(() => {
@@ -33,15 +37,9 @@ export default function Home() {
 		 } else {
 			 setIsLoggedIn(true);
 		 }
-		const fetchTags = async () => {
-			const allTags = await tagService.getAllTags();
-			if (allTags && allTags.tags) {
-				setTags(allTags.tags);
-				getAllTags();
-			}
-		};
+		
 		dispatch(getAllBlogs(token));
-		fetchTags();
+		dispatch(getAllTags());
 	}, [token]);
 	useEffect(() => {
 		const fetchAllUserNotFollow =  async () => {
@@ -131,7 +129,7 @@ export default function Home() {
 								onClickButton= {handleViewNotFollow} />
 						</Suspense>
 						<div className="mt-4 lg:w-[280px]">
-							<TagsBox title="Các chủ đề được đề xuất" tags={tags} />
+							<TagsBox title="Các chủ đề được đề xuất" tags={tags} pending={pendingTagList} />
 						</div>
 					</div>
 				</div>

@@ -14,13 +14,15 @@ import  followService  from '@/services/followService';
 import { Blog } from '@/types';
 
 interface Props {
-    blog: Blog,
+    blog: {
+        article: Blog,
+        favoriteStatus: boolean
+    },
     className?: string,
-    isFavorite: boolean,
     setIsFavorite: Dispatch<SetStateAction<boolean>>
 }
 
-export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Props) => {
+export const BlogDetails = ({ blog, className, setIsFavorite }: Props) => {
     const { lengthAllComment } = useSelector((reduxData: any) => {
 		return reduxData.sharingBlogReducers;
 	});
@@ -29,17 +31,18 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
     const router = useRouter()
     const dispatch = useDispatch();
 
-    const [userDetail,setUserDetail] = useState({})
+    const [userDetail, setUserDetail] = useState({})
     const [dataReady, setDataReady] = useState(false);
 	useEffect(() => {
 		const fetchGetProfileByUsername =  async () => {
-			const fetchNotFollow = await followService.getProfileByUsername(token, blog.author.username)
+			const fetchNotFollow = await followService.getProfileByUsername(token, blog.article.author.username)
 			if (fetchNotFollow) {
 				setUserDetail(fetchNotFollow.profile)
                 setDataReady(true)
 			}
 		}
-		fetchGetProfileByUsername()
+        fetchGetProfileByUsername()
+        setIsFavorite(blog.favoriteStatus)
     }, []);
     // ham call get page profile/username
     const handleViewProfileUser = async () => {
@@ -51,7 +54,7 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
     }
     const items: MenuProps['items'] = [
         {
-            label: <Link href={`/blog/update/${blog.slug}`} >Chỉnh sửa</Link>,
+            label: <Link href={`/blog/update/${blog.article.slug}`} >Chỉnh sửa</Link>,
             key: 0
 
         },
@@ -63,7 +66,7 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
     ]
     const handleDeleteBlog = async () => {
         try {
-            const result = await blogService.deletePost(token, blog.slug)
+            const result = await blogService.deletePost(token, blog.article.slug)
             if (result.statusCode === 404) {
                 router.push({
                     pathname: "/profile",
@@ -88,21 +91,19 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
         }
     }
 
-    // const [countFavorites, setCountFavorites] = useState(blog.favoritesCount)
-
     const handleFavorite = async () => {
         try {
-            if (isFavorite) {
-                await blogService.unFavoritePost(token, blog.slug)
+            if (blog.favoriteStatus) {
+                await blogService.unFavoritePost(token, blog.article.slug)
+                setIsFavorite(false)
             } else {
-                await blogService.favoritePost(token, blog.slug)
+                await blogService.favoritePost(token, blog.article.slug)
+                setIsFavorite(true)
             }
-            setIsFavorite(!isFavorite)
         } catch (error) {
             toast.error("Lỗi: " + error)
         }
     }
-
 
     return (
         <div className={`mb-8 w-full border rounded-xl border-gray-300 -z-10 py-2 ` + className}>
@@ -114,14 +115,14 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
-                            src={blog.author.avatar}
+                            src={blog.article.author.avatar}
                             alt="Avatar"
                         />
                     </div>
                     <div>
-                        <Typography.Title level={4} className="font-bold mb-1">{blog.author.fullname}</Typography.Title>
-                        <h5 className="text-gray-500 mb-1">@{blog.author.username}</h5>
-                        <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.createdAt)}</p>
+                        <Typography.Title level={4} className="font-bold mb-1">{blog.article.author.fullname}</Typography.Title>
+                        <h5 className="text-gray-500 mb-1">@{blog.article.author.username}</h5>
+                        <p className="text-gray-500 font-normal italic text-sm">{getTimeDiffInWords(blog.article.createdAt)}</p>
                     </div>
                 </a>
                 <Dropdown menu={{ items }} trigger={['click']} arrow={{ pointAtCenter: true }} placement="bottomRight">
@@ -132,12 +133,12 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
 
             {/* Body card */}
             <div className="h-fit px-6 py-2">
-                <h1 className="text-xl font-bold mb-2 text-center">{blog.title}</h1>
+                <h1 className="text-xl font-bold mb-2 text-center">{blog.article.title}</h1>
                 <div className="lg:flex-2 flex justify-center">
-                    <img src={blog.banner} alt="Post" className="w-40 rounded-lg object-cover" />
+                    <img src={blog.article.banner} alt="Post" className="w-40 rounded-lg object-cover" />
                 </div>
                 <div className="mb-4 lg:mr-2 content"
-                        dangerouslySetInnerHTML={{__html: blog.content}}
+                        dangerouslySetInnerHTML={{__html: blog.article.content}}
                     />
             </div>
 
@@ -148,20 +149,20 @@ export const BlogDetails = ({ blog, className, isFavorite, setIsFavorite }: Prop
                 <div className="flex-1">
                     {/* is favorite */}
                     {
-                        isFavorite ? (
-                            <><a onClick={handleFavorite}><HeartFilled className="text-red-600 text-[22px]" /></a> {blog.favoritesCount}</>
+                        blog.favoriteStatus ? (
+                            <><a onClick={handleFavorite}><HeartFilled className="text-red-600 text-[22px]" /></a> {blog.article.favoritesCount}</>
                         ) : (
-                            <><a onClick={handleFavorite} className="hover:text-gray-400"><HeartOutlined className="border-black text-[22px]" size={20} /></a> {blog.favoritesCount}</>
+                            <><a onClick={handleFavorite} className="hover:text-gray-400"><HeartOutlined className="border-black text-[22px]" size={20} /></a> {blog.article.favoritesCount}</>
                         )
                     }
 
                     {/* comments */}
-                    <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> {blog.commentCount}
+                    <a href="#" className="hover:text-gray-400 ml-4"><CommentOutlined className="text-[22px]" /></a> {blog.article.commentCount}
                 </div>
 
                 <div className='flex-1'>
                     <span>Chủ đề: </span>
-                    {blog.tagList && blog.tagList.map((tag, index) => (
+                    {blog.article.tagList && blog.article.tagList.map((tag, index) => (
                         <a key={index} href="#"><Tag>{tag}</Tag></a>
                     ))}
                 </div>

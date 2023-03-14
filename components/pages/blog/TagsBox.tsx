@@ -1,4 +1,4 @@
-import { message, Tag, Typography } from "antd"
+import { message, Spin, Tag, Typography } from "antd"
 import cx from 'classnames';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -7,11 +7,12 @@ import Cookies from "js-cookie";
 import { getAllBlogsByTags } from "@/store/redux/actions/sharingblogAction";
 
 interface Props {
-    title?: string,
-    tags: string[]
+  title?: string,
+  tags: string[],
+  pending: boolean,
 }
 
-export const TagsBox = ({title, tags}: Props) => {
+export const TagsBox = ({title, tags, pending}: Props) => {
     const [selectedTag, setSelectedTag] = useState('');
     const token = Cookies.get("token") || "";
     const dispatch = useDispatch();
@@ -34,28 +35,23 @@ export const TagsBox = ({title, tags}: Props) => {
 
     
     }
-    // useEffect( () => {
-    //     if (selectedTag) {
-    //         blogService.getAllPosts(token, undefined, undefined, selectedTag)
-    //         .then((result) => {
-    //             dispatch(getAllBlogsByTags(result.articles));
-    //         })
-    //         .catch((err) => {
-    //             message.error(err);
-    //         })
-    //     }
-    // }, [selectedTag])
     
     return (
         <div>
-            <Typography.Title level={5}>{ title }</Typography.Title>
-            <div className="mt-4">
+        <Typography.Title level={5}>{title}</Typography.Title>
+        {
+          pending ? 
+            <div className="flex items-center justify-center">
+              <Spin className="w-12 h-12" />
+            </div> :
+            (
+              <div className="mt-4">
                 {tags && tags.map((item, index) => (
-                    <a key={index} >
+                  <a key={index} >
                     <Tag
                       className={cx('cursor-pointer mb-1', {
                         'text-blue-800'
-                        : item === selectedTag,
+                          : item === selectedTag,
                       })}
                       onClick={() => filterBlogByTags(item)}
                     >
@@ -63,7 +59,9 @@ export const TagsBox = ({title, tags}: Props) => {
                     </Tag>
                   </a>
                 ))}
-            </div>
+              </div>
+            )
+        }
         </div>
     )
 }

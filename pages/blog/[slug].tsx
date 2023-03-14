@@ -81,18 +81,18 @@ export default function BlogDetail() {
         setCurrenId(id)
         setCommentKey(commentKey + 1)
     };
-       // hàm delted comment
-       const handleOkModalDel = async () => {
-        setIsDeletedModalOpen(false);
-        try {
-            const response = await commentService.deleteComment(token, slug, currenId);
-            if(response) {
-                setLengthComment(lengthComment + 1)
-                message.success("Xóa bình luận thành công")
-            }
-          } catch (error) {
-            message.error("Xóa bình luận không thành công");
-          }
+    // hàm delted comment
+    const handleOkModalDel = async () => {
+    setIsDeletedModalOpen(false);
+    try {
+        const response = await commentService.deleteComment(token, slug, currenId);
+        if(response) {
+            setLengthComment(lengthComment + 1)
+            message.success("Xóa bình luận thành công")
+        }
+        } catch (error) {
+        message.error("Xóa bình luận không thành công");
+        }
     };
     // hàm đóng modal deleted
     const handleCancelModalDel = () => {
@@ -101,7 +101,10 @@ export default function BlogDetail() {
     const { blog, pending, notFound } = useSelector((reduxData: any) => {
         return reduxData.sharingBlogReducers;
     });
-    const [isFavorite, setIsFavorite] = useState(blog.favoriteStatus)
+    const [isFavorite, setIsFavorite] = useState(false)
+    // if (blog) {
+    //     setIsFavorite(blog.favoriteStatus)
+    // }
 
     // list comment
     const [allComment, setAllComment] = useState([])
@@ -115,6 +118,8 @@ export default function BlogDetail() {
         }
         fetchGetAllCommentBlog()
     }, [token, slug, isFavorite, lengthComment])
+    
+    // setIsFavorite(blog.favoriteStatus)
     return (
         <Sidebar>
             {pending ? (
@@ -125,7 +130,7 @@ export default function BlogDetail() {
                 blog && (
                 <div className="container mx-auto py-8 h-screen overflow-scroll">
                     <div className="w-[82%] mx-auto">
-                        <BlogDetails blog={blog.article} isFavorite={isFavorite} setIsFavorite={setIsFavorite} className="mb-0"/>
+                        <BlogDetails blog={blog} setIsFavorite={setIsFavorite} className="mb-0"/>
                         <Card>
                             <Input.Group compact>
                                 <TextArea

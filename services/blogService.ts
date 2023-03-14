@@ -1,8 +1,9 @@
 const BASE_URL = 'http://localhost:3000/articles';
+import { Blog } from '@/types';
 import { CREATED, INTERNAL_SERVER_ERROR, OK } from './../types/status';
 
 const blogService = {
-    createPost: async (token: string, newBlog: object) => {
+    createPost: async (token: string, newBlog: Blog) => {
         try {
             const formData = new FormData();
             formData.append('title', newBlog.title);
@@ -110,7 +111,7 @@ const blogService = {
         return null;
     },
 
-    updatePost: async (token: string, slug: string, updatedBlog: object) => {
+    updatePost: async (token: string, slug: string, updatedBlog: Blog) => {
         try {
             const formData = new FormData();
             formData.append('title', updatedBlog.title);
@@ -192,6 +193,3 @@ const blogService = {
 };
 
 export default blogService;
-
-
-

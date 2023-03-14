@@ -62,19 +62,10 @@ const Preview = () => {
                 toast.error('Tạo bài Blog thất bại');
           }
     }
-    // console.log("file create: " + fileImage)
 
-    const [tags, setTags] = useState([])
-    useEffect(() => {
-        const fetchTags = async () => {
-            const allTags = await tagService.getAllTags()
-            if (allTags && allTags.tags) {
-                setTags(allTags.tags)
-                getAllTags()
-            }
-        }
-        fetchTags()
-    }, []);
+    const { tags, pendingTagList } = useSelector((reduxData: any) => {
+        return reduxData.tagReducer
+    })
 
     return (
         <div className='flex py-16 px-10'>
@@ -110,7 +101,7 @@ const Preview = () => {
 
                 {/* Add tags */}
                 <div className='mt-2'>
-                    <CheckBoxGrid title='Thêm tags' items={tags} onChange={onChangeCheckBox} />
+                    <CheckBoxGrid title='Thêm tags' items={tags} onChange={onChangeCheckBox} pending={pendingTagList} />
                 </div>
 
                 {/* Button post blog */}

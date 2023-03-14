@@ -137,17 +137,6 @@ export const Sidebar = ({ children }: Props) => {
 				setModal={setModalLogout}
 				handleLogout={onClicklogoutUser}
 			/>
-			{/* <ModalInput
-				title={title == "" ? "Tiêu đề" : title}
-				isModalOpen={showTitleModal}
-				handleOk={handleOkTitle}
-				handleCancel={handleCancel}
-				defaultValue={title === "Tiêu đề" ? "" : title}
-				onChange={(e) => setTitle(e.target.value)}
-				isTextArea
-				maxLength={200}
-				placeHolder="Nhập tiêu đề..."
-			/> */}
 		</div>
 	);
 };

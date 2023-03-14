@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Modal, Button } from "antd";
-import blogService from "@/services/blogService";
 
 const ModalDeleteBlog = ({ showModal, setShowModal, handleDeleteBlog }: any) => {
 	const handleOk = async() => {

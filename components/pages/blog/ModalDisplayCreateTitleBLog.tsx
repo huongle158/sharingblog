@@ -19,7 +19,6 @@ export default function ModalDisplayCreateTitleBLog({
         setShowModal();
         router.push("/blog/create");
         dispatch(getTitleNewBlog(title));
-        //console.log(title)
     };
     const handleCancel = () => {
         setShowModal()
