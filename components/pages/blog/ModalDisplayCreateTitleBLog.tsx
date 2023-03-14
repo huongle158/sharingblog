@@ -39,7 +39,7 @@ export default function ModalDisplayCreateTitleBLog({
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/*header*/}
                     <div className="flex justify-center p-5 border-b border-solid border-slate-200 rounded-t">
-                        <h3 className="lg:text-xl text-lg font-semibold py-2 text-center">{title == "" ? "Title" : title}</h3>
+                        <h3 className="lg:text-xl text-lg font-semibold py-2 text-center">{title == "" ? "Tiêu đề" : title}</h3>
                     </div>
                     {/*body*/}
                     <div className="relative p-6 flex-auto justify-self-center">
