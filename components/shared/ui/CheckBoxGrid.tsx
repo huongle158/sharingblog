@@ -1,4 +1,4 @@
-import { Checkbox, Col, Row, Spin, Typography } from "antd"
+import { Checkbox, Col, Row, Typography } from "antd"
 import { CheckboxValueType } from "antd/es/checkbox/Group"
 
 interface Props {
@@ -25,19 +25,14 @@ const CheckBoxGrid = ({ title, items, itemsChecked = [], onChange, pending = fal
                 </Checkbox.Group>
             ) : (
                 <Checkbox.Group onChange={onChange} >
-                        <Row className='space-y-2 max-h-80 overflow-scroll'>
-                            {
-                                pending ?
-                                    <div className="flex items-center justify-center">
-                                        <Spin className="w-12 h-12" />
-                                    </div> :
-                                    items.map((item, index) => (
-                                        <Col span={8} key={index}>
-                                            <Checkbox value={item}>{item}</Checkbox>
-                                        </Col>
-                                    ))
-                            }
-                        
+                    <Row className='space-y-2 max-h-80 overflow-scroll'>
+                        {
+                            items.map((item, index) => (
+                                <Col span={8} key={index}>
+                                    <Checkbox value={item}>{item}</Checkbox>
+                                </Col>
+                            ))
+                        }
                     </Row>
                 </Checkbox.Group>
             )}
