@@ -16,6 +16,7 @@ import { logoutUser } from "@/store/redux/actions/userAction";
 import ModalLogout from "../../pages/user/ModalLogoutUser";
 import userService  from '@/services/userService';
 import notificationService from "@/services/notificationService";
+import { BASE_URL_AVATAR } from "@/utils/url";
 
 interface Props {
 	children: ReactNode;
@@ -84,7 +85,7 @@ export const Sidebar = ({ children }: Props) => {
 					// ))}
 					trigger="click"
 				> */}
-				<Avatar shape="circle" src={avatar == "" ? avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"} size={46} />
+				<Avatar shape="circle" src={avatar !== BASE_URL_AVATAR ? avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"} size={46} />
 				{/* </Popover> */}
 
 				<span className="border-b-[1px] border-gray-400 w-full p-2"></span>

@@ -8,6 +8,7 @@ import { getListFollower } from "@/store/redux/actions/userAction";
 import { getAllBlogsUser } from "@/store/redux/actions/sharingblogAction";
 import { Sidebar } from "@/components/shared";
 import { ListUsers, ProfileFrame, ProfilePosts } from "@/components/pages";
+import { BASE_URL_AVATAR } from "@/utils/url";
 
 export default function ProfileOtherUser() {
     const router = useRouter();
@@ -108,7 +109,7 @@ export default function ProfileOtherUser() {
                     <div className="flex justify-center items-center mb-8">
                         <Avatar
                             size={128}
-                            src={userDetail.avatar == "" ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
+                        src={userDetail.avatar !== BASE_URL_AVATAR ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
                             alt="Avatar"
                             className="w-32 h-32 object-cover mr-4"
                         />

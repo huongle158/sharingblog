@@ -1,0 +1,1 @@
+export const BASE_URL_AVATAR = 'http://localhost:3000/avatars/'

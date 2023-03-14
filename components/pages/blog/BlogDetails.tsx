@@ -12,6 +12,7 @@ import { getTimeDiffInWords } from '../../shared/format/formatTime';
 import { getDetailUser } from "@/store/redux/actions/userAction";
 import  followService  from '@/services/followService';
 import { Blog } from '@/types';
+import { BASE_URL_AVATAR } from '@/utils/url';
 
 interface Props {
     blog: {
@@ -115,7 +116,7 @@ export const BlogDetails = ({ blog, className, setIsFavorite }: Props) => {
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
-                            src={blog.article.author.avatar}
+                            src={blog.article.author.avatar !== BASE_URL_AVATAR ? blog.article.author.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
                             alt="Avatar"
                         />
                     </div>

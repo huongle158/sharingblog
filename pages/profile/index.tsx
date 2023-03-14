@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { getAllBlogsUser } from '../../store/redux/actions/sharingblogAction';
 import { ModalInput, ModalMultipleInput, Sidebar } from "@/components/shared";
 import { ProfileFrame, ProfileGroupBox, ProfileHeader, ProfilePosts } from "@/components/pages";
+import { BASE_URL_AVATAR } from "@/utils/url";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 	const reader = new FileReader();
@@ -239,7 +240,7 @@ export default function Profile() {
 						
 								<Avatar
 									size={128}
-									src={avatar == "" ? avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
+									src={avatar !== BASE_URL_AVATAR ? avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
 									alt="Avatar"
 									className="w-full h-full object-cover"
 								/>

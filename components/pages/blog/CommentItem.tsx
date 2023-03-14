@@ -1,6 +1,7 @@
 import { Avatar, Typography } from "antd"
 import { getTimeDiffInWords } from '../../shared/format/formatTime';
 import { useSelector } from 'react-redux';
+import { BASE_URL_AVATAR } from "@/utils/url";
 
 interface Props {
     onClickReply: () => void,
@@ -27,7 +28,7 @@ export const CommentItem = ({ onClickReply, onClickEdit, onClickDelete, content,
                         <div className="mr-2">
                             <Avatar
                                 size={36}
-                                src={userDetail.avatar == "" ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
+                                src={userDetail.avatar !== BASE_URL_AVATAR ? userDetail.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
                                 alt={userDetail.avatar}
                             />
                         </div>

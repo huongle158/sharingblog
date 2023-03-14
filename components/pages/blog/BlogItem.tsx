@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getDetailUser } from "@/store/redux/actions/userAction";
 import { useRouter } from 'next/router';
 import { Blog } from '@/types';
+import { BASE_URL_AVATAR } from '@/utils/url';
 
 interface Props {
     blog: Blog,
@@ -53,7 +54,7 @@ export const BlogItem = ({ blog, className }: Props) => {
                     <div className="mr-4 mt-1">
                         <Avatar
                             size={36}
-                            src={blog.author.avatar}
+                            src={blog.author.avatar !== BASE_URL_AVATAR ? blog.author.avatar : "https://i.ibb.co/XWHftvG/sbcf-default-avatar.png"}
                             alt="Avatar"
                         />
                     </div>
