@@ -11,6 +11,5 @@ export * from "./ui/CheckBoxGrid";
 
 export * from "./modals/ModalInput";
 export * from "./modals/ModalMultipleInput";
-export * from "./modals/ModalDeleteBlog";
 
 export * from "./error/NotFound";

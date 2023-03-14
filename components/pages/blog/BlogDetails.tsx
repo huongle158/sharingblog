@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import ModalDeleteBlog from '../../shared/modals/ModalDeleteBlog';
 import { getTimeDiffInWords } from '../../shared/format/formatTime';
 import { getDetailUser } from "@/store/redux/actions/userAction";
 import  followService  from '@/services/followService';
 import { Blog } from '@/types';
 import { BASE_URL_AVATAR } from '@/utils/url';
+import ModalDeleteBlog from './ModalDeleteBlog';
 
 interface Props {
     blog: {
